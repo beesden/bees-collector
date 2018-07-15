@@ -1,0 +1,114 @@
+// ********************
+//   Swatches
+// ********************
+
+// Violet swatches
+$swatch-violet-dark: #5d2a73;
+$swatch-violet: #7d3f98;
+$swatch-violet-tint: #b18cc1;
+$swatch-violet-light: #f5eff8;
+
+// Cranberry swatches
+$swatch-cranberry: #d20962;
+$swatch-cranberry-tint: #e46b95;
+$swatch-cranberry-neon: #ef1e7b;
+
+// Grey swatches
+$swatch-charcoal: #414141;
+$swatch-grey-dark: #646464;
+$swatch-grey-light: #dcdcdc;
+
+// Teal swatches
+$swatch-teal: #00a78e;
+$swatch-teal-tint: #66cabb;
+$swatch-teal-neon: #00f0cc;
+$swatch-teal-deep-ui: #007d82;
+
+// Base swatches
+$swatch-smoke: #f5f5f5;
+$swatch-black: #000;
+$swatch-white: #fff;
+
+/// *********************
+/// Theme CSS variables
+/// *********************
+
+[v-page-theme] {
+  --theme-content: $swatch-grey-dark;
+  --theme-content-bg: $swatch-white;
+  --theme-content-break: $swatch-grey-light;
+  --theme-content-link: $swatch-violet;
+  --theme-content-title: $swatch-black;
+  --theme-header: $swatch-violet;
+  --theme-header-bg: $swatch-white;
+  --theme-input: $swatch-grey-dark;
+  --theme-input-bg: $swatch-smoke;
+  --theme-input-value: $swatch-black;
+}
+
+[v-page-theme='charcoal'] {
+  --theme-content-title: $swatch-white;
+  --theme-content-link: $swatch-teal-neon;
+  --theme-content: $swatch-white;
+  --theme-content-bg: $swatch-charcoal;
+  --theme-header: $swatch-white;
+  --theme-header-bg: $swatch-charcoal;
+}
+
+[v-page-theme='grey'] {
+  --theme-content-bg: $swatch-smoke;
+  --theme-content-break: $swatch-grey-light;
+  --theme-input-bg: $swatch-white;
+
+  .v-section:nth-of-type(even) {
+    --theme-content-bg: $swatch-white;
+    --theme-content-break: $swatch-grey-light;
+    --theme-input-bg: $swatch-smoke;
+  }
+}
+
+[v-page-theme='cranberry'] {
+  --theme-content-title: $swatch-white;
+  --theme-content-link: $swatch-white;
+  --theme-content: $swatch-white;
+  --theme-content-bg: $swatch-cranberry;
+  --theme-header: $swatch-white;
+  --theme-header-bg: $swatch-cranberry-neon;
+}
+
+[v-page-theme='teal'] {
+  --theme-content-title: $swatch-white;
+  --theme-content-link: $swatch-white;
+  --theme-content: $swatch-white;
+  --theme-content-bg: $swatch-teal;
+  --theme-header: $swatch-white;
+  --theme-header-bg: $swatch-teal-tint;
+}
+
+[v-page-theme='violet'] {
+  --theme-content-title: $swatch-white;
+  --theme-content-link: $swatch-white;
+  --theme-content: $swatch-white;
+  --theme-content-bg: $swatch-violet;
+  --theme-header: $swatch-white;
+  --theme-header-bg: $swatch-violet-tint;
+}
+
+[v-page-theme='image'] {
+  --theme-header: $swatch-white;
+
+  .v-section:nth-of-type(even) {
+    --theme-content-bg: $swatch-smoke;
+    --theme-content-break: $swatch-grey-light;
+    --theme-input-bg: $swatch-white;
+  }
+}
+
+[v-page-theme='waiting'] {
+  --theme-content-bg: $swatch-violet;
+  --theme-content-title: $swatch-white;
+  --theme-content-link: $swatch-white;
+  --theme-content: $swatch-white;
+  --theme-header: $swatch-white;
+  --theme-header-bg: $swatch-violet;
+}

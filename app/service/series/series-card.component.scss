@@ -1,0 +1,32 @@
+@import "../../styles/variables";
+
+:host {
+  box-shadow: $card-shadow;
+  position: relative;
+}
+
+.image {
+  background: center center/cover no-repeat;
+  padding-bottom: 50%;
+  width: 100%;
+}
+
+header {
+  padding: 8px 8px 16px;
+}
+
+h2 {
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+p {
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 0;
+
+  span + span:before {
+    content: ' - ';
+  }
+}

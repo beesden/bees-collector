@@ -1,0 +1,48 @@
+@import "../../styles/variables";
+
+:host {
+  box-shadow: $card-shadow;
+  position: relative;
+}
+
+.image {
+  background: center top/cover no-repeat;
+  padding-bottom: 125%;
+  width: 100%;
+}
+
+header {
+  padding: 8px 8px 16px;
+}
+
+h2 {
+  font-size: 15px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.collection {
+  color: #666;
+  font-weight: 700;
+}
+
+p {
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 0;
+
+  span + span:before {
+    content: ' - '
+  }
+}
+
+.completion {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 8px 8px;
+
+  ion-icon {
+    font-size: 24px;
+    margin-left: 16px;
+  }
+}

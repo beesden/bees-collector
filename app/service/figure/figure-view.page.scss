@@ -1,0 +1,85 @@
+@import "../../styles/variables";
+
+ion-slides {
+  height: 240px;
+
+  ion-slide {
+    background: #333;
+  }
+
+  img {
+    height: 240px;
+  }
+}
+
+h1 {
+  font-size: 18px;
+  margin: 12px 0;
+}
+
+h2 {
+  font-size: 16px;
+  margin: 12px 0;
+}
+
+dl {
+  display: flex;
+  flex-flow: row wrap;
+
+  dt {
+    color: #555;
+    flex: 40% 0 0;
+    margin: 0 0 8px;
+  }
+
+  dd {
+    flex: 60% 0 0;
+    margin: 0 0 8px;
+  }
+}
+
+.page-section {
+  overflow: auto;
+  padding: 0 14px;
+
+  &:nth-child(odd) {
+    background: #f0f0f0;
+  }
+
+  &:last-child {
+    padding-bottom: 40px;
+  }
+
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 8px;
+}
+
+.completion {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 12px 0;
+
+  li {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    font-size: 11px;
+    justify-content: center;
+    min-height: 48px;
+    text-align: center;
+
+    &.complete {
+      background: #009900;
+      color: #fff;
+    }
+  }
+}
