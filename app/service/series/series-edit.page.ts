@@ -19,7 +19,7 @@ import { Page } from "ionic-angular/navigation/nav-util";
 
       <ion-item *ngFor="let figure of figures" [navPush]="figureViewPage" [navParams]="{figure: figure}">
         <h2>{{figure.name}}</h2>
-        <p>{{figure.variant}}</p>
+        <p>{{figure.description}}</p>
       </ion-item>
       
 

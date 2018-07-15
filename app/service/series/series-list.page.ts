@@ -1,11 +1,7 @@
 import { Component } from '@angular/core';
-import { Figure, FigureService } from "../figure/figure.service";
-import { ModalController, NavParams } from "ionic-angular";
-import { FigureEditPage } from "../figure/figure-edit.page";
 import { Page } from "ionic-angular/navigation/nav-util";
 import { Series } from "./series";
 import { SeriesService } from "./series.service";
-import { CollectionViewPage } from "./collection-view.page";
 import { FigureListPage } from "../figure/figure-list.page";
 
 @Component({
@@ -22,10 +18,10 @@ import { FigureListPage } from "../figure/figure-list.page";
 
     <ion-content>
       <div class="content-grid">
-        <card-collection *ngFor="let collection of collections"
-                         [collection]="collection"
+        <series-card *ngFor="let series of seriesList"
+                         [series]="series"
                          [navPush]="figureListPage"
-                         [navParams]="{collection: collection}"></card-collection>
+                         [navParams]="{series: series}"></series-card>
       </div>
     </ion-content>
   `
@@ -33,10 +29,10 @@ import { FigureListPage } from "../figure/figure-list.page";
 export class SeriesListPage {
 
   figureListPage: Page = FigureListPage;
-  collections: Series[];
+  seriesList: Series[];
 
-  constructor(collectionService: SeriesService) {
-    collectionService.getList().then(collections => this.collections = collections);
+  constructor(seriesService: SeriesService) {
+    seriesService.getList().then(series => this.seriesList = series);
   }
 
 }

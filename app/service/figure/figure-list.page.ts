@@ -15,7 +15,7 @@ import { FigureViewPage } from "./figure-view.page";
     <ion-header>
 
       <ion-navbar>
-        <ion-title *ngIf="!searchToggle">{{collection?.name || 'My Figures'}}</ion-title>
+        <ion-title *ngIf="!searchToggle">{{series?.name || 'My Figures'}}</ion-title>
         <ion-searchbar *ngIf="searchToggle" [(ngModel)]="searchFilter" (ionInput)="filterResults(searchFilter)"></ion-searchbar>
 
         <ion-buttons start>

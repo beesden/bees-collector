@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Figure, FigureService } from "./figure.service";
 import { ActionSheetController, ModalController, NavParams, ViewController } from "ionic-angular";
+import { Camera, CameraOptions, DestinationType, MediaType, PictureSourceType } from "@ionic-native/camera";
 
 @Component({
   selector: 'page:figure-view',
@@ -20,7 +21,7 @@ import { ActionSheetController, ModalController, NavParams, ViewController } fro
 
     <ion-content>
 
-      <ion-slides class="image-preview" (click)="openImageBrowser()" [loop]="true" [pager]="true">
+      <ion-slides class="image-preview" [loop]="true" [pager]="true">
         <ion-slide *ngFor="let image of figure.image"><img [src]="image"/></ion-slide>
       </ion-slides>
 
@@ -32,9 +33,9 @@ import { ActionSheetController, ModalController, NavParams, ViewController } fro
       <section class="page-section">
 
         <ol class="completion">
-          <li [ngClass]="{complete: figure.owned}">Figure Owned</li>
-          <li [ngClass]="{complete: figure.condition}">Good Condition</li>
-          <li [ngClass]="{complete: figure.accessories}">All Accessories</li>
+          <li [ngClass]="{complete: figure.owned}" (click)="this.update({owned: !figure.owned})">Figure Owned</li>
+          <li [ngClass]="{complete: figure.condition}" (click)="this.update({condition: !figure.condition})">Good Condition</li>
+          <li [ngClass]="{complete: figure.accessories}" (click)="this.update({accessories: !figure.accessories})">All Accessories</li>
         </ol>
 
         <h2>More info</h2>
@@ -44,14 +45,17 @@ import { ActionSheetController, ModalController, NavParams, ViewController } fro
         <dl>
           <dt>Series</dt>
           <dd>{{figure.series}}</dd>
+          <!-- Figure range -->
           <ng-container *ngIf="figure.range">
             <dt>Range</dt>
             <dd>{{figure.range}}</dd>
           </ng-container>
+          <!-- Release date -->
           <ng-container *ngIf="figure.release">
             <dt>Release date</dt>
             <dd>{{figure.release | date: 'yyyy'}}</dd>
           </ng-container>
+          <!-- Extra info -->
           <ng-container *ngFor="let property of properties">
             <dt>{{property.key}}</dt>
             <dd>{{property.value}}</dd>
@@ -59,13 +63,13 @@ import { ActionSheetController, ModalController, NavParams, ViewController } fro
         </dl>
       </section>
 
-      <section class="page-section">
+      <section class="page-section" *ngIf="figure.collection?.length">
         <h2>Collections:</h2>
 
         <div class="grid">
-          <card-collection [collection]="{}"></card-collection>
-          <card-collection [collection]="{}"></card-collection>
-          <card-collection [collection]="{}"></card-collection>
+          <series-card [series]="{name: 'Test 1'}"></series-card>
+          <series-card [series]="{name: 'Test 2'}"></series-card>
+          <series-card [series]="{name: 'Test 3'}"></series-card>
         </div>
       </section>
 
@@ -76,8 +80,15 @@ export class FigureViewPage {
 
   figure: Figure;
 
+  get properties(): Array<{ key: string, value: string }> {
+    return Object.entries<string>(this.figure.properties)
+      .filter(([key, value]) => !!value)
+      .map(([key, value]) => ({key, value}));
+  }
+
   constructor(private viewCtrl: ViewController,
               private actionSheetCtrl: ActionSheetController,
+              private camera: Camera,
               private figureService: FigureService,
               navParams: NavParams) {
 
@@ -85,25 +96,50 @@ export class FigureViewPage {
 
   }
 
-  get properties(): Array<{ key: string, value: string }> {
-    return Object.entries<string>(this.figure.properties)
-      .filter(([key, value]) => !!value)
-      .map(([key, value]) => ({key, value}));
-  }
-
+  /**
+   * Opens the additional editing options menu.
+   */
   openMenu(): void {
 
    this.actionSheetCtrl.create()
-      .addButton({icon: 'camera', text: 'Upload image'})
+      .addButton({icon: 'create', text: 'Edit information', handler: () => this.editFigure()})
+      .addButton({icon: 'camera', text: 'Add new photo', handler: () => this.uploadImage(PictureSourceType.CAMERA)})
+      .addButton({icon: 'images', text: 'Select image', handler: () => this.uploadImage(PictureSourceType.SAVEDPHOTOALBUM)})
       .present()
 
   }
 
-  dismiss(): void {
-    this.viewCtrl.dismiss();
+  /**
+   * Opens the edit figure dialog.
+   */
+  editFigure(): void {
+    this.figureService.update(this.figure);
   }
 
-  update(): void {
+  /**
+   * Add an image to the figure.
+   */
+  uploadImage(sourceType: PictureSourceType ): void {
+
+    const cameraOptions: CameraOptions = {
+      destinationType: DestinationType.FILE_URL,
+      mediaType: MediaType.PICTURE,
+      sourceType,
+      correctOrientation: true
+    };
+
+    this.camera.getPicture(cameraOptions)
+      .then(path =>  this.figure.image.push(path))
+      .then(() =>  this.update())
+      .catch(err => console.log(err));
+
+  }
+
+  /**
+   * Saves changes to the db
+   */
+  update(merge: {} = {}): void {
+    this.figure = Object.assign(this.figure, merge);
     this.figureService.update(this.figure);
   }
 }

@@ -13,6 +13,7 @@ import { SeriesService } from "../service/series/series.service";
 import { SeriesCardComponent } from "../service/series/series-card.component";
 import { FigureCardComponent } from "../service/figure/figure-card.component";
 import { FigureViewPage } from "../service/figure/figure-view.page";
+import { Camera } from "@ionic-native/camera";
 
 const pages = [
   TabsPage,
@@ -49,6 +50,7 @@ const pages = [
     FigureService,
 
     // Ionic Native
+    Camera,
     SQLite
 
   ],

@@ -12,7 +12,7 @@ import { Figure } from "./figure.service";
       <h2>{{figure.name}}</h2>
       <p class="collection">{{figure.collection}}</p>
       <p>
-        <span *ngIf="figure.variant">{{figure.variant}}</span>
+        <span *ngIf="figure.description">{{figure.description}}</span>
         <span *ngIf="figure.range">{{figure.range}}</span>
       </p>
     </header>
