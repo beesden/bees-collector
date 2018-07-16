@@ -1,0 +1,36 @@
+{
+	"name": "Collections",
+	"version": "0.0.1",
+	"description": "Organise your collections quickly and easily.",
+	"keywords": [],
+	"license": "ISC",
+	"author": "",
+	"main": "index.js",
+	"scripts": {
+		"postinstall": "node prepare.js",
+		"cordova": "cordova"
+	},
+	"dependencies": {
+		"cordova-android": "^7.1.1",
+		"cordova-ios": "^4.5.4",
+		"cordova-plugin-camera": "^4.0.3",
+		"cordova-sqlite-storage": "^2.3.3"
+	},
+	"devDependencies": {
+		"cordova": "^8.0.0",
+		"cordova-common": "^2.2.5",
+		"fs-extra": "^6.0.1",
+		"rimraf": "^2.6.2"
+	},
+	"cordova": {
+		"name": "org.beesden.collections",
+		"plugins": {
+			"cordova-plugin-camera": {},
+			"cordova-sqlite-storage": {}
+		},
+		"platforms": [
+			"android",
+			"ios"
+		]
+	}
+}

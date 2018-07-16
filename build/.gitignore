@@ -1,0 +1,10 @@
+# Dependencies
+node_modules
+
+# Generated files
+platforms
+plugins
+www
+config.xml
+
+

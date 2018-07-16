@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+
+  app:
+    build:
+      context: ./app
+    command: ['ionic',  'serve']
+    volumes:
+      - ./build/www:/build/www
+      - node_modules:/build/node_modules
+      - ./:/build
+
+  build:
+    build:
+      dockerfile: beesden/cordova
+      context: ./build
+    volumes:
+      - .:.

@@ -3,6 +3,8 @@ import { Figure, FigureService } from "../figure/figure.service";
 import { ModalController, NavParams } from "ionic-angular";
 import { FigureEditPage } from "../figure/figure-edit.page";
 import { Page } from "ionic-angular/navigation/nav-util";
+import { Collection } from "../collection/collection";
+import { Series } from "./series";
 
 @Component({
   selector: 'page:collection-edit',
@@ -29,7 +31,7 @@ import { Page } from "ionic-angular/navigation/nav-util";
 export class SeriesEditPage {
 
   figureViewPage: Page = FigureEditPage;
-  collection: string;
+  collection: Series;
   figures: Figure[];
 
   constructor(private modalCtrl: ModalController,
@@ -37,7 +39,7 @@ export class SeriesEditPage {
               navParams: NavParams) {
 
     this.collection = navParams.get('collection');
-    figureService.getList(this.collection).then(figures => this.figures = figures);
+    figureService.getList({series: this.collection}).then(figures => this.figures = figures);
 
   }
 
