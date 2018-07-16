@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
-import { Figure } from "./figure";
 import { Series } from "../series/series";
+import { Figure } from "./figure";
 
 export { Figure } from './figure';
 
@@ -994,7 +994,7 @@ export class FigureService {
       return db;
     });
 
-  };
+  }
 
   /**
    * List all figures
@@ -1033,11 +1033,11 @@ export class FigureService {
    */
   update(figure?: Figure): Promise<Figure[]> {
 
-    let query = `UPDATE FIGURES SET name=${figure.name} WHERE ID=${figure.id}`;
+    const query = `UPDATE FIGURES SET name=${figure.name} WHERE ID=${figure.id}`;
     console.log(query);
 
     return this.create()
-      .then((db: SQLiteObject) => db.executeSql(query))
+      .then((db: SQLiteObject) => db.executeSql(query));
   }
 
 

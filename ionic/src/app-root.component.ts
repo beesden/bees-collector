@@ -8,5 +8,5 @@ import { TabsPage } from "./pages/tabs.page";
   `
 })
 export class AppRootComponent {
-  rootPage = TabsPage;
+  rootPage: object = TabsPage;
 }

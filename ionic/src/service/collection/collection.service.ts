@@ -23,11 +23,12 @@ export class CollectionService {
    */
   private create(): Promise<SQLiteObject> {
     return this.sqlite.create({name: 'collection.db', location: 'default'}).then((db: SQLiteObject) => {
+      // noinspection JSIgnoredPromiseFromCall
       db.executeSql(`CREATE TABLE IF NOT EXISTS COLLECTIONS (NAME, START)`);
       return db;
     });
 
-  };
+  }
 
   /**
    * List all figures
@@ -68,11 +69,11 @@ export class CollectionService {
    */
   update(figure?: Collection): Promise<Collection[]> {
 
-    let query = `UPDATE FIGURES SET name=${figure.name} WHERE ID=${figure.id}`;
+    const query = `UPDATE FIGURES SET name=${figure.name} WHERE ID=${figure.id}`;
     console.log(query);
 
     return this.create()
-      .then((db: SQLiteObject) => db.executeSql(query))
+      .then((db: SQLiteObject) => db.executeSql(query));
   }
 
 

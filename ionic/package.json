@@ -1,7 +1,8 @@
 {
-  "name": "bees-kenner",
-  "version": "0.0.0",
+  "name": "bees-collections",
+  "version": "0.0.1",
   "scripts": {
+    "postinstall": "ng build",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",

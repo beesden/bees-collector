@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
-import { Figure } from "../figure/figure";
 import { Series } from "./series";
 
 // todo  -remove once device testing starts
@@ -45,7 +44,7 @@ export class SeriesService {
       return db;
     });
 
-  };
+  }
 
   /**
    * List all figures
@@ -86,12 +85,11 @@ export class SeriesService {
    */
   update(figure?: Series): Promise<Series[]> {
 
-    let query = `UPDATE FIGURES SET name=${figure.name} WHERE ID=${figure.id}`;
+    const query = `UPDATE FIGURES SET name=${figure.name} WHERE ID=${figure.id}`;
     console.log(query);
 
     return this.create()
-      .then((db: SQLiteObject) => db.executeSql(query))
+      .then((db: SQLiteObject) => db.executeSql(query));
   }
-
 
 }

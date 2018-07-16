@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { Figure, FigureService } from "../figure/figure.service";
-import { ModalController, NavParams } from "ionic-angular";
-import { FigureEditPage } from "../figure/figure-edit.page";
+import { NavParams } from "ionic-angular";
 import { Page } from "ionic-angular/navigation/nav-util";
-import { Collection } from "../collection/collection";
+import { FigureEditPage } from "../figure/figure-edit.page";
+import { Figure, FigureService } from "../figure/figure.service";
 import { Series } from "./series";
 
 @Component({
@@ -34,8 +33,7 @@ export class SeriesEditPage {
   collection: Series;
   figures: Figure[];
 
-  constructor(private modalCtrl: ModalController,
-              figureService: FigureService,
+  constructor(figureService: FigureService,
               navParams: NavParams) {
 
     this.collection = navParams.get('collection');

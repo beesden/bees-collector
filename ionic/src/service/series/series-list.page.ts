@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Page } from "ionic-angular/navigation/nav-util";
+import { FigureListPage } from "../figure/figure-list.page";
 import { Series } from "./series";
 import { SeriesService } from "./series.service";
-import { FigureListPage } from "../figure/figure-list.page";
 
 @Component({
   selector: 'page:collection-list',

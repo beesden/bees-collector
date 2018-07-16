@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "bees-kenner": {
+    "bees-collections": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "../build/www",
+            "outputPath": "www",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -23,8 +23,8 @@
               "src/assets"
             ],
             "styles": [
-              "styles/ionic.scss",
-              "styles/theme.scss",
+              "src/styles/ionic.scss",
+              "src/styles/theme.scss",
               "node_modules/ionicons/dist/scss/ionicons.scss"
             ],
             "scripts": []
@@ -37,8 +37,10 @@
                   "with": "environments/environment.prod.ts"
                 }
               ],
+              "deployUrl": "",
               "optimization": true,
               "outputHashing": "all",
+              "deleteOutputPath": false,
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
@@ -52,18 +54,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "bees-kenner:build"
+            "browserTarget": "bees-collections:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "bees-kenner:build:production"
+              "browserTarget": "bees-collections:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "bees-kenner:build"
+            "browserTarget": "bees-collections:build"
           }
         },
         "test": {
@@ -97,7 +99,7 @@
         }
       }
     },
-    "bees-kenner-e2e": {
+    "bees-collections-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -105,11 +107,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "bees-kenner:serve"
+            "devServerTarget": "bees-collections:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "bees-kenner:serve:production"
+              "devServerTarget": "bees-collections:serve:production"
             }
           }
         },
@@ -125,5 +127,5 @@
       }
     }
   },
-  "defaultProject": "bees-kenner"
+  "defaultProject": "bees-collections"
 }

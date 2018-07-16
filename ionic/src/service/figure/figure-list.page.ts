@@ -1,12 +1,9 @@
 import { Component } from '@angular/core';
-import { Figure, FigureService } from "./figure.service";
-import { ModalController, NavParams } from "ionic-angular";
-import { FigureEditPage } from "./figure-edit.page";
-import { SeriesListPage } from "../series/series-list.page";
+import { NavParams } from "ionic-angular";
 import { Page } from "ionic-angular/navigation/nav-util";
 import { Series } from "../series/series";
-import { animate, state, style, transition, trigger } from "@angular/animations";
 import { FigureViewPage } from "./figure-view.page";
+import { Figure, FigureService } from "./figure.service";
 
 @Component({
   selector: 'page:figure-list',
@@ -57,8 +54,7 @@ export class FigureListPage {
   limit: number;
 
 
-  constructor(private modalCtrl: ModalController,
-              private figureService: FigureService,
+  constructor(private figureService: FigureService,
               navParams: NavParams) {
 
     this.series = navParams.get('series');
@@ -68,12 +64,12 @@ export class FigureListPage {
     });
   }
 
-  filterResults(search: string = '') {
+  filterResults(search: string = ''): void {
     this.limit = 12;
     this.results = this.figures.filter(figure => figure.name.toLowerCase().indexOf(search.toLowerCase()) !== -1);
   }
 
-  doInfinite(event): void {
+  doInfinite(event: {complete: Function} ): void {
     this.limit += 12;
     event.complete();
   }

@@ -1,4 +1,3 @@
-import { Series } from "../series/series";
 import { Collection } from "../collection/collection";
 
 export interface Figure {

@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
 const {execSync} = require('child_process');
-const {ConfigParser} = require('cordova-common');
 const {existsSync, mkdirSync, readdirSync, writeFileSync} = require('fs');
 const {resolve} = require('path');
 const {copySync: copydirSync} = require('fs-extra');
 const {sync: rmdirSync} = require('rimraf');
+const {Element, ElementTree, SubElement} = require('elementtree');
 
 console.log('Running cordova setup commands');
 const startTime = Date.now();
@@ -17,10 +17,6 @@ const Folders = {
 	PLATFORMS: resolve(__dirname, 'platforms'),
 	PLUGINS: resolve(__dirname, 'plugins'),
 	WWW: resolve(__dirname, 'www')
-};
-
-const run = (command) => {
-	execSync(command, {stdio: 'inherit'});
 };
 
 const runTask = (task, fn) => {
@@ -61,22 +57,33 @@ runTask('Configuring workspace', () => {
 
 runTask('Configuring environment', () => {
 
-	// Create a blank config file
-	const configFile = resolve(__dirname, 'config.xml');
-
-	writeFileSync(configFile, '<widget></widget>');
-	const config = new ConfigParser(configFile);
-
 	console.log('App ID:', nodePackage.cordova.name);
 	console.log('App Name:', nodePackage.name);
 	console.log('App Version:', nodePackage.version);
 
+	const addElement = (target, name, content) => {
+		const element = new SubElement(target, name);
+		element.text = content;
+		return element;
+	};
+
+	// Create a blank config file
+	const configFile = resolve(__dirname, 'config.xml');
+
+	const root = new Element('widget');
+	root.set('id', nodePackage.cordova.name);
 	// TODO - autoincrement version number and tag
-	config.setPackageName(nodePackage.cordova.name);
-	config.setName(nodePackage.name);
-	config.setDescription(nodePackage.description);
-	config.setVersion(nodePackage.version);
-	config.write();
+	root.set('version', nodePackage.version);
+
+	// Description
+	addElement(root, 'name', nodePackage.name);
+	addElement(root, 'description', nodePackage.description);
+
+	// Config / Preferences
+	// addElement(root, 'content').set('src', 'www/index.html');
+
+	// Save
+	writeFileSync(configFile, new ElementTree(root).write({indent: 4}), 'utf-8');
 
 });
 
@@ -109,7 +116,7 @@ runTask('Configuring plugins', () => {
 const platforms = nodePackage.cordova.platforms || [];
 platforms.forEach(platform => {
 	runTask(`Installing ${platform}`, () => {
-		run(`npm run cordova -- platform add ${platform}`);
+execSync(`npm run cordova -- platform add ${platform}`, {stdio: 'inherit'});
 	});
 });
 

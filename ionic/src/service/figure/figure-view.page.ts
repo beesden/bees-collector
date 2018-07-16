@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { Figure, FigureService } from "./figure.service";
-import { ActionSheetController, ModalController, NavParams, ViewController } from "ionic-angular";
 import { Camera, CameraOptions, DestinationType, MediaType, PictureSourceType } from "@ionic-native/camera";
+import { ActionSheetController, NavParams } from "ionic-angular";
+import { Figure, FigureService } from "./figure.service";
 
 @Component({
   selector: 'page:figure-view',
@@ -86,8 +86,7 @@ export class FigureViewPage {
       .map(([key, value]) => ({key, value}));
   }
 
-  constructor(private viewCtrl: ViewController,
-              private actionSheetCtrl: ActionSheetController,
+  constructor(private actionSheetCtrl: ActionSheetController,
               private camera: Camera,
               private figureService: FigureService,
               navParams: NavParams) {
@@ -105,7 +104,7 @@ export class FigureViewPage {
       .addButton({icon: 'create', text: 'Edit information', handler: () => this.editFigure()})
       .addButton({icon: 'camera', text: 'Add new photo', handler: () => this.uploadImage(PictureSourceType.CAMERA)})
       .addButton({icon: 'images', text: 'Select image', handler: () => this.uploadImage(PictureSourceType.SAVEDPHOTOALBUM)})
-      .present()
+      .present();
 
   }
 

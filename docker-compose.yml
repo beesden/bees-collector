@@ -2,22 +2,47 @@ version: '3'
 
 services:
 
-  app:
-    build:
-      context: ./app
-    command: ['ionic',  'serve']
+  ionic:
+    image: node
+    command: bash -c 'npm install && npm run build -- --prod'
+    working_dir: /build
     volumes:
-      - www:/build/www
+      - /build/node_modules
+      - ./ionic:/build
+      - ./dist/www:/build/www
 
   cordova:
-    command: npm install --unsafe-perm
+    command: bash -c 'npm install && npm run build'
+    depends_on:
+      - ionic
+    environment:
+      - CI=true
     image: beesden/cordova
     working_dir: /build
     volumes:
-      - ./cordova:/build
       - /build/node_modules
-      - platforms:/build/platforms
+      - ./cordova:/build
+      - ./dist/platforms:/build/platforms
+      - ./dist/www:/build/www
+
+  android_debug:
+    command: gradle assembleDebug
+    image: beesden/android
+    working_dir: /build/android
+    volumes:
+      - gradle:/root/.gradle
+      - ./dist/platforms:/build
+      - ./dist/android:/build/android/app/build/outputs/apk
+
+  android_release:
+    command: gradle assembleRelease
+    image: beesden/android
+    working_dir: /build/android
+    volumes:
+      - gradle:/root/.gradle
+      - ./dist/platforms:/build
+      - ./dist/android:/build/android/app/build/outputs/apk
+
 
 volumes:
-  platforms:
-  www:
+  gradle:

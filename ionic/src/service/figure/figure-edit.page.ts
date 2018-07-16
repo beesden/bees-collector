@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
+import { NavParams, ViewController } from "ionic-angular";
 import { Figure, FigureService } from "./figure.service";
-import { ModalController, NavParams, ViewController } from "ionic-angular";
 
 @Component({
   selector: 'page:figure-view',
@@ -23,13 +23,18 @@ import { ModalController, NavParams, ViewController } from "ionic-angular";
           </ion-item>
 
           <ion-item>
-            <ion-label>Range</ion-label>
-            <ion-input name="range" [(ngModel)]="figure.range"></ion-input>
+            <ion-label>Description</ion-label>
+            <ion-textarea name="variant" [(ngModel)]="figure.description"></ion-textarea>
           </ion-item>
 
           <ion-item>
-            <ion-label>Variant info</ion-label>
-            <ion-textarea name="variant" [(ngModel)]="figure.variant"></ion-textarea>
+            <ion-label>Series</ion-label>
+            <ion-input name="range" [(ngModel)]="figure.series"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Range</ion-label>
+            <ion-input name="range" [(ngModel)]="figure.range"></ion-input>
           </ion-item>
         </ion-list>
         
