@@ -2,7 +2,7 @@
 
 const {execSync} = require('child_process');
 const {ConfigParser} = require('cordova-common');
-const {existsSync, mkdirSync, writeFileSync} = require('fs');
+const {existsSync, mkdirSync, readdirSync, writeFileSync} = require('fs');
 const {resolve} = require('path');
 const {copySync: copydirSync} = require('fs-extra');
 const {sync: rmdirSync} = require('rimraf');
@@ -11,11 +11,16 @@ console.log('Running cordova setup commands');
 const startTime = Date.now();
 const timerLog = [];
 
+
 const nodePackage = require('./package');
 const Folders = {
 	PLATFORMS: resolve(__dirname, 'platforms'),
 	PLUGINS: resolve(__dirname, 'plugins'),
 	WWW: resolve(__dirname, 'www')
+};
+
+const run = (command) => {
+	execSync(command, {stdio: 'inherit'});
 };
 
 const runTask = (task, fn) => {
@@ -36,8 +41,15 @@ const runTask = (task, fn) => {
 /////////////////////////////////
 
 runTask('Configuring workspace', () => {
-	rmdirSync(Folders.PLATFORMS);
-	rmdirSync(Folders.PLUGINS);
+
+	// Clear contents of folder only
+	[Folders.PLATFORMS, Folders.PLUGINS].forEach(folder => {
+		if (existsSync(folder)) {
+			readdirSync(folder).forEach(target => rmdirSync(resolve(folder, target)));
+		}
+	});
+
+	// Ensure folder exists
 	if (!existsSync(Folders.WWW)) {
 		mkdirSync(Folders.WWW);
 	}
@@ -46,7 +58,6 @@ runTask('Configuring workspace', () => {
 /////////////////////////////////
 // VERSION MANAGEMENT
 /////////////////////////////////
-
 
 runTask('Configuring environment', () => {
 
@@ -98,7 +109,7 @@ runTask('Configuring plugins', () => {
 const platforms = nodePackage.cordova.platforms || [];
 platforms.forEach(platform => {
 	runTask(`Installing ${platform}`, () => {
-		execSync(`npm run cordova -- platform add ${platform}`, {stdio: [0, 1, 2]});
+		run(`npm run cordova -- platform add ${platform}`);
 	});
 });
 

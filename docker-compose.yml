@@ -7,13 +7,17 @@ services:
       context: ./app
     command: ['ionic',  'serve']
     volumes:
-      - ./build/www:/build/www
-      - node_modules:/build/node_modules
-      - ./:/build
+      - www:/build/www
 
-  build:
-    build:
-      dockerfile: beesden/cordova
-      context: ./build
+  cordova:
+    command: npm install --unsafe-perm
+    image: beesden/cordova
+    working_dir: /build
     volumes:
-      - .:.
+      - ./cordova:/build
+      - /build/node_modules
+      - platforms:/build/platforms
+
+volumes:
+  platforms:
+  www:
