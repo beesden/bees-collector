@@ -1,44 +1,15 @@
-// ********************
-//   Swatches
-// ********************
-
-// Violet swatches
-$swatch-violet-dark: #5d2a73;
-$swatch-violet: #7d3f98;
-$swatch-violet-tint: #b18cc1;
-$swatch-violet-light: #f5eff8;
-
-// Cranberry swatches
-$swatch-cranberry: #d20962;
-$swatch-cranberry-tint: #e46b95;
-$swatch-cranberry-neon: #ef1e7b;
-
-// Grey swatches
-$swatch-charcoal: #414141;
-$swatch-grey-dark: #646464;
-$swatch-grey-light: #dcdcdc;
-
-// Teal swatches
-$swatch-teal: #00a78e;
-$swatch-teal-tint: #66cabb;
-$swatch-teal-neon: #00f0cc;
-$swatch-teal-deep-ui: #007d82;
-
-// Base swatches
-$swatch-smoke: #f5f5f5;
-$swatch-black: #000;
-$swatch-white: #fff;
+@import './variables';
 
 /// *********************
 /// Theme CSS variables
 /// *********************
 
-[v-page-theme] {
+.ion-page {
   --theme-content: $swatch-grey-dark;
   --theme-content-bg: $swatch-white;
   --theme-content-break: $swatch-grey-light;
   --theme-content-link: $swatch-violet;
-  --theme-content-title: $swatch-black;
+  --theme-content-title: $swatch-violet;
   --theme-header: $swatch-violet;
   --theme-header-bg: $swatch-white;
   --theme-input: $swatch-grey-dark;
@@ -59,12 +30,6 @@ $swatch-white: #fff;
   --theme-content-bg: $swatch-smoke;
   --theme-content-break: $swatch-grey-light;
   --theme-input-bg: $swatch-white;
-
-  .v-section:nth-of-type(even) {
-    --theme-content-bg: $swatch-white;
-    --theme-content-break: $swatch-grey-light;
-    --theme-input-bg: $swatch-smoke;
-  }
 }
 
 [v-page-theme='cranberry'] {
@@ -96,12 +61,6 @@ $swatch-white: #fff;
 
 [v-page-theme='image'] {
   --theme-header: $swatch-white;
-
-  .v-section:nth-of-type(even) {
-    --theme-content-bg: $swatch-smoke;
-    --theme-content-break: $swatch-grey-light;
-    --theme-input-bg: $swatch-white;
-  }
 }
 
 [v-page-theme='waiting'] {

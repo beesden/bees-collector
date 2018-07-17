@@ -38,7 +38,7 @@ export class FigureService {
         location: "collections",
         autoSave: true,
         entities,
-        logging: ['query', 'schema'],
+        logging: [],
         synchronize: true
       };
       this.database = createConnection(connection);
@@ -64,7 +64,9 @@ export class FigureService {
           });
         }
 
-        figure.release = item.release;
+        if (item.release) {
+          figure.release = item.release.toISOString();
+        }
 
         figure.properties = Object.entries(item.properties).map(entry => {
           const prop = new FigureProperty();
@@ -74,10 +76,14 @@ export class FigureService {
           return prop;
         });
 
-        const testAcc = new FigureAccessory();
-        testAcc.figure = figure;
-        testAcc.name = 'test';
-        figure.accessories = [testAcc];
+        if (item.accessories) {
+          figure.accessories = item.accessories.map(entry => {
+            const prop = new FigureAccessory();
+            prop.name = entry;
+            prop.figure = figure;
+            return prop;
+          });
+        }
 
         return figure;
       });
@@ -85,6 +91,16 @@ export class FigureService {
       const repo = connection.getRepository(Figure);
       repo.clear();
       repo.save(figures);
+    });
+
+  }
+
+
+  deleteFigure(figureId: number) {
+
+    return this.database.then(connection => {
+      const repo = connection.getRepository(Figure);
+      return repo.delete(figureId);
     });
 
   }
@@ -98,7 +114,7 @@ export class FigureService {
 
     return this.database.then(connection => {
       const repo = connection.getRepository(Figure);
-      return repo.findOne(figureId, { relations: ["images", 'properties', 'accessories'] });
+      return repo.findOne(figureId, {relations: ["images", 'properties', 'accessories']});
     });
 
   }
@@ -110,15 +126,15 @@ export class FigureService {
 
     return this.database.then(connection => {
       const repo = connection.getRepository(Figure);
-      return repo.find({ relations: ["images", 'properties', 'accessories'] });
+      return repo.find({relations: ["images", 'properties', 'accessories']});
     });
 
   }
 
   /**
-   * List all figures
+   * Create / update a figure.
    *
-   * @param figure figure to update
+   * @param figure figure to persist
    */
   saveFigure(figure?: Figure): Promise<Figure> {
 

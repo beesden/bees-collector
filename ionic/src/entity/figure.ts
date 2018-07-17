@@ -39,7 +39,7 @@ export class Figure extends Collectable {
   range: string;
 
   @Column({nullable: true})
-  release: Date;
+  release: string;
 
   @OneToMany(type => FigureAccessory, accessory => accessory.figure, {cascade: true})
   accessories: FigureAccessory[];

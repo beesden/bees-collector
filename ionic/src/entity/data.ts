@@ -6,7 +6,7 @@ export interface FigureData {
   images?: string[];
   owned?: boolean;
   condition?: boolean;
-  accessories?: boolean;
+  accessories?: string[];
   release?: Date;
   properties?: {};
   range?: string;
@@ -28,7 +28,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'A'},
     owned: true,
     condition: false,
-    accessories: false
+    accessories: ['Extending yellow Lightsaber']
   },
   {
     id: 'Princess Leia',
@@ -38,7 +38,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'A'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: ['Laser Pistol']
   },
   {
     id: 'Artoo-Detoo (R2-D2)',
@@ -48,7 +48,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'A'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Chewbacca',
@@ -58,7 +58,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'A'},
     owned: true,
     condition: true,
-    accessories: true
+    accessories: ['Bowcaster']
   },
   {
     id: 'See-Threepio (C-3PO)',
@@ -68,7 +68,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'A'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Darth Vader',
@@ -78,7 +78,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'A'},
     owned: true,
     condition: false,
-    accessories: false
+    accessories: ['Extending red lightsaber']
   },
   {
     id: 'Stormtrooper',
@@ -88,7 +88,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'A'},
     owned: true,
     condition: false,
-    accessories: false
+    accessories: ['Blaster Rifle']
   },
   {
     id: 'Ben (Obi-Wan) Kenobi',
@@ -98,7 +98,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'A'},
     owned: true,
     condition: true,
-    accessories: true
+    accessories: []
   },
   {
     id: 'Han Solo',
@@ -108,7 +108,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'A'},
     owned: true,
     condition: true,
-    accessories: true
+    accessories: []
   },
   {
     id: 'Jawa',
@@ -118,7 +118,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'A'},
     owned: true,
     condition: true,
-    accessories: true
+    accessories: []
   },
   {
     id: 'Sand People',
@@ -128,7 +128,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'A'},
     owned: true,
     condition: true,
-    accessories: true
+    accessories: []
   },
   {
     id: 'Death Squad Commander',
@@ -138,7 +138,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'A'},
     owned: true,
     condition: false,
-    accessories: true
+    accessories: []
   },
   {
     id: 'Greedo',
@@ -148,7 +148,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'B'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Hammerhead',
@@ -158,7 +158,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'B'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Snaggletooth',
@@ -168,7 +168,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'B'},
     owned: true,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Walrus Man',
@@ -178,7 +178,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'B'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Luke Skywalker: X-wing Pilot',
@@ -188,7 +188,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'B'},
     owned: true,
     condition: false,
-    accessories: true
+    accessories: []
   },
   {
     id: 'R5-D4',
@@ -198,7 +198,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'B'},
     owned: true,
     condition: false,
-    accessories: true
+    accessories: []
   },
   {
     id: 'Death Star Droid',
@@ -208,7 +208,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'B'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Power Droid',
@@ -218,7 +218,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'B'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Boba Fett',
@@ -228,7 +228,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'C'},
     owned: true,
     condition: true,
-    accessories: true
+    accessories: []
   },
   {
     id: 'Leia Organa (Bespin Gown)',
@@ -238,7 +238,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'D'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'FX-7',
@@ -248,7 +248,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'D'},
     owned: true,
     condition: true,
-    accessories: true
+    accessories: []
   },
   {
     id: 'Imperial Stormtrooper (Hoth Battle Gear)',
@@ -258,7 +258,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'D'},
     owned: true,
     condition: true,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Rebel Soldier (Hoth Battle Gear)',
@@ -268,7 +268,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'D'},
     owned: true,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Bossk (Bounty Hunter)',
@@ -278,7 +278,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'D'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'IG-88',
@@ -288,7 +288,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'D'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Luke Skywalker (Bespin Fatigues)',
@@ -298,7 +298,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'D'},
     owned: true,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Han Solo (Hoth Outfit)',
@@ -308,7 +308,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'D'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Lando Calrissian',
@@ -318,7 +318,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'D'},
     owned: true,
     condition: true,
-    accessories: true
+    accessories: []
   },
   {
     id: 'Bespin Security Guard',
@@ -328,7 +328,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'D'},
     owned: true,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Yoda',
@@ -338,7 +338,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'E'},
     owned: true,
     condition: true,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Ugnaught',
@@ -348,7 +348,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'F'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Dengar',
@@ -358,7 +358,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'F'},
     owned: true,
     condition: true,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Han Solo (Bespin Outfit)',
@@ -368,7 +368,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'F'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Lobot',
@@ -378,7 +378,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'F'},
     owned: true,
     condition: true,
-    accessories: true
+    accessories: []
   },
   {
     id: 'Leia (Hoth Outfit)',
@@ -388,7 +388,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'F'},
     owned: true,
     condition: true,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Rebel Commander',
@@ -398,7 +398,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'F'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'AT-AT Driver',
@@ -408,7 +408,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'F'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Imperial Commander',
@@ -418,7 +418,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'F'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: '2-1B',
@@ -428,7 +428,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'F'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Artoo-Detoo (R2-D2) (with Sensorscope)',
@@ -438,7 +438,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'G'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'C-3PO (Removable Limbs)',
@@ -448,7 +448,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'G'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Luke Skywalker (Hoth Battle Gear)',
@@ -458,7 +458,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'G'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'AT-AT Commander',
@@ -468,7 +468,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'G'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: '(Twin-Pod) Cloud Car Pilot',
@@ -478,7 +478,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'G'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Bespin Security Guard',
@@ -488,7 +488,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'G'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: '4-LOM',
@@ -498,7 +498,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'H'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Zuckuss',
@@ -508,7 +508,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'H'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Imperial Tie Fighter Pilot',
@@ -518,7 +518,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'I'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Admiral Ackbar',
@@ -528,7 +528,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'J'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Luke Skywalker (Jedi Knight Outfit)',
@@ -538,7 +538,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'J'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Princess Leia Organa (Boushh Disguise)',
@@ -548,7 +548,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'J'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Gamorrean Guard',
@@ -558,7 +558,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'J'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Emperor\'s Royal Guard',
@@ -568,7 +568,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'J'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Chief Chirpa',
@@ -578,7 +578,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'J'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Logray (Ewok Medicine Man)',
@@ -588,7 +588,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'J'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Klaatu',
@@ -598,7 +598,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'J'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Rebel Commando',
@@ -608,7 +608,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'J'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Weequay',
@@ -618,7 +618,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'J'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Squid Head',
@@ -628,7 +628,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'J'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'General Madine',
@@ -638,7 +638,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'J'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Bib Fortuna',
@@ -648,7 +648,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'J'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Ree-Yees',
@@ -658,7 +658,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'J'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Biker Scout',
@@ -668,7 +668,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'J'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Lando Calrissian (Skiff Guard Disguise)',
@@ -678,7 +678,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'J'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Nien Nunb',
@@ -688,7 +688,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'J'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Nikto',
@@ -698,7 +698,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'K'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: '8D8',
@@ -708,7 +708,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'K'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Princess Leia Organa (in Combat Poncho)',
@@ -718,7 +718,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'K'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Wicket W. Warrick',
@@ -728,7 +728,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'K'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'The Emperor',
@@ -738,7 +738,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'K'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'B-Wing Pilot',
@@ -748,7 +748,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'K'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Klaatu (in Skiff Guard Outfit)',
@@ -758,7 +758,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'K'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Han Solo (in Trench Coat)',
@@ -768,7 +768,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'K'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Teebo',
@@ -778,7 +778,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'K'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Prune Face',
@@ -788,7 +788,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'K'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'AT-ST Driver',
@@ -798,7 +798,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'K'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Rancor Keeper',
@@ -808,7 +808,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'K'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Lumat',
@@ -818,7 +818,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'L'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Paploo',
@@ -828,7 +828,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'L'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Luke Skywalker (in Battle Poncho)',
@@ -838,7 +838,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'M'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Artoo-Detoo (R2-D2) with pop-up Lightsaber',
@@ -848,7 +848,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'M'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Romba',
@@ -858,7 +858,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'M'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Amanaman',
@@ -868,7 +868,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'M'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Barada',
@@ -878,7 +878,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'M'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Imperial Gunner',
@@ -888,7 +888,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'M'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Han Solo (in Carbonite Chamber)',
@@ -898,7 +898,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'M'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Luke Skywalker (Imperial Stormtrooper Outfit)',
@@ -908,7 +908,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'M'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Anakin Skywalker',
@@ -918,7 +918,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'M'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'EV-9D9',
@@ -928,7 +928,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'M'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Warok',
@@ -938,7 +938,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'M'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Lando Calrissian (General Pilot)',
@@ -948,7 +948,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'M'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'A-Wing Pilot',
@@ -958,7 +958,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'M'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Imperial Dignitary',
@@ -968,7 +968,7 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'M'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   },
   {
     id: 'Yak Face',
@@ -978,6 +978,6 @@ export const sampleData: FigureData[] = [
     properties: {Wave: 'N'},
     owned: false,
     condition: false,
-    accessories: false
+    accessories: []
   }
 ];

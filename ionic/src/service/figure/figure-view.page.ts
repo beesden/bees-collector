@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { Camera, CameraOptions, DestinationType, MediaType, PictureSourceType } from "@ionic-native/camera";
-import { ActionSheetController, NavParams } from "ionic-angular";
+import { ActionSheetController, AlertController, ModalController, NavParams, ViewController } from "ionic-angular";
+import { Page } from "ionic-angular/navigation/nav-util";
+import { Image } from "src/entity";
 import { Figure } from "src/entity/figure";
+import { FigureEditPage } from "src/service/figure/figure-edit.page";
 import { FigureService } from "./figure.service";
 
 @Component({
@@ -12,8 +15,14 @@ import { FigureService } from "./figure.service";
       <ion-navbar>
 
         <ion-buttons end>
-          <button ion-button (click)="openMenu()">
-            <ion-icon name="more"></ion-icon>
+          <button ion-button [navPush]="figureEditPage" [navParams]="{figureId: figure.id}">
+            <ion-icon name="create"></ion-icon>
+          </button>
+          <button ion-button (click)="addPhoto()">
+            <ion-icon name="camera"></ion-icon>
+          </button>
+          <button ion-button (click)="deleteFigure()">
+            <ion-icon name="trash"></ion-icon>
           </button>
         </ion-buttons>
 
@@ -28,14 +37,14 @@ import { FigureService } from "./figure.service";
 
       <header class="page-section">
         <h1>{{figure.name}}</h1>
-        <p>{{figure.notes}}</p>
+        <p>{{figure.series}} | {{figure.range}}</p>
       </header>
 
       <section class="page-section">
 
         <ol class="completion">
-          <li [ngClass]="{complete: figure.owned}" (click)="this.update({owned: !figure.owned})">Figure Owned</li>
-          <li [ngClass]="{complete: figure.condition}" (click)="this.update({condition: !figure.condition})">Good Condition</li>
+          <li [ngClass]="{complete: figure.owned}">Figure Owned</li>
+          <li [ngClass]="{complete: figure.condition}">Good Condition</li>
         </ol>
 
         <h2>More info</h2>
@@ -63,6 +72,20 @@ import { FigureService } from "./figure.service";
         </dl>
       </section>
 
+      <section class="page-section">
+        <h2>Accessories</h2>
+
+        <div class="scroller">
+          <div class="accessory" *ngFor="let accessory of figure.accessories">
+            {{accessory.name}}
+          </div>
+          <div class="add-button" (click)="addAccessory()">
+            Add
+          </div>
+        </div>
+
+      </section>
+
       <section class="page-section" *ngIf="figure.collections?.length">
         <h2>Collections:</h2>
 
@@ -78,41 +101,63 @@ import { FigureService } from "./figure.service";
 })
 export class FigureViewPage {
 
+  figureEditPage: Page = FigureEditPage;
   figure: Figure;
 
   constructor(private actionSheetCtrl: ActionSheetController,
+              private alertCtrl: AlertController,
               private camera: Camera,
               private figureService: FigureService,
+              private viewCtrl: ViewController,
               navParams: NavParams) {
 
     this.figure = Object.assign({}, navParams.get('figure'));
 
   }
 
+  addAccessory(): void {
+    console.log('Add accessory');
+  }
+
   /**
    * Opens the additional editing options menu.
    */
-  openMenu(): void {
+  addPhoto(): void {
 
-   this.actionSheetCtrl.create()
-      .addButton({icon: 'create', text: 'Edit information', handler: () => this.editFigure()})
-      .addButton({icon: 'camera', text: 'Add new photo', handler: () => this.uploadImage(PictureSourceType.CAMERA)})
-      .addButton({icon: 'images', text: 'Select image', handler: () => this.uploadImage(PictureSourceType.SAVEDPHOTOALBUM)})
+    this.actionSheetCtrl.create()
+      .addButton({icon: 'camera', text: 'Add new photo', handler: () => this.photoUpload(PictureSourceType.CAMERA)})
+      .addButton({
+        icon: 'images',
+        text: 'Select image',
+        handler: () => this.photoUpload(PictureSourceType.SAVEDPHOTOALBUM)
+      })
       .present();
 
   }
 
   /**
-   * Opens the edit figure dialog.
+   * Show a confimation to delete a figure - if confirmed, then remove the figure from the DB.
    */
-  editFigure(): void {
-    this.figureService.saveFigure(this.figure);
+  deleteFigure(): void {
+
+    this.alertCtrl.create()
+      .setTitle('Delete Figure?')
+      .setMessage(`Are you sure you wish to delete ${this.figure.name}?`)
+      .addButton({text: 'Cancel', role: 'cancel'})
+      .addButton({
+        text: 'Yes I\'m Sure',
+        handler: () => {
+          this.figureService.deleteFigure(this.figure.id).then(() => this.viewCtrl.dismiss());
+        }
+      })
+      .present();
+
   }
 
   /**
    * Add an image to the figure.
    */
-  uploadImage(sourceType: PictureSourceType ): void {
+  private photoUpload(sourceType: PictureSourceType): void {
 
     const cameraOptions: CameraOptions = {
       destinationType: DestinationType.FILE_URL,
@@ -122,17 +167,15 @@ export class FigureViewPage {
     };
 
     this.camera.getPicture(cameraOptions)
-      .then(path =>  this.figure.images.push(path))
-      .then(() =>  this.update())
+      .then(path => {
+        const image = new Image();
+        image.url = path;
+        this.figure.images.push(image)
+        // todo - image repo?
+        this.figureService.saveFigure(this.figure);
+      })
       .catch(err => console.log(err));
 
   }
 
-  /**
-   * Saves changes to the db
-   */
-  update(merge: {} = {}): void {
-    this.figure = Object.assign(this.figure, merge);
-    this.figureService.saveFigure(this.figure);
-  }
 }

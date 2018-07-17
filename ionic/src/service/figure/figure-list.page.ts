@@ -3,6 +3,7 @@ import { NavParams } from "ionic-angular";
 import { Page } from "ionic-angular/navigation/nav-util";
 import { Figure } from "src/entity/figure";
 import { IonViewWillEnter } from "src/ionic-lifecycle";
+import { FigureEditPage } from "src/service/figure/figure-edit.page";
 import { Series } from "src/service/series/series";
 import { FigureViewPage } from "./figure-view.page";
 import { FigureService } from "./figure.service";
@@ -37,6 +38,10 @@ import { FigureService } from "./figure.service";
         </card-figure>
       </div>
 
+      <ion-fab bottom right>
+        <button ion-fab [navPush]="figureEditPage"><ion-icon name="add"></ion-icon></button>
+      </ion-fab>
+
       <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
         <ion-infinite-scroll-content></ion-infinite-scroll-content>
       </ion-infinite-scroll>
@@ -50,6 +55,7 @@ export class FigureListPage implements IonViewWillEnter {
   series: Series;
   results: Figure[];
 
+  figureEditPage: Page = FigureEditPage;
   figureViewPage: Page = FigureViewPage;
   searchToggle: boolean;
 

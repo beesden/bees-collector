@@ -27,8 +27,8 @@
               "node_modules/sql.js/js/sql.js"
             ],
             "styles": [
-              "src/styles/ionic.scss",
               "src/styles/theme.scss",
+              "src/styles/ionic.scss",
               "node_modules/ionicons/dist/scss/ionicons.scss"
             ]
           },
@@ -40,6 +40,7 @@
                   "with": "environments/environment.prod.ts"
                 }
               ],
+              "scripts": [],
               "deployUrl": "",
               "optimization": true,
               "outputHashing": "all",
