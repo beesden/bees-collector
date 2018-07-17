@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavParams, ViewController } from "ionic-angular";
 import { Figure, FigureProperty } from "src/entity/figure";
-import { FigureService } from "./figure.service";
+import { FigureService } from "src/service/figure.service";
 
 @Component({
   selector: 'page:figure-view',

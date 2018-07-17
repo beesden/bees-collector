@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FigureListPage } from "src/service/figure/figure-list.page";
+import { FigureListPage } from "src/figure/figure-list.page";
 import { SeriesListPage } from "src/service/series/series-list.page";
 
 @Component({

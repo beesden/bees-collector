@@ -8,7 +8,7 @@ import { sampleData } from "src/entity/data";
 import { Series } from "src/service/series/series";
 
 @Injectable()
-export class FigureService {
+export class RepositoryService {
 
   private database: Promise<Connection>;
 

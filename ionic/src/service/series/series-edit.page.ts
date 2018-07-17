@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { NavParams } from "ionic-angular";
 import { Page } from "ionic-angular/navigation/nav-util";
 import { Figure } from "src/entity/figure";
-import { FigureEditPage } from "src/service/figure/figure-edit.page";
-import { FigureService } from "src/service/figure/figure.service";
+import { FigureEditPage } from "src/figure/figure-edit.page";
+import { FigureService } from "src/service/figure.service";
 import { Series } from "./series";
 
 @Component({

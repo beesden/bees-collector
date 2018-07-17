@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { Camera, CameraOptions, DestinationType, MediaType, PictureSourceType } from "@ionic-native/camera";
-import { ActionSheetController, AlertController, ModalController, NavParams, ViewController } from "ionic-angular";
+import { ActionSheetController, AlertController, NavParams, ViewController } from "ionic-angular";
 import { Page } from "ionic-angular/navigation/nav-util";
 import { Image } from "src/entity";
 import { Figure } from "src/entity/figure";
-import { FigureEditPage } from "src/service/figure/figure-edit.page";
-import { FigureService } from "./figure.service";
+import { FigureEditPage } from "src/figure/figure-edit.page";
+import { FigureService } from "src/service/figure.service";
 
 @Component({
   selector: 'page:figure-view',

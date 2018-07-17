@@ -2,11 +2,12 @@ import { Component, NgZone } from '@angular/core';
 import { NavParams } from "ionic-angular";
 import { Page } from "ionic-angular/navigation/nav-util";
 import { Figure } from "src/entity/figure";
+import { FigureEditPage } from "src/figure/figure-edit.page";
 import { IonViewWillEnter } from "src/ionic-lifecycle";
-import { FigureEditPage } from "src/service/figure/figure-edit.page";
+import { SearchPage } from "src/search/search.page";
+import { FigureService } from "src/service/figure.service";
 import { Series } from "src/service/series/series";
 import { FigureViewPage } from "./figure-view.page";
-import { FigureService } from "./figure.service";
 
 @Component({
   selector: 'page:figure-list',
@@ -15,12 +16,10 @@ import { FigureService } from "./figure.service";
     <ion-header>
 
       <ion-navbar>
-        <ion-title *ngIf="!searchToggle">{{series?.name || 'My Figures'}}</ion-title>
-        <ion-searchbar *ngIf="searchToggle" [(ngModel)]="searchFilter"
-                       (ionInput)="filterResults(searchFilter)"></ion-searchbar>
+        <ion-title>All Figures</ion-title>
 
         <ion-buttons start>
-          <button (click)="searchToggle = !searchToggle" ion-button>
+          <button ion-button [navPush]="searchPage">
             <ion-icon name="search"></ion-icon>
           </button>
         </ion-buttons>
@@ -31,7 +30,7 @@ import { FigureService } from "./figure.service";
     <ion-content>
 
       <div class="content-grid">
-        <card-figure *ngFor="let figure of results | slice: 0: limit"
+        <card-figure *ngFor="let figure of figures | slice: 0: limit"
                      [figure]="figure"
                      [navPush]="figureViewPage"
                      [navParams]="{figure: figure}">
@@ -39,7 +38,9 @@ import { FigureService } from "./figure.service";
       </div>
 
       <ion-fab bottom right>
-        <button ion-fab [navPush]="figureEditPage"><ion-icon name="add"></ion-icon></button>
+        <button ion-fab [navPush]="figureEditPage">
+          <ion-icon name="add"></ion-icon>
+        </button>
       </ion-fab>
 
       <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
@@ -51,21 +52,21 @@ import { FigureService } from "./figure.service";
 })
 export class FigureListPage implements IonViewWillEnter {
 
-  private figures: Figure[];
-  series: Series;
-  results: Figure[];
+  limit: number;
 
+  figures: Figure[];
+  series: Series;
+
+  searchPage: Page = SearchPage;
   figureEditPage: Page = FigureEditPage;
   figureViewPage: Page = FigureViewPage;
-  searchToggle: boolean;
-
-  searchFilter: string;
-  limit: number;
 
   constructor(private figureService: FigureService,
               private zone: NgZone,
               navParams: NavParams) {
+
     this.series = navParams.get('series');
+
   }
 
   /**
@@ -73,22 +74,10 @@ export class FigureListPage implements IonViewWillEnter {
    */
   ionViewWillEnter(): void {
     this.figureService.getList({series: this.series}).then(figures => {
-      this.figures = figures;
-      this.filterResults();
+      this.zone.run(() => {
+        this.figures = figures;
+      });
     });
-  }
-
-  /**
-   * Apply search filters to the result set.
-   *
-   * @param search search string
-   */
-  filterResults(search: string = ''): void {
-    this.zone.run(() => {
-      this.limit = 12;
-      console.log(this.figures);
-      this.results = this.figures.filter(figure => figure.name.toLowerCase().indexOf(search.toLowerCase()) !== -1);
-    })
   }
 
   /**
