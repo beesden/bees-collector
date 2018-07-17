@@ -4,12 +4,12 @@ services:
 
   ionic:
     image: node
-    command: bash -c 'npm install && npm run build -- --prod'
+    command: bash -c 'npm install && npm run build'
     working_dir: /build
     volumes:
       - /build/node_modules
       - ./ionic:/build
-      - ./dist/www:/build/www
+      - ./dist/www:/dist/www
 
   cordova:
     command: bash -c 'npm install && npm run build'
@@ -31,8 +31,8 @@ services:
     working_dir: /build/android
     volumes:
       - gradle:/root/.gradle
-      - ./dist/platforms:/build
       - ./dist/android:/build/android/app/build/outputs/apk
+      - ./dist/platforms:/build
 
   android_release:
     command: gradle assembleRelease
@@ -40,9 +40,8 @@ services:
     working_dir: /build/android
     volumes:
       - gradle:/root/.gradle
-      - ./dist/platforms:/build
       - ./dist/android:/build/android/app/build/outputs/apk
-
+      - ./dist/platforms:/build
 
 volumes:
   gradle:

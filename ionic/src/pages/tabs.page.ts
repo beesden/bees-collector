@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { FigureListPage } from "../service/figure/figure-list.page";
-import { SeriesListPage } from "../service/series/series-list.page";
+import { FigureListPage } from "src/service/figure/figure-list.page";
+import { SeriesListPage } from "src/service/series/series-list.page";
 
 @Component({
   selector: 'page:tabs',

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavParams, ViewController } from "ionic-angular";
-import { Figure, FigureService } from "./figure.service";
+import { Figure } from "src/entity/figure";
+import { FigureService } from "./figure.service";
 
 @Component({
   selector: 'page:figure-view',
@@ -24,7 +25,7 @@ import { Figure, FigureService } from "./figure.service";
 
           <ion-item>
             <ion-label>Description</ion-label>
-            <ion-textarea name="variant" [(ngModel)]="figure.description"></ion-textarea>
+            <ion-textarea name="variant" [(ngModel)]="figure.notes"></ion-textarea>
           </ion-item>
 
           <ion-item>
@@ -86,6 +87,6 @@ export class FigureEditPage {
   }
 
   update(): void {
-    this.figureService.update(this.figure);
+    this.figureService.saveFigure(this.figure);
   }
 }

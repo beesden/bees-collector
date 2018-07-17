@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Camera, CameraOptions, DestinationType, MediaType, PictureSourceType } from "@ionic-native/camera";
 import { ActionSheetController, NavParams } from "ionic-angular";
-import { Figure, FigureService } from "./figure.service";
+import { Figure } from "src/entity/figure";
+import { FigureService } from "./figure.service";
 
 @Component({
   selector: 'page:figure-view',
@@ -22,12 +23,12 @@ import { Figure, FigureService } from "./figure.service";
     <ion-content>
 
       <ion-slides class="image-preview" [loop]="true" [pager]="true">
-        <ion-slide *ngFor="let image of figure.image"><img [src]="image"/></ion-slide>
+        <ion-slide *ngFor="let image of figure.images"><img [src]="image.url"/></ion-slide>
       </ion-slides>
 
       <header class="page-section">
         <h1>{{figure.name}}</h1>
-        <p>{{figure.description}}</p>
+        <p>{{figure.notes}}</p>
       </header>
 
       <section class="page-section">
@@ -56,14 +57,14 @@ import { Figure, FigureService } from "./figure.service";
             <dd>{{figure.release | date: 'yyyy'}}</dd>
           </ng-container>
           <!-- Extra info -->
-          <ng-container *ngFor="let property of properties">
-            <dt>{{property.key}}</dt>
+          <ng-container *ngFor="let property of figure.properties">
+            <dt>{{property.name}}</dt>
             <dd>{{property.value}}</dd>
           </ng-container>
         </dl>
       </section>
 
-      <section class="page-section" *ngIf="figure.collection?.length">
+      <section class="page-section" *ngIf="figure.collections?.length">
         <h2>Collections:</h2>
 
         <div class="grid">
@@ -79,12 +80,6 @@ import { Figure, FigureService } from "./figure.service";
 export class FigureViewPage {
 
   figure: Figure;
-
-  get properties(): Array<{ key: string, value: string }> {
-    return Object.entries<string>(this.figure.properties)
-      .filter(([key, value]) => !!value)
-      .map(([key, value]) => ({key, value}));
-  }
 
   constructor(private actionSheetCtrl: ActionSheetController,
               private camera: Camera,
@@ -112,7 +107,7 @@ export class FigureViewPage {
    * Opens the edit figure dialog.
    */
   editFigure(): void {
-    this.figureService.update(this.figure);
+    this.figureService.saveFigure(this.figure);
   }
 
   /**
@@ -128,7 +123,7 @@ export class FigureViewPage {
     };
 
     this.camera.getPicture(cameraOptions)
-      .then(path =>  this.figure.image.push(path))
+      .then(path =>  this.figure.images.push(path))
       .then(() =>  this.update())
       .catch(err => console.log(err));
 
@@ -139,6 +134,6 @@ export class FigureViewPage {
    */
   update(merge: {} = {}): void {
     this.figure = Object.assign(this.figure, merge);
-    this.figureService.update(this.figure);
+    this.figureService.saveFigure(this.figure);
   }
 }

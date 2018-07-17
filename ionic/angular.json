@@ -13,7 +13,8 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "www",
+            "deleteOutputPath": false,
+            "outputPath": "../dist/www",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -22,12 +23,14 @@
               "src/favicon.ico",
               "src/assets"
             ],
+            "scripts": [
+              "node_modules/sql.js/js/sql.js"
+            ],
             "styles": [
               "src/styles/ionic.scss",
               "src/styles/theme.scss",
               "node_modules/ionicons/dist/scss/ionicons.scss"
-            ],
-            "scripts": []
+            ]
           },
           "configurations": {
             "production": {
@@ -40,7 +43,6 @@
               "deployUrl": "",
               "optimization": true,
               "outputHashing": "all",
-              "deleteOutputPath": false,
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
