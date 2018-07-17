@@ -36,7 +36,6 @@ import { FigureService } from "./figure.service";
         <ol class="completion">
           <li [ngClass]="{complete: figure.owned}" (click)="this.update({owned: !figure.owned})">Figure Owned</li>
           <li [ngClass]="{complete: figure.condition}" (click)="this.update({condition: !figure.condition})">Good Condition</li>
-          <li [ngClass]="{complete: figure.accessories}" (click)="this.update({accessories: !figure.accessories})">All Accessories</li>
         </ol>
 
         <h2>More info</h2>

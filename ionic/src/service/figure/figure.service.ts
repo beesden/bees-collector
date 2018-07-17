@@ -52,6 +52,32 @@ export class FigureService {
         figure.name = item.name;
         figure.series = item.series;
         figure.range = item.range;
+        figure.owned = item.owned;
+        figure.condition = item.condition;
+
+        if (item.images) {
+          figure.images = item.images.map(url => {
+            const image = new Image();
+            image.name = 'Image';
+            image.url = url;
+            return image;
+          });
+        }
+
+        figure.release = item.release;
+
+        figure.properties = Object.entries(item.properties).map(entry => {
+          const prop = new FigureProperty();
+          prop.name = entry[0];
+          prop.value = entry[1].toString();
+          prop.figure = figure;
+          return prop;
+        });
+
+        const testAcc = new FigureAccessory();
+        testAcc.figure = figure;
+        testAcc.name = 'test';
+        figure.accessories = [testAcc];
 
         return figure;
       });
@@ -72,7 +98,7 @@ export class FigureService {
 
     return this.database.then(connection => {
       const repo = connection.getRepository(Figure);
-      return repo.findOne(figureId);
+      return repo.findOne(figureId, { relations: ["images", 'properties', 'accessories'] });
     });
 
   }
@@ -84,7 +110,7 @@ export class FigureService {
 
     return this.database.then(connection => {
       const repo = connection.getRepository(Figure);
-      return repo.find();
+      return repo.find({ relations: ["images", 'properties', 'accessories'] });
     });
 
   }

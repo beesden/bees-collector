@@ -80,6 +80,7 @@ export class FigureListPage implements IonViewWillEnter {
   filterResults(search: string = ''): void {
     this.zone.run(() => {
       this.limit = 12;
+      console.log(this.figures);
       this.results = this.figures.filter(figure => figure.name.toLowerCase().indexOf(search.toLowerCase()) !== -1);
     })
   }

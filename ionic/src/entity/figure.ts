@@ -1,8 +1,8 @@
-import { Column, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm/browser";
+import { Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm/browser";
 import { Collection } from "./collection";
 import { Image } from "./image";
 
-class Collectable {
+abstract class Collectable {
 
   @PrimaryGeneratedColumn()
   id: number;
@@ -14,6 +14,7 @@ class Collectable {
   notes: string;
 
   @ManyToMany(type => Image, {cascade: true})
+  @JoinTable()
   images: Image[];
 
   @Column({nullable: true})
@@ -31,6 +32,7 @@ export class Figure extends Collectable {
   series: string;
 
   @ManyToMany(type => Collection, {cascade: true})
+  @JoinTable()
   collections: Collection[];
 
   @Column({nullable: true})
@@ -39,10 +41,10 @@ export class Figure extends Collectable {
   @Column({nullable: true})
   release: Date;
 
-  @OneToMany(type => FigureAccessory, accessory => accessory.figure)
+  @OneToMany(type => FigureAccessory, accessory => accessory.figure, {cascade: true})
   accessories: FigureAccessory[];
 
-  @OneToMany(type => FigureProperty, property => property.figure)
+  @OneToMany(type => FigureProperty, property => property.figure, {cascade: true})
   properties: FigureProperty[];
 }
 
@@ -65,9 +67,6 @@ export class FigureProperty {
 
 @Entity()
 export class FigureAccessory extends Collectable {
-
-  @PrimaryGeneratedColumn()
-  id: number;
 
   @ManyToOne(type => Figure, figure => figure.accessories)
   figure: Figure;
