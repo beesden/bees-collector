@@ -4,10 +4,10 @@ import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm/brows
 @Entity()
 export class FigureProperty {
 
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(type => Figure, figure => figure.properties)
+  @ManyToOne(type => Figure, figure => figure.properties, {onDelete:'CASCADE'})
   figure: Figure;
 
   @Column()

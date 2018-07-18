@@ -5,7 +5,7 @@ import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryGen
 @Entity()
 export class Collection {
 
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
@@ -14,11 +14,11 @@ export class Collection {
   @Column({nullable: true})
   description: string;
 
-  @OneToOne(type => Image, {cascade: true, eager: true})
+  @OneToOne(type => Image, {cascade: true})
   @JoinColumn()
   image: Image;
 
-  @ManyToMany(type => Figure, figure => figure.collections, {cascade: true})
+  @ManyToMany(type => Figure, figure => figure.collections)
   @JoinTable()
   figures: Figure[];
 
