@@ -6,8 +6,6 @@ import { Image } from "src/entity";
 import { Collection } from "src/entity/collection";
 import { IonViewWillEnter } from "src/ionic-lifecycle";
 import { CollectionEditPageComponent } from "src/pages/collection-edit-page.component";
-import { FigureEditPageComponent } from "src/pages/figure-edit-page.component";
-import { FigureViewPageComponent } from "src/pages/figure-view-page.component";
 import { CollectionService } from "src/service/collection.service";
 
 @Component({

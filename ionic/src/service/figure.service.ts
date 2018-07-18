@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Figure } from "src/entity";
 import { ConnectionService } from "src/service/connection.service";
-import { QueryBuilder, Repository, SelectQueryBuilder } from "typeorm/browser";
+import { Repository, SelectQueryBuilder } from "typeorm/browser";
 
 export interface FigureRange {
   name: string;

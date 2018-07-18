@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Page } from "ionic-angular/navigation/nav-util";
 import { FigureListPageComponent } from "src/pages/figure-list-page.component";
 import { SearchPageComponent } from "src/pages/search-page.component";
-import { FigureService, FigureRange } from "src/service/figure.service";
+import { FigureRange, FigureService } from "src/service/figure.service";
 
 @Component({
   selector: 'bp-ranges',

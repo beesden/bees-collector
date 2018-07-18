@@ -3,7 +3,7 @@ import { Column, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm/b
 
 export abstract class Collectable {
 
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @Column()

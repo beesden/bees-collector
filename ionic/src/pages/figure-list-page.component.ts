@@ -5,8 +5,7 @@ import { Figure } from "src/entity/figure";
 import { IonViewWillEnter } from "src/ionic-lifecycle";
 import { FigureEditPageComponent } from "src/pages/figure-edit-page.component";
 import { SearchPageComponent } from "src/pages/search-page.component";
-import { FigureService, FigureRange } from "src/service/figure.service";
-import { FigureViewPageComponent } from "./figure-view-page.component";
+import { FigureRange, FigureService } from "src/service/figure.service";
 
 @Component({
   selector: 'bp-figure-list',

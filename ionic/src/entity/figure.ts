@@ -2,7 +2,7 @@ import { Collectable } from "src/entity/collectable";
 import { Collection } from "src/entity/collection";
 import { FigureAccessory } from "src/entity/figure-accessory";
 import { FigureProperty } from "src/entity/figure-property";
-import { Column, Entity, JoinTable, ManyToMany, OneToMany } from "typeorm/browser";
+import { Column, Entity, ManyToMany, OneToMany } from "typeorm/browser";
 
 
 @Entity()

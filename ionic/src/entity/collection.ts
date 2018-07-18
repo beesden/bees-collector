@@ -5,14 +5,14 @@ import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryGen
 @Entity()
 export class Collection {
 
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @Column()
   name: string;
 
   @Column({nullable: true})
-  description?: string;
+  description: string;
 
   @OneToOne(type => Image, {cascade: true, eager: true})
   @JoinColumn()

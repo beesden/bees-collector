@@ -2,9 +2,8 @@ import { Component } from '@angular/core';
 import { NavParams, ViewController } from "ionic-angular";
 import { Figure } from "src/entity/figure";
 import { FigureProperty } from "src/entity/figure-property";
-import { CollectionViewPageComponent } from "src/pages/collection-view-page.component";
 import { FigureViewPageComponent } from "src/pages/figure-view-page.component";
-import { FigureService, FigureRange } from "src/service/figure.service";
+import { FigureRange, FigureService } from "src/service/figure.service";
 
 @Component({
   selector: 'bp-figure-edit',

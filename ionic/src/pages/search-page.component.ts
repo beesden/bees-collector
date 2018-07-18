@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-import { Page } from "ionic-angular/navigation/nav-util";
 import { Collection } from "src/entity";
 import { Figure } from "src/entity/figure";
-import { FigureViewPageComponent } from "src/pages/figure-view-page.component";
 import { CollectionService } from "src/service";
 import { FigureService } from "src/service/figure.service";
 

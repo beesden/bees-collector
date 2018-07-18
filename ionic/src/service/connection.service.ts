@@ -13,6 +13,55 @@ export class ConnectionService {
 
   connection: Promise<Connection>;
 
+  constructor(platform: Platform) {
+
+    const entities = [
+      Figure,
+      FigureAccessory,
+      FigureProperty,
+      Collection,
+      Image
+    ];
+
+    if (platform.is('cordova')) {
+
+      const connection: CordovaConnectionOptions = {
+        type: 'cordova',
+        database: "collections.db",
+        location: "default",
+        entities,
+        logging: ['error'],
+        synchronize: true
+      };
+
+      this.connection = platform.ready()
+        .then(() => createConnection(connection))
+        .then(connection => this.populate(connection));
+
+    } else {
+
+      const connection: SqljsConnectionOptions = {
+        type: 'sqljs',
+        location: "collections",
+        autoSave: true,
+        entities,
+        logging: ['error'],
+        synchronize: true
+      };
+
+      this.connection = platform.ready()
+        .then(() => createConnection(connection))
+        .then(connection => this.populate(connection));
+
+    }
+
+  }
+
+  /**
+   * Temp population script for debugging
+   * @param {Connection} connection
+   * @returns {Promise<Connection>}
+   */
   private populate(connection: Connection): Promise<Connection> {
 
     const figures: Figure[] = sampleData.map(item => {
@@ -59,8 +108,8 @@ export class ConnectionService {
     const figureRepo = connection.getRepository(Figure);
     const collectionRepo = connection.getRepository(Collection);
 
-    return figureRepo.clear()
-      .then(() => collectionRepo.clear())
+    return collectionRepo.clear()
+      .then(() => figureRepo.clear())
       .then(() => figureRepo.save(figures))
       .then(figures => {
 
@@ -90,39 +139,5 @@ export class ConnectionService {
       .then(() => connection);
 
   };
-
-  constructor(platform: Platform) {
-
-    const entities = [
-      Collection,
-      Figure,
-      FigureAccessory,
-      FigureProperty,
-      Image
-    ];
-
-    if (platform.is('cordova')) {
-      const connection: CordovaConnectionOptions = {
-        type: 'cordova',
-        database: "collections.db",
-        location: "default",
-        entities,
-        logging: true,
-        synchronize: true
-      };
-      this.connection = createConnection(connection).then(connection => this.populate(connection));
-    } else {
-      const connection: SqljsConnectionOptions = {
-        type: 'sqljs',
-        location: "collections",
-        autoSave: true,
-        entities,
-        logging: ['error'],
-        synchronize: true
-      };
-      this.connection = createConnection(connection).then(connection => this.populate(connection));
-    }
-
-  }
 
 }
