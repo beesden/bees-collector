@@ -7,7 +7,7 @@ import { CollectionService } from "src/service";
 import { FigureService } from "src/service/figure.service";
 
 @Component({
-  selector: 'search-page',
+  selector: 'bp-search',
   styleUrls: ['./search-page.component.scss'],
   template: `
     <ion-header>
@@ -21,30 +21,25 @@ import { FigureService } from "src/service/figure.service";
 
     <ion-content>
 
-      <div class="content-grid">
-        <card-figure *ngFor="let figure of figures | slice: 0: limit"
-                     [figure]="figure"
-                     [navPush]="figureViewPage"
-                     [navParams]="{figureId: figure.id}">
-        </card-figure>
-      </div>
-
-      <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
-        <ion-infinite-scroll-content></ion-infinite-scroll-content>
-      </ion-infinite-scroll>
-
+      <section class="section" *ngIf="collections?.length">
+        <h2>Collections</h2>
+        <bc-collection-card *ngFor="let collection of collections"></bc-collection-card>
+      </section>
+      
+      <section class="section" *ngIf="figures?.length">
+        <h2>Figures</h2>
+        <bc-figure-list [figures]="figures"></bc-figure-list>
+      </section>
+      
     </ion-content>
   `
 })
 export class SearchPageComponent {
 
   query: string;
-  limit: number;
 
   collections: Collection[];
   figures: Figure[];
-
-  figureViewPage: Page = FigureViewPageComponent;
 
   constructor(private figureService: FigureService,
               private collectionService: CollectionService) {
@@ -65,14 +60,6 @@ export class SearchPageComponent {
       this.collections = collections;
     })
 
-  }
-
-  /**
-   * Incremement number of results shown on scroll.
-   */
-  doInfinite(event: { complete: Function }): void {
-    this.limit = Math.min(this.figures.length, this.limit + 12);
-    event.complete();
   }
 
 }

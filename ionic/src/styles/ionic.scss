@@ -220,3 +220,10 @@ $colors: (
 ion-icon {
   font-size: 24px;
 }
+
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  grid-gap: 12px;
+  margin: 12px;
+}

@@ -3,14 +3,13 @@ import { DomSanitizer, SafeStyle } from "@angular/platform-browser";
 import { Collection } from "src/entity";
 
 @Component({
-  selector: 'collection-card',
+  selector: 'bc-collection-card',
   styleUrls: ['./collection-card.component.scss'],
   template: `
-    <div class="image" [style.backgroundImage]="image"></div>
+    <figure [style.backgroundImage]="image"></figure>
 
     <header>
       <h2>{{collection.name}}</h2>
-      <p *ngIf="collection.length"> {{collection.collected}} / {{collection.length}} </p>
     </header>
   `
 })

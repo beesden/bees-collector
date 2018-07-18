@@ -5,7 +5,7 @@ import { SearchPageComponent } from "src/pages/search-page.component";
 import { FigureService, FigureRange } from "src/service/figure.service";
 
 @Component({
-  selector: 'ranges-page',
+  selector: 'bp-ranges',
   styleUrls: ['./ranges-page.component.scss'],
   template: `
     <ion-header>

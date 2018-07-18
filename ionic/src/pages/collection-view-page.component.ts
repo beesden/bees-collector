@@ -6,10 +6,11 @@ import { Image } from "src/entity";
 import { Collection } from "src/entity/collection";
 import { IonViewWillEnter } from "src/ionic-lifecycle";
 import { FigureEditPageComponent } from "src/pages/figure-edit-page.component";
+import { FigureViewPageComponent } from "src/pages/figure-view-page.component";
 import { CollectionService } from "src/service/collection.service";
 
 @Component({
-  selector: 'collection-view-page',
+  selector: 'bp-collection-view',
   styleUrls: ['./figure-view-page.component.scss'],
   template: `
     <ion-header>
@@ -49,10 +50,7 @@ import { CollectionService } from "src/service/collection.service";
 
       <section class="page-section">
         <h2>Figures:</h2>
-
-        <card-figure [figure]="{name: 'Test 1'}"></card-figure>
-        <card-figure [figure]="{name: 'Test 2'}"></card-figure>
-        <card-figure [figure]="{name: 'Test 3'}"></card-figure>
+        <bc-figure-list [figures]="collection.figures"></bc-figure-list>
       </section>
 
     </ion-content>

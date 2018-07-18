@@ -56,19 +56,37 @@ export class ConnectionService {
       return figure;
     });
 
-    const collection = new Collection();
-    collection.name = 'Last 17';
-    collection.image = new Image();
-    collection.image.url = 'https://assets.catawiki.nl/assets/2017/12/12/e/7/8/e788e550-718b-4afe-81eb-ad4798f7ebfe.jpg';
-    collection.image.name = 'Cover';
-
     const figureRepo = connection.getRepository(Figure);
     const collectionRepo = connection.getRepository(Collection);
 
     return figureRepo.clear()
-      .then(() => figureRepo.save(figures))
       .then(() => collectionRepo.clear())
-      .then(() => collectionRepo.save(collection))
+      .then(() => figureRepo.save(figures))
+      .then(figures => {
+
+        const collection = new Collection();
+        collection.name = 'Last 17';
+        collection.image = new Image();
+        collection.image.url = 'https://assets.catawiki.nl/assets/2017/12/12/e/7/8/e788e550-718b-4afe-81eb-ad4798f7ebfe.jpg';
+        collection.image.name = 'Cover';
+        collection.figures = figures.slice(figures.length - 17, figures.length);
+
+        const collection2 = new Collection();
+        collection2.name = 'Early Bird Mail-In';
+        collection2.image = new Image();
+        collection2.image.url = 'http://i161.photobucket.com/albums/t222/cocofstar/early_bird_display_with_fig.jpg';
+        collection2.image.name = 'Cover';
+        collection2.figures = figures.slice(figures.length - 17, figures.length);
+
+        const collection3 = new Collection();
+        collection3.name = 'Droids';
+        collection3.image = new Image();
+        collection3.image.url = 'http://news.toyark.com/wp-content/uploads/sites/4/2013/10/Star-Wars-Jumbo-Kenner-Droid-Special-Set-056.jpg';
+        collection3.image.name = 'Cover';
+        collection3.figures = figures.slice(figures.length - 17, figures.length);
+
+        collectionRepo.save([collection, collection2, collection3])
+      })
       .then(() => connection);
 
   };

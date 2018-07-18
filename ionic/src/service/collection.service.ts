@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { Collection } from "src/entity";
+import { Collection, Figure } from "src/entity";
 import { ConnectionService } from "src/service/connection.service";
-import { Repository } from "typeorm/browser";
+import { Repository, SelectQueryBuilder } from "typeorm/browser";
 
 @Injectable()
 export class CollectionService {
@@ -10,6 +10,14 @@ export class CollectionService {
 
   constructor(connectionService: ConnectionService) {
     this.repository = connectionService.connection.then(connection => connection.getRepository(Collection));
+  }
+
+  private get query(): Promise<SelectQueryBuilder<Collection>> {
+
+    return this.repository.then(repo => repo.createQueryBuilder('collection')
+      .leftJoinAndSelect('collection.image', 'image')
+    );
+
   }
 
   /**
@@ -27,21 +35,20 @@ export class CollectionService {
    * @param collectionId
    */
   getOne(collectionId: number): Promise<Collection> {
-    return this.repository.then(repo => repo.findOne(collectionId, {relations: ["image", 'figures']}));
+
+    return this.query.then(query => query
+      .leftJoinAndSelect('collection.figures', 'figures')
+      .whereInIds(collectionId)
+      .getOne()
+    );
+
   }
 
   /**
    * List all collections in the database.
    */
   getList(): Promise<Collection[]> {
-
-    return this.repository.then(repo => {
-      return repo.createQueryBuilder('collection')
-        .leftJoinAndSelect('collection.figures', 'figures')
-        .leftJoinAndSelect('collection.image', 'image')
-        .getMany();
-    });
-
+    return this.query.then(query => query.getMany());
   }
 
   /**
@@ -55,14 +62,11 @@ export class CollectionService {
 
   /**
    * Search for collections by query string.
-   *
-   * Search results are returned based on both name and notes fields.
    */
-  search(query: string): Promise<Collection[]> {
+  search(queryString: string): Promise<Collection[]> {
 
-    return this.repository.then(repo => repo.createQueryBuilder('collection')
-      .andWhere(`collection.name LIKE '%${query}%'`)
-      .orWhere(`collection.notes LIKE '%${query}%'`)
+    return this.query.then(query => query
+      .andWhere(`collection.name LIKE '%${queryString}%'`)
       .getMany())
 
   }

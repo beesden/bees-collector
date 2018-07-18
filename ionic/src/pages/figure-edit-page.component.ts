@@ -5,7 +5,7 @@ import { FigureProperty } from "src/entity/figure-property";
 import { FigureService, FigureRange } from "src/service/figure.service";
 
 @Component({
-  selector: 'figure-edit-page',
+  selector: 'bp-figure-edit',
   styleUrls: ['./figure-edit-page.component.scss'],
   template: `
     <ion-header>

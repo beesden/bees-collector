@@ -5,7 +5,7 @@ import { SQLite } from "@ionic-native/sqlite";
 import { IonicApp, IonicModule } from "ionic-angular";
 import { AppRootComponent } from 'src/app-root.component';
 
-import { CollectionCardComponent, FigureCardComponent } from "src/components";
+import { CollectionCardComponent, FigureCardComponent, FigureListComponent } from "src/components";
 import { CollectionViewPageComponent, FigureEditPageComponent, FigureListPageComponent, FigureViewPageComponent, RangesPageComponent, SearchPageComponent, TabsPageComponent } from "src/pages";
 import { CollectionListPageComponent } from "src/pages/collection-list-page.component";
 import { CollectionService, ConnectionService, FigureService } from "src/service";
@@ -28,6 +28,7 @@ const pages = [
   declarations: [
     AppRootComponent,
     CollectionCardComponent,
+    FigureListComponent,
     FigureCardComponent,
     ...pages
   ],

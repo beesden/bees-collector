@@ -4,12 +4,13 @@ import { FigureListPageComponent } from "src/pages/figure-list-page.component";
 import { RangesPageComponent } from "src/pages/ranges-page.component";
 
 @Component({
-  selector: 'tabs-page',
+  selector: 'bp-tabs',
   template: `
-    <ion-tabs tabsPlacement="top" tabsLayout="icon-hide">
-      <ion-tab tabTitle="Figures" [root]="figuresPage"></ion-tab>
-      <ion-tab tabTitle="Collections" [root]="collectionsPage"></ion-tab>
-      <ion-tab tabTitle="Ranges" [root]="rangesPage"></ion-tab>
+    <ion-tabs>
+      <ion-tab tabIcon="photos" tabTitle="Collections" [root]="collectionsPage"></ion-tab>
+      <ion-tab tabIcon="person" tabTitle="Figures" [root]="figuresPage"></ion-tab>
+      <ion-tab tabIcon="folder-open" tabTitle="Ranges" [root]="rangesPage"></ion-tab>
+      <ion-tab tabIcon="settings" tabTitle="Settings" [root]="rangesPage"></ion-tab>
     </ion-tabs>
   `
 })

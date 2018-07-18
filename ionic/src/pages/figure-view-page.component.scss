@@ -1,14 +1,11 @@
 @import "../styles/variables";
 
 ion-slides {
-  height: 240px;
-
-  ion-slide {
-    background: #333;
-  }
+  background: #333;
+  height: 200px;
 
   img {
-    height: 240px;
+    height: 200px;
   }
 }
 
@@ -25,6 +22,7 @@ h2 {
 dl {
   display: flex;
   flex-flow: row wrap;
+  margin: $gutter 0;
 
   dt {
     color: #555;

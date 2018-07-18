@@ -11,19 +11,18 @@ export class Figure extends Collectable {
   @Column({nullable: true})
   series: string;
 
-  @ManyToMany(type => Collection, {cascade: true})
-  @JoinTable()
-  collections: Collection[];
-
   @Column({nullable: true})
   range: string;
 
   @Column({nullable: true})
   release: string;
 
-  @OneToMany(type => FigureAccessory, accessory => accessory.figure, {cascade: true})
+  @OneToMany(type => FigureAccessory, accessory => accessory.figure, {cascade: true, eager: true})
   accessories: FigureAccessory[];
 
-  @OneToMany(type => FigureProperty, property => property.figure, {cascade: true})
+  @OneToMany(type => FigureProperty, property => property.figure, {cascade: true, eager: true})
   properties: FigureProperty[];
+
+  @ManyToMany(type => Collection, collection => collection.figures)
+  collections: Collection[];
 }

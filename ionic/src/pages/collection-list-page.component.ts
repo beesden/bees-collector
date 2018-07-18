@@ -8,8 +8,7 @@ import { CollectionService } from "src/service";
 
 
 @Component({
-  selector: 'collection-list-page',
-  styleUrls: ['./figure-list-page.component.scss'],
+  selector: 'bp-collection-list',
   template: `
     <ion-header>
 
@@ -28,11 +27,11 @@ import { CollectionService } from "src/service";
     <ion-content>
 
       <div class="content-grid">
-        <collection-card *ngFor="let collection of collections | slice: 0: limit"
+        <bc-collection-card *ngFor="let collection of collections"
                      [collection]="collection"
                      [navPush]="collectionViewPage"
                      [navParams]="{collectionId: collection.id}">
-        </collection-card>
+        </bc-collection-card>
       </div>
 
       <ion-fab bottom right>
@@ -40,10 +39,6 @@ import { CollectionService } from "src/service";
           <ion-icon name="add"></ion-icon>
         </button>
       </ion-fab>
-
-      <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
-        <ion-infinite-scroll-content></ion-infinite-scroll-content>
-      </ion-infinite-scroll>
 
     </ion-content>
   `
@@ -72,14 +67,6 @@ export class CollectionListPageComponent implements IonViewWillEnter {
         this.collections = collections;
       });
     });
-  }
-
-  /**
-   * Incremement number of results shown on scroll.
-   */
-  doInfinite(event: { complete: Function }): void {
-    this.limit = Math.min(this.collections.length, this.limit + 12);
-    event.complete();
   }
 
 }

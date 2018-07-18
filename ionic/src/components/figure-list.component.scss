@@ -1,0 +1,10 @@
+@import "../styles/variables";
+
+:root {
+  display: block;
+  background: $swatch-smoke;
+}
+
+bc-figure-card {
+  margin: $gutter;
+}

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Figure } from "src/entity";
 import { ConnectionService } from "src/service/connection.service";
-import { Repository } from "typeorm/browser";
+import { QueryBuilder, Repository, SelectQueryBuilder } from "typeorm/browser";
 
 export interface FigureRange {
   name: string;
@@ -20,6 +20,16 @@ export class FigureService {
     this.repository = connectionService.connection.then(connection => connection.getRepository(Figure));
   }
 
+  private get query(): Promise<SelectQueryBuilder<Figure>> {
+
+    return this.repository.then(repo => repo.createQueryBuilder('figure')
+      .leftJoinAndSelect('figure.images', 'images')
+      .leftJoinAndSelect('figure.properties', 'properties')
+      .leftJoinAndSelect('figure.accessories', 'accessories')
+    );
+
+  }
+
   /**
    * Delete a figure from the database.
    *
@@ -35,7 +45,13 @@ export class FigureService {
    * @param figureId
    */
   getOne(figureId: number): Promise<Figure> {
-    return this.repository.then(repo => repo.findOne(figureId, {relations: ["images", 'properties', 'accessories']}));
+
+    return this.query.then(query => query
+      .leftJoinAndSelect('figure.collections', 'collections')
+      .whereInIds(figureId)
+      .getOne()
+    );
+
   }
 
   /**
@@ -46,11 +62,7 @@ export class FigureService {
    */
   getList(filters: { range?: FigureRange } = {}): Promise<Figure[]> {
 
-    return this.repository.then(repo => {
-      const query = repo.createQueryBuilder('figure')
-        .leftJoinAndSelect('figure.images', 'images')
-        .leftJoinAndSelect('figure.properties', 'properties')
-        .leftJoinAndSelect('figure.accessories', 'accessories');
+    return this.query.then(query => {
 
       if (filters.range) {
         query
@@ -92,9 +104,7 @@ export class FigureService {
    * @param figure
    */
   saveFigure(figure?: Figure): Promise<Figure> {
-
     return this.repository.then(repo => repo.save(figure));
-
   }
 
   /**
@@ -102,11 +112,11 @@ export class FigureService {
    *
    * Search results are returned based on both name and notes fields.
    */
-  search(query: string): Promise<Figure[]> {
+  search(queryString: string): Promise<Figure[]> {
 
-    return this.repository.then(repo => repo.createQueryBuilder('figure')
-      .andWhere(`figure.name LIKE '%${query}%'`)
-      .orWhere(`figure.notes LIKE '%${query}%'`)
+    return this.query.then(query => query
+      .andWhere(`figure.name LIKE '%${queryString}%'`)
+      .orWhere(`figure.notes LIKE '%${queryString}%'`)
       .getMany())
 
   }

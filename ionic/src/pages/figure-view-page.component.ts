@@ -9,7 +9,7 @@ import { FigureEditPageComponent } from "src/pages/figure-edit-page.component";
 import { FigureService } from "src/service/figure.service";
 
 @Component({
-  selector: 'figure-view-page',
+  selector: 'bp-figure-view',
   styleUrls: ['./figure-view-page.component.scss'],
   template: `
     <ion-header>
@@ -82,13 +82,12 @@ import { FigureService } from "src/service/figure.service";
 
       </section>
 
-      <section class="page-section" *ngIf="figure.collections?.length">
+      <section class="page-section">
         <h2>Collections:</h2>
 
         <div class="grid">
-          <collection-card [collection]="{name: 'Test 1'}"></collection-card>
-          <collection-card [collection]="{name: 'Test 2'}"></collection-card>
-          <collection-card [collection]="{name: 'Test 3'}"></collection-card>
+          <bc-collection-card [collection]="collection"
+                              *ngFor="let collection of figure.collections"></bc-collection-card>
         </div>
       </section>
 
@@ -117,12 +116,12 @@ export class FigureViewPageComponent implements IonViewWillEnter {
   ionViewWillEnter(): void {
 
     const figureId = this.navParams.get('figureId');
-    if (!figureId) {
-      //  this.viewCtrl.dismiss();
-    }
 
     this.figureService.getOne(figureId).then(figure => {
-      this.zone.run(() => this.figure = figure);
+      this.zone.run(() => {
+        console.log(figure);
+        this.figure = figure
+      });
     });
 
   }

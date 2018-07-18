@@ -3,7 +3,7 @@ import { DomSanitizer, SafeStyle } from "@angular/platform-browser";
 import { Figure } from "src/entity";
 
 @Component({
-  selector: 'card-figure',
+  selector: 'bc-figure-card',
   styleUrls: ['./figure-card.component.scss'],
   template: `
     <figure [style.backgroundImage]="image"></figure>
@@ -48,10 +48,8 @@ export class FigureCardComponent {
    * Return 'orange' if some accessories are owned.
    */
   get accessoryState(): 'red' | 'orange' | 'green' {
-    console.log(this.figure)
 
     const accessories = this.figure.accessories || [];
-
     const collected = accessories.filter(accessory => accessory.collected);
 
     if (collected.length === accessories.length) {
