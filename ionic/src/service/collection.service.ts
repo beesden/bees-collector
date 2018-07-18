@@ -27,7 +27,7 @@ export class CollectionService {
    * @param collectionId
    */
   getOne(collectionId: number): Promise<Collection> {
-    return this.repository.then(repo => repo.findOne(collectionId, {relations: ["images", 'properties', 'accessories']}));
+    return this.repository.then(repo => repo.findOne(collectionId, {relations: ["image", 'figures']}));
   }
 
   /**
@@ -37,7 +37,8 @@ export class CollectionService {
 
     return this.repository.then(repo => {
       return repo.createQueryBuilder('collection')
-        .leftJoinAndSelect('collection.images', 'images')
+        .leftJoinAndSelect('collection.figures', 'figures')
+        .leftJoinAndSelect('collection.image', 'image')
         .getMany();
     });
 

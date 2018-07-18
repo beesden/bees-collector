@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { DomSanitizer, SafeStyle } from "@angular/platform-browser";
 import { Figure } from "src/entity";
 
@@ -6,20 +6,21 @@ import { Figure } from "src/entity";
   selector: 'card-figure',
   styleUrls: ['./figure-card.component.scss'],
   template: `
-    <div class="image" [style.backgroundImage]="image"></div>
+    <figure [style.backgroundImage]="image"></figure>
 
     <header>
       <h2>{{figure.name}}</h2>
-      <p class="collection">{{figure.series}}</p>
-      <p>
-        <span *ngIf="figure.range">{{figure.range}}</span>
+      <p class="range">
+        {{figure.range}}
+        <span *ngIf="figure.release">({{figure.release | date: 'yyyy'}})</span>
       </p>
+      <p class="series">{{figure.series}}</p>
     </header>
 
-    <div class="completion">
+    <aside class="completion">
       <ion-icon name="checkmark" [color]="figure.collected ? 'green' : 'red'"></ion-icon>
       <ion-icon name="briefcase" [color]="accessoryState"></ion-icon>
-    </div>
+    </aside>
 
   `
 })
@@ -35,7 +36,7 @@ export class FigureCardComponent {
 
   get image(): SafeStyle {
     if (this.figure.images && this.figure.images.length) {
-    return this.sanitizer.bypassSecurityTrustStyle(`url(${this.figure.images[0].url})`);
+      return this.sanitizer.bypassSecurityTrustStyle(`url(${this.figure.images[0].url})`);
     }
     return this.sanitizer.bypassSecurityTrustStyle(`url(${this.defaultImage})`);
   }
@@ -47,6 +48,7 @@ export class FigureCardComponent {
    * Return 'orange' if some accessories are owned.
    */
   get accessoryState(): 'red' | 'orange' | 'green' {
+    console.log(this.figure)
 
     const accessories = this.figure.accessories || [];
 

@@ -58,10 +58,9 @@ export class ConnectionService {
 
     const collection = new Collection();
     collection.name = 'Last 17';
-    collection.images = [];
-    collection.images.push(new Image());
-    collection.images[0].url = 'https://assets.catawiki.nl/assets/2017/12/12/e/7/8/e788e550-718b-4afe-81eb-ad4798f7ebfe.jpg';
-    collection.images[0].name = 'Cover';
+    collection.image = new Image();
+    collection.image.url = 'https://assets.catawiki.nl/assets/2017/12/12/e/7/8/e788e550-718b-4afe-81eb-ad4798f7ebfe.jpg';
+    collection.image.name = 'Cover';
 
     const figureRepo = connection.getRepository(Figure);
     const collectionRepo = connection.getRepository(Collection);

@@ -28,13 +28,10 @@ import { FigureViewPageComponent } from "./figure-view-page.component";
 
     <ion-content>
 
-      <div class="content-grid">
-        <card-figure *ngFor="let figure of figures | slice: 0: limit"
-                     [figure]="figure"
-                     [navPush]="figureViewPage"
-                     [navParams]="{figureId: figure.id}">
-        </card-figure>
-      </div>
+      <card-figure *ngFor="let figure of figures | slice: 0: limit"
+                   [figure]="figure"
+                   [navPush]="figureViewPage"
+                   [navParams]="{figureId: figure.id}"></card-figure>
 
       <ion-fab bottom right>
         <button ion-fab [navPush]="figureEditPage" [navParams]="{range: range}">

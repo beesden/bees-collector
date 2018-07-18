@@ -1,7 +1,7 @@
 @import "../styles/variables";
 
 :host {
-  box-shadow: $card-shadow;
+  @include card;
   position: relative;
 }
 

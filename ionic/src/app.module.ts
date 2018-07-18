@@ -3,24 +3,19 @@ import { BrowserModule } from '@angular/platform-browser';
 import { Camera } from "@ionic-native/camera";
 import { SQLite } from "@ionic-native/sqlite";
 import { IonicApp, IonicModule } from "ionic-angular";
-
-import { FigureCardComponent, CollectionCardComponent } from "src/components";
-import {
-  FigureEditPageComponent,
-  FigureListPageComponent,
-  FigureViewPageComponent, RangesPageComponent,
-  SearchPageComponent,
-  TabsPageComponent
-} from "src/pages";
-import { CollectionListPageComponent } from "src/pages/collection-list-page.component";
-import { ConnectionService, FigureService, CollectionService } from "src/service";
 import { AppRootComponent } from 'src/app-root.component';
+
+import { CollectionCardComponent, FigureCardComponent } from "src/components";
+import { CollectionViewPageComponent, FigureEditPageComponent, FigureListPageComponent, FigureViewPageComponent, RangesPageComponent, SearchPageComponent, TabsPageComponent } from "src/pages";
+import { CollectionListPageComponent } from "src/pages/collection-list-page.component";
+import { CollectionService, ConnectionService, FigureService } from "src/service";
 
 const pages = [
   TabsPageComponent,
   SearchPageComponent,
 
   CollectionListPageComponent,
+  CollectionViewPageComponent,
 
   FigureListPageComponent,
   FigureEditPageComponent,

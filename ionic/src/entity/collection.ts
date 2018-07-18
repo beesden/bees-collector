@@ -1,6 +1,6 @@
 import { Figure } from "src/entity/figure";
 import { Image } from "src/entity/image";
-import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm/browser";
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm/browser";
 
 @Entity()
 export class Collection {
@@ -14,12 +14,26 @@ export class Collection {
   @Column({nullable: true})
   description?: string;
 
+  @OneToOne(type => Image, {cascade: true})
+  @JoinColumn()
+  image: Image;
+
   @ManyToMany(type => Figure, {cascade: true})
   @JoinTable()
   figures: Figure[];
 
-  @ManyToMany(type => Image, {cascade: true})
-  @JoinTable()
-  images: Image[];
+  /**
+   * Return how many of the figures in the collection have been collected.
+   */
+  get collected(): number {
+    return this.figures ? this.figures.filter(figure => figure.collected).length : 0;
+  }
+
+  /**
+   * Return the length of the figures in the collection..
+   */
+  get length(): number {
+    return this.figures ? this.figures.length : 0;
+  }
 
 }

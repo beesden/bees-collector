@@ -1,18 +1,20 @@
 @import "../styles/variables";
 
 :host {
-  box-shadow: $card-shadow;
+  @include card;
+  display: flex;
   position: relative;
 }
 
-.image {
+figure {
   background: center top/cover no-repeat;
-  padding-bottom: 125%;
-  width: 100%;
+  margin: 0 $gutter 0 0;
+  flex: 90px 0 0;
+  height: 90px;
 }
 
 header {
-  padding: 8px 8px 16px;
+  flex: 1;
 }
 
 h2 {
@@ -21,18 +23,18 @@ h2 {
   margin: 0;
 }
 
-.collection {
-  color: #666;
-  font-weight: 700;
-}
-
 p {
   font-size: 12px;
   line-height: 1.5;
   margin: 0;
 
-  span + span:before {
-    content: ' - '
+  &.range {
+    color: #888;
+    font-weight: 500;
+  }
+
+  &.series {
+    color: #888;
   }
 }
 

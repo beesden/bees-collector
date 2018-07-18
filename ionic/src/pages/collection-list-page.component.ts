@@ -2,6 +2,7 @@ import { Component, NgZone } from "@angular/core";
 import { Page } from "ionic-angular/navigation/nav-util";
 import { Collection } from "src/entity";
 import { IonViewWillEnter } from "src/ionic-lifecycle";
+import { CollectionViewPageComponent } from "src/pages/collection-view-page.component";
 import { SearchPageComponent } from "src/pages/search-page.component";
 import { CollectionService } from "src/service";
 
@@ -55,7 +56,7 @@ export class CollectionListPageComponent implements IonViewWillEnter {
 
   searchPage: Page = SearchPageComponent;
   collectionEditPage: Page = SearchPageComponent;
-  collectionViewPage: Page = SearchPageComponent;
+  collectionViewPage: Page = CollectionViewPageComponent;
 
   constructor(private collectionService: CollectionService,
               private zone: NgZone) {
