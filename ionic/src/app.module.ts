@@ -3,29 +3,27 @@ import { BrowserModule } from '@angular/platform-browser';
 import { Camera } from "@ionic-native/camera";
 import { SQLite } from "@ionic-native/sqlite";
 import { IonicApp, IonicModule } from "ionic-angular";
-import { FigureCardComponent } from "src/figure/figure-card.component";
-import { FigureEditPage } from "src/figure/figure-edit.page";
-import { FigureListPage } from "src/figure/figure-list.page";
-import { FigureViewPage } from "src/figure/figure-view.page";
-import { SearchPage } from "src/search/search.page";
-import { FigureService } from "src/service/figure.service";
-import { AppRootComponent } from './app-root.component';
-import { TabsPage } from "./pages/tabs.page";
-import { SeriesCardComponent } from "./service/series/series-card.component";
-import { SeriesEditPage } from "./service/series/series-edit.page";
-import { SeriesListPage } from "./service/series/series-list.page";
-import { SeriesService } from "./service/series/series.service";
+
+import { FigureCardComponent, SeriesCardComponent } from "src/components";
+import {
+  FigureEditPageComponent,
+  FigureListPageComponent,
+  FigureViewPageComponent, RangesPageComponent,
+  SearchPageComponent,
+  TabsPageComponent
+} from "src/pages";
+import { ConnectionService, FigureService, SeriesService } from "src/service";
+import { AppRootComponent } from 'src/app-root.component';
 
 const pages = [
-  TabsPage,
-  SearchPage,
+  TabsPageComponent,
+  SearchPageComponent,
 
-  FigureListPage,
-  FigureEditPage,
-  FigureViewPage,
+  FigureListPageComponent,
+  FigureEditPageComponent,
+  FigureViewPageComponent,
 
-  SeriesListPage,
-  SeriesEditPage,
+  RangesPageComponent,
 ];
 
 @NgModule({
@@ -48,6 +46,7 @@ const pages = [
   ],
   providers: [
     // Local services
+    ConnectionService,
     SeriesService,
     FigureService,
 

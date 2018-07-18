@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { Page } from "ionic-angular/navigation/nav-util";
 import { Figure } from "src/entity/figure";
-import { FigureViewPage } from "src/figure/figure-view.page";
+import { FigureViewPageComponent } from "src/pages/figure-view-page.component";
 import { FigureService } from "src/service/figure.service";
 import { Series } from "src/service/series/series";
 
 @Component({
-  selector: 'page:figure-list',
-  styleUrls: ['./search.page.scss'],
+  selector: 'search-page',
+  styleUrls: ['./search-page.component.scss'],
   template: `
     <ion-header>
 
@@ -23,7 +23,7 @@ import { Series } from "src/service/series/series";
         <card-figure *ngFor="let figure of figures | slice: 0: limit"
                      [figure]="figure"
                      [navPush]="figureViewPage"
-                     [navParams]="{figure: figure}">
+                     [navParams]="{figureId: figure.id}">
         </card-figure>
       </div>
 
@@ -34,7 +34,7 @@ import { Series } from "src/service/series/series";
     </ion-content>
   `
 })
-export class SearchPage {
+export class SearchPageComponent {
 
   query: string;
   limit: number;
@@ -42,26 +42,30 @@ export class SearchPage {
   figures: Figure[];
   series: Series;
 
-  figureViewPage: Page = FigureViewPage;
+  figureViewPage: Page = FigureViewPageComponent;
 
   constructor(private figureService: FigureService) {
-
   }
 
+  /**
+   * Perform a search using the query string.
+   *
+   * @param query
+   */
   search(query: string) {
 
-    this.limit = 12;
-
     this.figureService.search(query).then((figures) => {
+      this.limit = Math.min(figures.length, 12);
       this.figures = figures;
     })
+
   }
 
   /**
    * Incremement number of results shown on scroll.
    */
   doInfinite(event: { complete: Function }): void {
-    this.limit += 12;
+    this.limit = Math.min(this.figures.length, this.limit + 12);
     event.complete();
   }
 

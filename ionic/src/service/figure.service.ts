@@ -1,107 +1,30 @@
 import { Injectable } from "@angular/core";
-import { Platform } from "ionic-angular";
-import { Connection, createConnection } from "typeorm/browser";
-import { CordovaConnectionOptions } from "typeorm/browser/driver/cordova/CordovaConnectionOptions";
-import { SqljsConnectionOptions } from "typeorm/browser/driver/sqljs/SqljsConnectionOptions";
-import { Collection, Figure, FigureAccessory, FigureProperty, Image } from "src/entity";
-import { sampleData } from "src/entity/data";
-import { Series } from "src/service/series/series";
+import { Figure } from "src/entity";
+import { ConnectionService } from "src/service/connection.service";
+import { Repository } from "typeorm/browser";
+
+export interface FigureRange {
+  name: string;
+  series: string;
+  year: string;
+  figures: number;
+  owned: number;
+}
+
 
 @Injectable()
 export class FigureService {
 
-  private database: Promise<Connection>;
+  private repository: Promise<Repository<Figure>>;
 
-  constructor(platform: Platform) {
-
-    const entities = [
-      Collection,
-      Figure,
-      FigureAccessory,
-      FigureProperty,
-      Image
-    ];
-
-    if (platform.is('cordova')) {
-      const connection: CordovaConnectionOptions = {
-        type: 'cordova',
-        database: "collections.db",
-        location: "default",
-        entities,
-        logging: true,
-        synchronize: true
-      };
-      this.database = createConnection(connection);
-    } else {
-      const connection: SqljsConnectionOptions = {
-        type: 'sqljs',
-        location: "collections",
-        autoSave: true,
-        entities,
-        logging: [],
-        synchronize: true
-      };
-      this.database = createConnection(connection);
-    }
-
-    // Load sample data
-    this.database.then(connection => {
-      const figures: Figure[] = sampleData.map(item => {
-
-        const figure = new Figure();
-        figure.name = item.name;
-        figure.series = item.series;
-        figure.range = item.range;
-        figure.owned = item.owned;
-        figure.condition = item.condition;
-
-        if (item.images) {
-          figure.images = item.images.map(url => {
-            const image = new Image();
-            image.name = 'Image';
-            image.url = url;
-            return image;
-          });
-        }
-
-        if (item.release) {
-          figure.release = item.release.toISOString();
-        }
-
-        figure.properties = Object.entries(item.properties).map(entry => {
-          const prop = new FigureProperty();
-          prop.name = entry[0];
-          prop.value = entry[1].toString();
-          prop.figure = figure;
-          return prop;
-        });
-
-        if (item.accessories) {
-          figure.accessories = item.accessories.map(entry => {
-            const prop = new FigureAccessory();
-            prop.name = entry;
-            prop.figure = figure;
-            return prop;
-          });
-        }
-
-        return figure;
-      });
-
-      const repo = connection.getRepository(Figure);
-      repo.clear();
-      repo.save(figures);
-    });
-
+  constructor(connectionService: ConnectionService) {
+    this.repository = connectionService.connection.then(connection => connection.getRepository(Figure));
   }
 
 
   deleteFigure(figureId: number) {
 
-    return this.database.then(connection => {
-      const repo = connection.getRepository(Figure);
-      return repo.delete(figureId);
-    });
+    return this.repository.then(repo => repo.delete(figureId));
 
   }
 
@@ -112,8 +35,7 @@ export class FigureService {
    */
   getOne(figureId?: number): Promise<Figure> {
 
-    return this.database.then(connection => {
-      const repo = connection.getRepository(Figure);
+    return this.repository.then(repo => {
       return repo.findOne(figureId, {relations: ["images", 'properties', 'accessories']});
     });
 
@@ -122,11 +44,44 @@ export class FigureService {
   /**
    * List all figures
    */
-  getList(filters: { series?: Series } = {}): Promise<Figure[]> {
+  getList(filters: { range?: FigureRange } = {}): Promise<Figure[]> {
 
-    return this.database.then(connection => {
-      const repo = connection.getRepository(Figure);
-      return repo.find({relations: ["images", 'properties', 'accessories']});
+    return this.repository.then(repo => {
+      const query = repo.createQueryBuilder('figure')
+        .leftJoinAndSelect('figure.images', 'images')
+        .leftJoinAndSelect('figure.properties', 'properties')
+        .leftJoinAndSelect('figure.accessories', 'accessories');
+
+      if (filters.range) {
+        query
+          .andWhere(`series = "${filters.range.series}"`)
+          .andWhere(`range = "${filters.range.name}"`)
+      }
+
+      return query.getMany();
+    });
+
+  }
+
+  /**
+   * Get a list of all ranges available.
+   */
+  getRanges(): Promise<FigureRange[]> {
+
+    return this.repository.then(repo => {
+      return repo.createQueryBuilder('f')
+        .select('count(*)', 'figures')
+        .addSelect('f.range', 'name')
+        .addSelect(' MIN(f.release)', 'year')
+        .addSelect('f.series', 'series')
+        .addSelect('sum(f.collected = 1)', 'owned')
+        .addGroupBy('f.range')
+        .addGroupBy('f.series')
+        .addOrderBy('series')
+        .addOrderBy('year')
+        .addOrderBy('range')
+        .getRawMany()
+        .then((data: FigureRange[]) => data);
     });
 
   }
@@ -138,10 +93,7 @@ export class FigureService {
    */
   saveFigure(figure?: Figure): Promise<Figure> {
 
-    return this.database.then(connection => {
-      const repo = connection.getRepository(Figure);
-      return repo.save(figure);
-    });
+    return this.repository.then(repo => repo.save(figure));
 
   }
 
@@ -150,13 +102,10 @@ export class FigureService {
    */
   search(query: string): Promise<Figure[]> {
 
-    return this.database.then(connection => {
-      return connection.getRepository(Figure)
-        .createQueryBuilder('figure')
-        .andWhere(`figure.name LIKE '%${query}%'`)
-        .orWhere(`figure.notes LIKE '%${query}%'`)
-        .getMany();
-    });
+    return this.repository.then(repo => repo.createQueryBuilder('figure')
+      .andWhere(`figure.name LIKE '%${query}%'`)
+      .orWhere(`figure.notes LIKE '%${query}%'`)
+      .getMany())
 
   }
 

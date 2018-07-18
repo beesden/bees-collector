@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
-import { Series } from "./series";
+import { Series } from "src/service/series/series";
 
 // todo  -remove once device testing starts
 

@@ -1,6 +1,6 @@
+import { Figure } from "src/entity/figure";
+import { Image } from "src/entity/image";
 import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm/browser";
-import { Figure } from "./figure";
-import { Image } from "./image";
 
 @Entity()
 export class Collection {

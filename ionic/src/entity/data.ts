@@ -15,10 +15,10 @@ export interface FigureData {
 export const sampleData: FigureData[] = [
   {
     id: 'Luke Skywalker',
-    series: 'Star Wars',
+    series: 'Star Wars II',
     description: 'Yellow hair, long saber',
     name: 'Luke Skywalker',
-    range: 'Star Wars - Kenner',
+    range: 'Star Wars',
     images: [
       'https://i.ebayimg.com/images/g/04QAAOSwRWRbRLXD/s-l1600.jpg',
       'https://i.ebayimg.com/images/g/6iAAAOSwh8NbRLXH/s-l1600.jpg',

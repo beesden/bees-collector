@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { DomSanitizer, SafeStyle } from "@angular/platform-browser";
-import { Series } from "./series";
+import { Series } from "src/service/series/series";
 
 @Component({
   selector: 'series-card',

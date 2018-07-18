@@ -17,8 +17,7 @@ import { Figure } from "src/entity";
     </header>
 
     <div class="completion">
-      <ion-icon name="checkmark" [color]="figure.owned ? 'green' : 'red'"></ion-icon>
-      <ion-icon name="bulb" [color]="figure.condition ? 'green' : 'red'"></ion-icon>
+      <ion-icon name="checkmark" [color]="figure.collected ? 'green' : 'red'"></ion-icon>
       <ion-icon name="briefcase" [color]="accessoryState"></ion-icon>
     </div>
 
@@ -51,12 +50,11 @@ export class FigureCardComponent {
 
     const accessories = this.figure.accessories || [];
 
-    const owned = accessories.filter(accessory => accessory.owned);
-    const condition = accessories.filter(accessory => accessory.condition);
+    const collected = accessories.filter(accessory => accessory.collected);
 
-    if (owned.length === condition.length && owned.length === accessories.length) {
+    if (collected.length === accessories.length) {
       return 'green';
-    } else if (owned.length || condition.length) {
+    } else if (collected.length) {
       return 'orange';
     } else {
       return 'red';

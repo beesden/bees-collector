@@ -1,6 +1,6 @@
 import { Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm/browser";
-import { Collection } from "./collection";
-import { Image } from "./image";
+import { Collection } from "src/entity/collection";
+import { Image } from "src/entity/image";
 
 abstract class Collectable {
 
@@ -18,10 +18,7 @@ abstract class Collectable {
   images: Image[];
 
   @Column({nullable: true})
-  owned: boolean;
-
-  @Column({nullable: true})
-  condition: boolean;
+  collected: boolean;
 
 }
 

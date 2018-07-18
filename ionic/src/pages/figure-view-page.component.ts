@@ -1,21 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { Camera, CameraOptions, DestinationType, MediaType, PictureSourceType } from "@ionic-native/camera";
 import { ActionSheetController, AlertController, NavParams, ViewController } from "ionic-angular";
 import { Page } from "ionic-angular/navigation/nav-util";
 import { Image } from "src/entity";
 import { Figure } from "src/entity/figure";
-import { FigureEditPage } from "src/figure/figure-edit.page";
+import { IonViewWillEnter } from "src/ionic-lifecycle";
+import { FigureEditPageComponent } from "src/pages/figure-edit-page.component";
 import { FigureService } from "src/service/figure.service";
 
 @Component({
-  selector: 'page:figure-view',
-  styleUrls: ['./figure-view.page.scss'],
+  selector: 'figure-view-page',
+  styleUrls: ['./figure-view-page.component.scss'],
   template: `
     <ion-header>
       <ion-navbar>
 
         <ion-buttons end>
-          <button ion-button [navPush]="figureEditPage" [navParams]="{figureId: figure.id}">
+          <button ion-button [navPush]="figureEditPage" [navParams]="{figureId: figure?.id}">
             <ion-icon name="create"></ion-icon>
           </button>
           <button ion-button (click)="addPhoto()">
@@ -41,12 +42,7 @@ import { FigureService } from "src/service/figure.service";
       </header>
 
       <section class="page-section">
-
-        <ol class="completion">
-          <li [ngClass]="{complete: figure.owned}">Figure Owned</li>
-          <li [ngClass]="{complete: figure.condition}">Good Condition</li>
-        </ol>
-
+        <button ion-button block *ngIf="!figure.collected" (click)="addToCollection()">Add to Collection</button>
         <h2>More info</h2>
       </section>
 
@@ -99,21 +95,38 @@ import { FigureService } from "src/service/figure.service";
     </ion-content>
   `
 })
-export class FigureViewPage {
+export class FigureViewPageComponent implements IonViewWillEnter {
 
-  figureEditPage: Page = FigureEditPage;
-  figure: Figure;
+  figureEditPage: Page = FigureEditPageComponent;
+  figure: Figure = new Figure();
 
   constructor(private actionSheetCtrl: ActionSheetController,
               private alertCtrl: AlertController,
               private camera: Camera,
               private figureService: FigureService,
+              private zone: NgZone,
               private viewCtrl: ViewController,
-              navParams: NavParams) {
+              private navParams: NavParams) {
+  }
 
-    this.figure = Object.assign({}, navParams.get('figure'));
+  /**
+   *  Update data whenever the view is opened or returned to.
+   *
+   *  e.g. If we want to refresh the figure after editing.
+   */
+  ionViewWillEnter(): void {
+
+    const figureId = this.navParams.get('figureId');
+    if (!figureId) {
+      //  this.viewCtrl.dismiss();
+    }
+
+    this.figureService.getOne(figureId).then(figure => {
+      this.zone.run(() => this.figure = figure);
+    });
 
   }
+
 
   addAccessory(): void {
     console.log('Add accessory');
@@ -132,6 +145,16 @@ export class FigureViewPage {
         handler: () => this.photoUpload(PictureSourceType.SAVEDPHOTOALBUM)
       })
       .present();
+
+  }
+
+  /**
+   * Toggles the 'colected' field and saves the change to the DB.
+   */
+  addToCollection(): void {
+
+    this.figure.collected = true;
+    this.figureService.saveFigure(this.figure);
 
   }
 
@@ -155,7 +178,7 @@ export class FigureViewPage {
   }
 
   /**
-   * Add an image to the figure.
+   * Saves an uploaded image URL to the figure entity.
    */
   private photoUpload(sourceType: PictureSourceType): void {
 

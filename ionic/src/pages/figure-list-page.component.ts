@@ -2,21 +2,20 @@ import { Component, NgZone } from '@angular/core';
 import { NavParams } from "ionic-angular";
 import { Page } from "ionic-angular/navigation/nav-util";
 import { Figure } from "src/entity/figure";
-import { FigureEditPage } from "src/figure/figure-edit.page";
 import { IonViewWillEnter } from "src/ionic-lifecycle";
-import { SearchPage } from "src/search/search.page";
-import { FigureService } from "src/service/figure.service";
-import { Series } from "src/service/series/series";
-import { FigureViewPage } from "./figure-view.page";
+import { FigureEditPageComponent } from "src/pages/figure-edit-page.component";
+import { SearchPageComponent } from "src/pages/search-page.component";
+import { FigureService, FigureRange } from "src/service/figure.service";
+import { FigureViewPageComponent } from "./figure-view-page.component";
 
 @Component({
-  selector: 'page:figure-list',
-  styleUrls: ['./figure-list.page.scss'],
+  selector: 'figure-list-page',
+  styleUrls: ['./figure-list-page.component.scss'],
   template: `
     <ion-header>
 
       <ion-navbar>
-        <ion-title>All Figures</ion-title>
+        <ion-title>{{range?.name || 'All Figures'}}</ion-title>
 
         <ion-buttons start>
           <button ion-button [navPush]="searchPage">
@@ -33,12 +32,12 @@ import { FigureViewPage } from "./figure-view.page";
         <card-figure *ngFor="let figure of figures | slice: 0: limit"
                      [figure]="figure"
                      [navPush]="figureViewPage"
-                     [navParams]="{figure: figure}">
+                     [navParams]="{figureId: figure.id}">
         </card-figure>
       </div>
 
       <ion-fab bottom right>
-        <button ion-fab [navPush]="figureEditPage">
+        <button ion-fab [navPush]="figureEditPage" [navParams]="{range: range}">
           <ion-icon name="add"></ion-icon>
         </button>
       </ion-fab>
@@ -50,22 +49,22 @@ import { FigureViewPage } from "./figure-view.page";
     </ion-content>
   `
 })
-export class FigureListPage implements IonViewWillEnter {
+export class FigureListPageComponent implements IonViewWillEnter {
 
+  range: FigureRange;
   limit: number;
 
   figures: Figure[];
-  series: Series;
 
-  searchPage: Page = SearchPage;
-  figureEditPage: Page = FigureEditPage;
-  figureViewPage: Page = FigureViewPage;
+  searchPage: Page = SearchPageComponent;
+  figureEditPage: Page = FigureEditPageComponent;
+  figureViewPage: Page = FigureViewPageComponent;
 
   constructor(private figureService: FigureService,
               private zone: NgZone,
               navParams: NavParams) {
 
-    this.series = navParams.get('series');
+    this.range = navParams.get('range');
 
   }
 
@@ -73,8 +72,9 @@ export class FigureListPage implements IonViewWillEnter {
    *  Update data whenever the view is opened or returned to.
    */
   ionViewWillEnter(): void {
-    this.figureService.getList({series: this.series}).then(figures => {
+    this.figureService.getList({range: this.range}).then(figures => {
       this.zone.run(() => {
+        this.limit = Math.min(figures.length, 12);
         this.figures = figures;
       });
     });
@@ -84,7 +84,7 @@ export class FigureListPage implements IonViewWillEnter {
    * Incremement number of results shown on scroll.
    */
   doInfinite(event: { complete: Function }): void {
-    this.limit += 12;
+    this.limit = Math.min(this.figures.length, this.limit + 12);
     event.complete();
   }
 
