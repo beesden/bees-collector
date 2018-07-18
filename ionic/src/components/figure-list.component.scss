@@ -1,8 +1,9 @@
 @import "../styles/variables";
 
-:root {
+:host {
   display: block;
   background: $swatch-smoke;
+  overflow: hidden;
 }
 
 bc-figure-card {

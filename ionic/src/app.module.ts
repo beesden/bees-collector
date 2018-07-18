@@ -7,6 +7,7 @@ import { AppRootComponent } from 'src/app-root.component';
 
 import { CollectionCardComponent, FigureCardComponent, FigureListComponent } from "src/components";
 import { CollectionViewPageComponent, FigureEditPageComponent, FigureListPageComponent, FigureViewPageComponent, RangesPageComponent, SearchPageComponent, TabsPageComponent } from "src/pages";
+import { CollectionEditPageComponent } from "src/pages/collection-edit-page.component";
 import { CollectionListPageComponent } from "src/pages/collection-list-page.component";
 import { CollectionService, ConnectionService, FigureService } from "src/service";
 
@@ -14,6 +15,7 @@ const pages = [
   TabsPageComponent,
   SearchPageComponent,
 
+  CollectionEditPageComponent,
   CollectionListPageComponent,
   CollectionViewPageComponent,
 

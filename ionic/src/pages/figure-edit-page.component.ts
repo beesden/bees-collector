@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { NavParams, ViewController } from "ionic-angular";
 import { Figure } from "src/entity/figure";
 import { FigureProperty } from "src/entity/figure-property";
+import { CollectionViewPageComponent } from "src/pages/collection-view-page.component";
+import { FigureViewPageComponent } from "src/pages/figure-view-page.component";
 import { FigureService, FigureRange } from "src/service/figure.service";
 
 @Component({
   selector: 'bp-figure-edit',
-  styleUrls: ['./figure-edit-page.component.scss'],
   template: `
     <ion-header>
       <ion-navbar>
@@ -101,7 +102,7 @@ export class FigureEditPageComponent {
 
   constructor(private viewCtrl: ViewController,
               private figureService: FigureService,
-              navParams: NavParams) {
+              private navParams: NavParams) {
 
     const figureId = navParams.get('figureId');
     if (figureId) {
@@ -140,16 +141,21 @@ export class FigureEditPageComponent {
   }
 
   /**
-   * Close the form.
-   */
-  dismiss(): void {
-    this.viewCtrl.dismiss();
-  }
-
-  /**
    * Save any changes made in the form.
    */
   saveChanges(): void {
-    this.figureService.saveFigure(this.figure).then(() => this.dismiss());
-  }
+    this.figureService.saveFigure(this.figure).then(figure => {
+
+      const figureId = this.navParams.get('figureId');
+      const nav = this.viewCtrl.getNav();
+
+      this.viewCtrl.dismiss().then(() => {
+        if (!figureId) {
+          nav.push(FigureViewPageComponent, {figureId: figure.id})
+        }
+      })
+    })
+
+  };
+
 }

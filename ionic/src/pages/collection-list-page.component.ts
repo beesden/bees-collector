@@ -2,6 +2,7 @@ import { Component, NgZone } from "@angular/core";
 import { Page } from "ionic-angular/navigation/nav-util";
 import { Collection } from "src/entity";
 import { IonViewWillEnter } from "src/ionic-lifecycle";
+import { CollectionEditPageComponent } from "src/pages/collection-edit-page.component";
 import { CollectionViewPageComponent } from "src/pages/collection-view-page.component";
 import { SearchPageComponent } from "src/pages/search-page.component";
 import { CollectionService } from "src/service";
@@ -35,7 +36,7 @@ import { CollectionService } from "src/service";
       </div>
 
       <ion-fab bottom right>
-        <button ion-fab [navPush]="" [navParams]="{range: range}">
+        <button ion-fab [navPush]="collectionEditPage" [navParams]="{range: range}">
           <ion-icon name="add"></ion-icon>
         </button>
       </ion-fab>
@@ -50,7 +51,7 @@ export class CollectionListPageComponent implements IonViewWillEnter {
   collections: Collection[];
 
   searchPage: Page = SearchPageComponent;
-  collectionEditPage: Page = SearchPageComponent;
+  collectionEditPage: Page = CollectionEditPageComponent;
   collectionViewPage: Page = CollectionViewPageComponent;
 
   constructor(private collectionService: CollectionService,

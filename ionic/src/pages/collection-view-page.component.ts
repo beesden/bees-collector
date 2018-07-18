@@ -5,6 +5,7 @@ import { Page } from "ionic-angular/navigation/nav-util";
 import { Image } from "src/entity";
 import { Collection } from "src/entity/collection";
 import { IonViewWillEnter } from "src/ionic-lifecycle";
+import { CollectionEditPageComponent } from "src/pages/collection-edit-page.component";
 import { FigureEditPageComponent } from "src/pages/figure-edit-page.component";
 import { FigureViewPageComponent } from "src/pages/figure-view-page.component";
 import { CollectionService } from "src/service/collection.service";
@@ -39,6 +40,7 @@ import { CollectionService } from "src/service/collection.service";
 
       <header class="page-section">
         <h1>{{collection.name}}</h1>
+        <p>{{collection.description}}</p>
 
         <dl>
           <dt>Figures in Collection:</dt>
@@ -46,19 +48,20 @@ import { CollectionService } from "src/service/collection.service";
           <dt>Owned:</dt>
           <dd>{{collection.collected}}</dd>
         </dl>
+        
+        <hr />
+
+        <h2>Figures:</h2>
       </header>
 
-      <section class="page-section">
-        <h2>Figures:</h2>
-        <bc-figure-list [figures]="collection.figures"></bc-figure-list>
-      </section>
+      <bc-figure-list [figures]="collection.figures"></bc-figure-list>
 
     </ion-content>
   `
 })
 export class CollectionViewPageComponent implements IonViewWillEnter {
 
-  collectionEditPage: Page = FigureEditPageComponent;
+  collectionEditPage: Page = CollectionEditPageComponent;
   collection: Collection = new Collection();
 
   constructor(private actionSheetCtrl: ActionSheetController,
