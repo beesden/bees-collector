@@ -15,6 +15,29 @@ Since a Cordova build is somewhat temperamental, and to prevent dependencies get
 
 The main advantage of this is that each component of the build can be tested and built in isolation.
 
+A sample set of build instructions to install the android debug app to a device might be:
+
+```
+# Clear workspace
+echo "Clearing workspace..."
+rm -rf dist
+docker-compose down
+
+# Build cordova app
+docker-compose up ionic
+docker-compose up cordova
+docker-compose up android_debug
+echo "todo ios build"
+
+echo "Deploying debug to device..."
+adb install -d -r dist/android/debug/app-debug.apk
+
+# Clear containers
+echo "Clearing containers..."
+docker-compose down
+
+```
+
 #### 1. Ionic Front-End
 
 ```
@@ -49,7 +72,27 @@ docker-compose up android_release
 
 Once the Cordova platforms are built, the Android APKs are built using gradle commands. The output of this is saved in the `dist` folder.
 
-*TODO - android release APK*
+##### Local testing
+
+While the app can be completely built through containers, the following needs to be run in order to run the app on a device:
+
+###### Windows
+
+1. Download [ADB](https://dl.google.com/android/repository/platform-tools-latest-windows.zip) and install. Easiest step is to add to the $PATH in System Preferences.
+2. Plug the Android device in and ensure developer mode is enabled.
+3. Run the following command to install the debug APK: `adb install -r dist/android/debug/app-debug.apk`
+
+###### Linux / Mac
+
+Grant the docker access to the USB device and run this instead of the docker-compose up command.
+
+```
+docker run -ti -rm -v /dev/bus/usb:/dev/bus/usb android_debug gradle installDebug
+```
+
+##### Releasing
+
+*TODO*
 
 #### 4. iOS
 
@@ -60,8 +103,8 @@ docker-compose up ios
 
 Since the iOS builds require an OSX and xCode development environment, the build isn't added yet. 
 
-*TODO - ios build*
+*TODO*
 
-## Releasing
+##### Releasing
 
 *TODO*

@@ -13,8 +13,6 @@ services:
 
   cordova:
     command: bash -c 'npm install && npm run build'
-    depends_on:
-      - ionic
     environment:
       - CI=true
     image: beesden/cordova

@@ -1,17 +1,19 @@
-#!/usr/bin/env bash
-set -e:
+#!/bin/bash -e
 
+# Clear workspace
+echo "Clearing workspace..."
 rm -rf dist
+docker-compose down
 
 # Build cordova app
 docker-compose up ionic
 docker-compose up cordova
-
-# Build android
 docker-compose up android_debug
-docker-compose up android_release
+echo "todo ios build"
 
-# Build ios - TODO
-echo todo ios build
+echo "Deploying debug to device..."
+adb install -d -r dist/android/debug/app-debug.apk
 
-docker rm $(docker ps -a -q)
+# Clear containers
+echo "Clearing containers..."
+docker-compose down
