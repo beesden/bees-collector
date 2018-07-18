@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { Page } from "ionic-angular/navigation/nav-util";
+import { Collection } from "src/entity";
 import { Figure } from "src/entity/figure";
 import { FigureViewPageComponent } from "src/pages/figure-view-page.component";
+import { CollectionService } from "src/service";
 import { FigureService } from "src/service/figure.service";
-import { Series } from "src/service/series/series";
 
 @Component({
   selector: 'search-page',
@@ -12,13 +13,14 @@ import { Series } from "src/service/series/series";
     <ion-header>
 
       <ion-navbar>
-        <ion-searchbar [(ngModel)]="query" (ionChange)="search(query)" [showCancelButton]="true" autofocus></ion-searchbar>
+        <ion-searchbar [(ngModel)]="query" (ionChange)="search(query)" [showCancelButton]="true"
+                       autofocus></ion-searchbar>
       </ion-navbar>
 
     </ion-header>
 
     <ion-content>
-      
+
       <div class="content-grid">
         <card-figure *ngFor="let figure of figures | slice: 0: limit"
                      [figure]="figure"
@@ -39,12 +41,13 @@ export class SearchPageComponent {
   query: string;
   limit: number;
 
+  collections: Collection[];
   figures: Figure[];
-  series: Series;
 
   figureViewPage: Page = FigureViewPageComponent;
 
-  constructor(private figureService: FigureService) {
+  constructor(private figureService: FigureService,
+              private collectionService: CollectionService) {
   }
 
   /**
@@ -54,9 +57,12 @@ export class SearchPageComponent {
    */
   search(query: string) {
 
-    this.figureService.search(query).then((figures) => {
-      this.limit = Math.min(figures.length, 12);
+    this.figureService.search(query).then(figures => {
       this.figures = figures;
+    });
+
+    this.collectionService.search(query).then(collections => {
+      this.collections = collections;
     })
 
   }

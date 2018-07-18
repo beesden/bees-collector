@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavParams, ViewController } from "ionic-angular";
-import { Figure, FigureProperty } from "src/entity/figure";
+import { Figure } from "src/entity/figure";
+import { FigureProperty } from "src/entity/figure-property";
 import { FigureService, FigureRange } from "src/service/figure.service";
 
 @Component({

@@ -11,7 +11,6 @@ export interface FigureRange {
   owned: number;
 }
 
-
 @Injectable()
 export class FigureService {
 
@@ -21,28 +20,29 @@ export class FigureService {
     this.repository = connectionService.connection.then(connection => connection.getRepository(Figure));
   }
 
-
-  deleteFigure(figureId: number) {
-
-    return this.repository.then(repo => repo.delete(figureId));
-
-  }
-
   /**
-   * List all figures
+   * Delete a figure from the database.
    *
-   * @param range filter to a specific range.
+   * @param figureId
    */
-  getOne(figureId?: number): Promise<Figure> {
-
-    return this.repository.then(repo => {
-      return repo.findOne(figureId, {relations: ["images", 'properties', 'accessories']});
-    });
-
+  deleteOne(figureId: number) {
+    return this.repository.then(repo => repo.delete(figureId));
   }
 
   /**
-   * List all figures
+   * Fetch a single figure from the database.
+   *
+   * @param figureId
+   */
+  getOne(figureId: number): Promise<Figure> {
+    return this.repository.then(repo => repo.findOne(figureId, {relations: ["images", 'properties', 'accessories']}));
+  }
+
+  /**
+   * List all figures in the database.
+   *
+   * @param filters
+   * @param filters.range
    */
   getList(filters: { range?: FigureRange } = {}): Promise<Figure[]> {
 
@@ -64,7 +64,7 @@ export class FigureService {
   }
 
   /**
-   * Get a list of all ranges available.
+   * Get a list of all the distinct figure ranges.
    */
   getRanges(): Promise<FigureRange[]> {
 
@@ -89,7 +89,7 @@ export class FigureService {
   /**
    * Create / update a figure.
    *
-   * @param figure figure to persist
+   * @param figure
    */
   saveFigure(figure?: Figure): Promise<Figure> {
 
@@ -99,6 +99,8 @@ export class FigureService {
 
   /**
    * Search for figures by query string.
+   *
+   * Search results are returned based on both name and notes fields.
    */
   search(query: string): Promise<Figure[]> {
 

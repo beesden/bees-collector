@@ -86,9 +86,9 @@ import { FigureService } from "src/service/figure.service";
         <h2>Collections:</h2>
 
         <div class="grid">
-          <series-card [series]="{name: 'Test 1'}"></series-card>
-          <series-card [series]="{name: 'Test 2'}"></series-card>
-          <series-card [series]="{name: 'Test 3'}"></series-card>
+          <collection-card [collection]="{name: 'Test 1'}"></collection-card>
+          <collection-card [collection]="{name: 'Test 2'}"></collection-card>
+          <collection-card [collection]="{name: 'Test 3'}"></collection-card>
         </div>
       </section>
 
@@ -170,7 +170,7 @@ export class FigureViewPageComponent implements IonViewWillEnter {
       .addButton({
         text: 'Yes I\'m Sure',
         handler: () => {
-          this.figureService.deleteFigure(this.figure.id).then(() => this.viewCtrl.dismiss());
+          this.figureService.deleteOne(this.figure.id).then(() => this.viewCtrl.dismiss());
         }
       })
       .present();

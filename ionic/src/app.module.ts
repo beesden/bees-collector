@@ -4,7 +4,7 @@ import { Camera } from "@ionic-native/camera";
 import { SQLite } from "@ionic-native/sqlite";
 import { IonicApp, IonicModule } from "ionic-angular";
 
-import { FigureCardComponent, SeriesCardComponent } from "src/components";
+import { FigureCardComponent, CollectionCardComponent } from "src/components";
 import {
   FigureEditPageComponent,
   FigureListPageComponent,
@@ -12,12 +12,15 @@ import {
   SearchPageComponent,
   TabsPageComponent
 } from "src/pages";
-import { ConnectionService, FigureService, SeriesService } from "src/service";
+import { CollectionListPageComponent } from "src/pages/collection-list-page.component";
+import { ConnectionService, FigureService, CollectionService } from "src/service";
 import { AppRootComponent } from 'src/app-root.component';
 
 const pages = [
   TabsPageComponent,
   SearchPageComponent,
+
+  CollectionListPageComponent,
 
   FigureListPageComponent,
   FigureEditPageComponent,
@@ -29,7 +32,7 @@ const pages = [
 @NgModule({
   declarations: [
     AppRootComponent,
-    SeriesCardComponent,
+    CollectionCardComponent,
     FigureCardComponent,
     ...pages
   ],
@@ -47,7 +50,7 @@ const pages = [
   providers: [
     // Local services
     ConnectionService,
-    SeriesService,
+    CollectionService,
     FigureService,
 
     // Ionic Native

@@ -1,10 +1,12 @@
 import { Injectable } from "@angular/core";
 import { Platform } from "ionic-angular";
+import { Collection, Figure, Image } from "src/entity";
+import { sampleData } from "src/entity/data";
+import { FigureAccessory } from "src/entity/figure-accessory";
+import { FigureProperty } from "src/entity/figure-property";
 import { Connection, createConnection } from "typeorm/browser";
 import { CordovaConnectionOptions } from "typeorm/browser/driver/cordova/CordovaConnectionOptions";
 import { SqljsConnectionOptions } from "typeorm/browser/driver/sqljs/SqljsConnectionOptions";
-import { Collection, Figure, FigureAccessory, FigureProperty, Image } from "src/entity";
-import { sampleData } from "src/entity/data";
 
 @Injectable()
 export class ConnectionService {
@@ -54,10 +56,20 @@ export class ConnectionService {
       return figure;
     });
 
-    const repo = connection.getRepository(Figure);
+    const collection = new Collection();
+    collection.name = 'Last 17';
+    collection.images = [];
+    collection.images.push(new Image());
+    collection.images[0].url = 'https://assets.catawiki.nl/assets/2017/12/12/e/7/8/e788e550-718b-4afe-81eb-ad4798f7ebfe.jpg';
+    collection.images[0].name = 'Cover';
 
-    return repo.clear()
-      .then(() => repo.save(figures))
+    const figureRepo = connection.getRepository(Figure);
+    const collectionRepo = connection.getRepository(Collection);
+
+    return figureRepo.clear()
+      .then(() => figureRepo.save(figures))
+      .then(() => collectionRepo.clear())
+      .then(() => collectionRepo.save(collection))
       .then(() => connection);
 
   };
