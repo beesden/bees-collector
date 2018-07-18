@@ -24,16 +24,33 @@ import { FigureViewPageComponent } from "./figure-view-page.component";
       </ion-navbar>
 
     </ion-header>
- 
+
     <ion-content>
 
-      <bc-figure-list [figures]="figures"></bc-figure-list>
+      <ng-container *ngIf="figures?.length; else emptyState">
+        
+        <bc-figure-list [figures]="figures"></bc-figure-list>
 
-      <ion-fab bottom right>
-        <button ion-fab [navPush]="figureEditPage" [navParams]="{range: range}">
-          <ion-icon name="add"></ion-icon>
-        </button>
-      </ion-fab>
+        <ion-fab bottom right>
+          <button ion-fab [navPush]="figureEditPage" [navParams]="{range: range}">
+            <ion-icon name="add"></ion-icon>
+          </button>
+        </ion-fab>
+
+      </ng-container>
+
+      <ng-template #emptyState>
+
+        <article class="emptyState">
+          <ion-icon name="person"></ion-icon>
+
+          <h1>You have not added any figures.</h1>
+          <p>Track your action figure collection by added figures here, and assigning them to ranges or collections.</p>
+
+          <button ion-button [navPush]="figureEditPage">Add figure</button>
+        </article>
+
+      </ng-template>
 
     </ion-content>
   `

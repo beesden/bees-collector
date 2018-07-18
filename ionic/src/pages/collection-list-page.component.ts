@@ -27,19 +27,36 @@ import { CollectionService } from "src/service";
 
     <ion-content>
 
-      <div class="content-grid">
-        <bc-collection-card *ngFor="let collection of collections"
-                     [collection]="collection"
-                     [navPush]="collectionViewPage"
-                     [navParams]="{collectionId: collection.id}">
-        </bc-collection-card>
-      </div>
+      <ng-container *ngIf="collections?.length; else emptyState">
 
-      <ion-fab bottom right>
-        <button ion-fab [navPush]="collectionEditPage" [navParams]="{range: range}">
-          <ion-icon name="add"></ion-icon>
-        </button>
-      </ion-fab>
+        <div class="content-grid">
+          <bc-collection-card *ngFor="let collection of collections"
+                              [collection]="collection"
+                              [navPush]="collectionViewPage"
+                              [navParams]="{collectionId: collection.id}">
+          </bc-collection-card>
+        </div>
+
+        <ion-fab bottom right>
+          <button ion-fab [navPush]="collectionEditPage" [navParams]="{range: range}">
+            <ion-icon name="add"></ion-icon>
+          </button>
+        </ion-fab>
+
+      </ng-container>
+
+      <ng-template #emptyState>
+
+        <article class="emptyState">
+          <ion-icon name="albums"></ion-icon>
+
+          <h1>You do not have any collections.</h1>
+          <p>Collections can be used to categorise, group and organise your figures.</p>
+
+          <button ion-button [navPush]="collectionEditPage">Add collection</button>
+        </article>
+
+      </ng-template>
 
     </ion-content>
   `
