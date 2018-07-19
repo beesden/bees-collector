@@ -14,7 +14,7 @@ export class Collection {
   @Column({nullable: true})
   description: string;
 
-  @OneToOne(type => Image, {cascade: true})
+  @OneToOne(type => Image, {cascade: true, eager: true})
   @JoinColumn()
   image: Image;
 

@@ -48,6 +48,7 @@ export class FigureService {
 
     return this.query.then(query => query
       .leftJoinAndSelect('figure.collections', 'collections')
+      .leftJoinAndSelect('collections.image', 'collection_image')
       .whereInIds(figureId)
       .getOne()
     );

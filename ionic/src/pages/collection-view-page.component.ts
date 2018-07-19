@@ -135,7 +135,7 @@ export class CollectionViewPageComponent implements IonViewWillEnter {
   private photoUpload(sourceType: PictureSourceType): void {
 
     const cameraOptions: CameraOptions = {
-      destinationType: DestinationType.NATIVE_URI,
+      destinationType: DestinationType.FILE_URL,
       mediaType: MediaType.PICTURE,
       sourceType,
       correctOrientation: true

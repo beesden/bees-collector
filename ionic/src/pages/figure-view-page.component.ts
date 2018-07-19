@@ -118,10 +118,7 @@ export class FigureViewPageComponent implements IonViewWillEnter {
     const figureId = this.navParams.get('figureId');
 
     this.figureService.getOne(figureId).then(figure => {
-      this.zone.run(() => {
-        console.log(figure);
-        this.figure = figure
-      });
+      this.zone.run(() => this.figure = figure);
     });
 
   }
@@ -192,8 +189,8 @@ export class FigureViewPageComponent implements IonViewWillEnter {
       .then(path => {
         const image = new Image();
         image.url = path;
+        image.name = path;
         this.figure.images.push(image)
-        // todo - image repo?
         this.figureService.saveFigure(this.figure);
       })
       .catch(err => console.log(err));
