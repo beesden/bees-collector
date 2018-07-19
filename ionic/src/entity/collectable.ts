@@ -12,7 +12,7 @@ export abstract class Collectable {
   @Column({nullable: true})
   notes: string;
 
-  @ManyToMany(type => Image, {cascade: true})
+  @ManyToMany(type => Image, {cascade: true, eager: true})
   @JoinTable()
   images: Image[];
 

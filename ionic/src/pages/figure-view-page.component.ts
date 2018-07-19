@@ -16,14 +16,14 @@ import { FigureService } from "src/service/figure.service";
       <ion-navbar>
 
         <ion-buttons end>
-          <button ion-button [navPush]="figureEditPage" [navParams]="{figureId: figure?.id}">
-            <ion-icon name="create"></ion-icon>
-          </button>
           <button ion-button (click)="addPhoto()">
             <ion-icon name="camera"></ion-icon>
           </button>
           <button ion-button (click)="deleteFigure()">
             <ion-icon name="trash"></ion-icon>
+          </button>
+          <button ion-button (click)="changeStatus()">
+            <ion-icon [name]="figure.collected ? 'checkmark' : 'close'"></ion-icon>
           </button>
         </ion-buttons>
 
@@ -37,17 +37,20 @@ import { FigureService } from "src/service/figure.service";
       </ion-slides>
 
       <header class="page-section">
+
+        <!-- Main title -->
         <h1>{{figure.name}}</h1>
-        <p>{{figure.notes}}</p>
-      </header>
+        <div [class]="'status-' + figure.status">{{figure.statusText}}</div>
 
-      <section class="page-section">
-        <button ion-button block *ngIf="!figure.collected" (click)="addToCollection()">Add to Collection</button>
-      </section>
+        <!-- Notes -->
+        <ng-container *ngIf="figure.notes">
+          <hr/>
+          <p>{{figure.notes}}</p>
+        </ng-container>
 
-      <h2>More info</h2>
+        <hr/>
 
-      <section class="page-section">
+        <!-- Additional Info -->
         <dl>
           <dt>Series</dt>
           <dd>{{figure.series}}</dd>
@@ -67,43 +70,40 @@ import { FigureService } from "src/service/figure.service";
             <dd>{{property.value}}</dd>
           </ng-container>
         </dl>
-      </section>
 
-      <section class="page-section">
-        <h2>Accessories</h2>
-      </section>
+        <!-- Action bar -->
+        <ng-container *ngIf="!figure.collected">
+          <hr/>
+          <nav text-end>
+            <button ion-button clear [navPush]="figureEditPage" [navParams]="{figureId: figure?.id}">Edit Details</button>
+          </nav>
+        </ng-container>
 
-      <ion-list>
+      </header>
+
+      <h2>Accessories</h2>
+
+      <section class="scroller">
 
         <ion-item *ngFor="let accessory of figure.accessories">
-          <ion-icon item-left name="photos"></ion-icon>
-          <h2>{{accessory.name}}</h2>
-
-          <button ion-button>Collected</button>
-          <button ion-button>
-            <ion-icon name="close"></ion-icon>
-          </button>
+          <img item-left [src]="accessory.images ? accessory.images[0].url : ''"/>
+          <div>{{accessory.name}}</div>
         </ion-item>
 
         <ion-item>
           <button ion-button>Add</button>
         </ion-item>
-
-      </ion-list>
-
-      <section class="page-section">
-        <h2>In collections:</h2>
+        
       </section>
 
-      <ion-list>
-        <ion-item *ngFor="let collection of figure.collections">
-          <ion-icon item-left name="photos"></ion-icon>
-          <h2>{{collection.name}}</h2>
-          <button ion-button>
-            <ion-icon name="trash"></ion-icon>
-          </button>
-        </ion-item>
-      </ion-list>
+
+      <ng-container *ngIf="figure.collections?.length">
+        <h2>Collected in:</h2>
+
+        <section class="scroller">
+          <bc-collection-card *ngFor="let collection of figure.collections" [collection]="collection"></bc-collection-card>
+        </section>
+      </ng-container>
 
     </ion-content>
   `
@@ -161,9 +161,9 @@ export class FigureViewPageComponent implements IonViewDidEnter {
   /**
    * Toggles the 'colected' field and saves the change to the DB.
    */
-  addToCollection(): void {
+  changeStatus(): void {
 
-    this.figure.collected = true;
+    this.figure.collected = !this.figure.collected;
     this.figureService.saveFigure(this.figure);
 
   }

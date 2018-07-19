@@ -14,7 +14,7 @@ import { Figure, FigureState } from "src/entity";
       <header>
         <h2>{{figure.name}}</h2>
         
-        <p class="status">{{statusText}}</p>
+        <p class="status">{{figure.statusText}}</p>
         
         <p class="range">
           {{figure.range}}
@@ -43,17 +43,6 @@ export class FigureCardComponent {
       return this.sanitizer.bypassSecurityTrustStyle(`url(${this.figure.images[0].url})`);
     }
     return this.sanitizer.bypassSecurityTrustStyle(`url(${this.defaultImage})`);
-  }
-
-  get statusText(): string {
-    switch (this.figure.status) {
-      case FigureState.COMPLETE:
-        return 'Complete';
-      case FigureState.INCOMPLETE:
-        return 'Incomplete';
-      case FigureState.UNOWNED:
-        return 'Unowned';
-    }
   }
 
 

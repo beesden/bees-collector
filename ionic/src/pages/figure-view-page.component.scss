@@ -10,82 +10,90 @@ ion-slides {
 }
 
 header {
+  padding: 0 1rem;
+
   h1 {
     font-size: 1.5rem;
-    margin: 1rem 0;
+    line-height: 1.5;
+    margin: 1rem 0 0;
+  }
+
+  [class^="status-"] {
+    color: var(--status-color);
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 1rem;
+    text-transform: uppercase;
+  }
+
+  .status-0 {
+    --status-color: #{$swatch-teal};
+  }
+
+  .status-1 {
+    --status-color: #{$swatch-violet};
+  }
+
+  .status-2 {
+    --status-color: #{$swatch-cranberry};
   }
 
   p {
     font-size: 1rem;
+  }
 
+  hr {
+    margin: 1rem 0;
+  }
+
+  dl {
+    display: flex;
+    flex-flow: row wrap;
+    font-size: .9rem;
+    margin: 1rem 0;
+
+    dt {
+      color: #555;
+      flex: 40% 0 0;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    dd {
+      flex: 60% 0 0;
+      margin: 0;
+
+      ~ dt, ~ dd {
+        margin-top: .5rem;
+      }
+    }
+  }
+
+  nav {
+    margin: 1rem 0;
+
+    button {
+      font-size: 1rem;
+      height: auto;
+      line-height: 1;
+      padding: 0;
+    }
   }
 }
 
 h2 {
+  background: $swatch-smoke;
   font-size: 1.2rem;
   margin: 0;
   padding: 1rem;
 }
 
-dl {
+.scroller {
   display: flex;
-  flex-flow: row wrap;
-  margin: 1rem 0;
+  overflow-x: scroll;
 
-  dt {
-    color: #555;
-    flex: 40% 0 0;
-    margin: 0 0 8px;
-  }
-
-  dd {
-    flex: 60% 0 0;
-    margin: 0 0 8px;
-  }
-}
-
-.page-section {
-  overflow: auto;
-  padding: 0 14px;
-
-  &:nth-child(odd) {
-    background: #f0f0f0;
-  }
-
-  &:last-child {
-    padding-bottom: 40px;
-  }
-
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 8px;
-}
-
-.completion {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 8px;
-  list-style: none;
-  padding: 0;
-  margin: 12px 0;
-
-  li {
-    background: #900;
-    border: 1px solid #ddd;
-    border-radius: 2px;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    font-size: 14px;
-    justify-content: center;
-    min-height: 48px;
-    text-align: center;
-
-    &.complete {
-      background: #090;
-    }
+  > * {
+    flex: 10rem 0 0;
+    margin: 1rem;
   }
 }

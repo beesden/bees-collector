@@ -47,4 +47,19 @@ export class Figure extends Collectable {
     }
 
   }
+
+  /**
+   * Return appropriate text for the current status.
+   */
+  get statusText(): string {
+    switch (this.status) {
+      case FigureState.COMPLETE:
+        return 'Complete';
+      case FigureState.INCOMPLETE:
+        return 'Incomplete';
+      case FigureState.UNOWNED:
+        return 'Unowned';
+    }
+  }
+
 }
