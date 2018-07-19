@@ -1,7 +1,7 @@
 import { Component, NgZone } from "@angular/core";
 import { Page } from "ionic-angular/navigation/nav-util";
 import { Collection } from "src/entity";
-import { IonViewWillEnter } from "src/ionic-lifecycle";
+import { IonViewDidEnter } from "src/ionic-lifecycle";
 import { CollectionEditPageComponent } from "src/pages/collection-edit-page.component";
 import { CollectionViewPageComponent } from "src/pages/collection-view-page.component";
 import { SearchPageComponent } from "src/pages/search-page.component";
@@ -27,41 +27,33 @@ import { CollectionService } from "src/service";
 
     <ion-content>
 
-      <ng-container *ngIf="collections?.length; else emptyState">
+      <ion-spinner *ngIf="!collections"></ion-spinner>
 
-        <div class="content-grid">
-          <bc-collection-card *ngFor="let collection of collections"
-                              [collection]="collection"
-                              [navPush]="collectionViewPage"
-                              [navParams]="{collectionId: collection.id}">
-          </bc-collection-card>
-        </div>
+      <ion-fab bottom right *ngIf="collections">
+        <button ion-fab [navPush]="collectionEditPage" [navParams]="{range: range}">
+          <ion-icon name="add"></ion-icon>
+        </button>
+      </ion-fab>
 
-        <ion-fab bottom right>
-          <button ion-fab [navPush]="collectionEditPage" [navParams]="{range: range}">
-            <ion-icon name="add"></ion-icon>
-          </button>
-        </ion-fab>
+      <div class="content-grid" *ngIf="collections?.length > 0">
+        <bc-collection-card *ngFor="let collection of collections"
+                            [collection]="collection"
+                            [navPush]="collectionViewPage"
+                            [navParams]="{collectionId: collection.id}">
+        </bc-collection-card>
+      </div>
 
-      </ng-container>
+      <article class="emptyState" *ngIf="collections?.length === 0">
+        <ion-icon name="albums"></ion-icon>
 
-      <ng-template #emptyState>
-
-        <article class="emptyState">
-          <ion-icon name="albums"></ion-icon>
-
-          <h1>You do not have any collections.</h1>
-          <p>Collections can be used to categorise, group and organise your figures.</p>
-
-          <button ion-button [navPush]="collectionEditPage">Add collection</button>
-        </article>
-
-      </ng-template>
+        <h1>You do not have any collections.</h1>
+        <p>Collections can be used to categorise, group and organise your figures.</p>
+      </article>
 
     </ion-content>
   `
 })
-export class CollectionListPageComponent implements IonViewWillEnter {
+export class CollectionListPageComponent implements IonViewDidEnter {
 
   limit: number;
 
@@ -78,7 +70,7 @@ export class CollectionListPageComponent implements IonViewWillEnter {
   /**
    *  Update data whenever the view is opened or returned to.
    */
-  ionViewWillEnter(): void {
+  ionViewDidEnter(): void {
     this.collectionService.getList().then(collections => {
       this.zone.run(() => {
         this.limit = Math.min(collections.length, 12);

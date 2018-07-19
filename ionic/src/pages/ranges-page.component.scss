@@ -1,1 +1,44 @@
 @import "../styles/variables";
+
+.series {
+  color: $swatch-grey-dark;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  text-transform: uppercase;
+}
+
+.range {
+  display: flex;
+  border-bottom: 1px solid $swatch-grey-light;
+  margin: 0;
+  padding: 1rem;
+
+  ion-icon {
+    margin-right: 2rem;
+  }
+
+  header {
+    flex: 1;
+  }
+
+  h2 {
+    color: $swatch-black;
+    font-size: 1.1rem;
+    margin: 0;
+  }
+
+  p {
+    color: $swatch-grey-dark;
+    display: block;
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  div {
+    color: $swatch-grey-dark;
+    font-size: 1.2rem;
+  }
+}
+
+

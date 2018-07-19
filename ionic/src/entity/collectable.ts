@@ -1,5 +1,5 @@
 import { Image } from "src/entity/image";
-import { Column, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm/browser";
+import { Column, CreateDateColumn, JoinTable, ManyToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm/browser";
 
 export abstract class Collectable {
 
@@ -18,5 +18,11 @@ export abstract class Collectable {
 
   @Column({nullable: true})
   collected: boolean;
+
+  @CreateDateColumn()
+  dateCreated: Date;
+
+  @UpdateDateColumn()
+  dateUpdated: Date;
 
 }

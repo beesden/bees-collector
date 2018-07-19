@@ -9,20 +9,28 @@ ion-slides {
   }
 }
 
-h1 {
-  font-size: 18px;
-  margin: 12px 0;
+header {
+  h1 {
+    font-size: 1.5rem;
+    margin: 1rem 0;
+  }
+
+  p {
+    font-size: 1rem;
+
+  }
 }
 
 h2 {
-  font-size: 16px;
-  margin: 12px 0;
+  font-size: 1.2rem;
+  margin: 0;
+  padding: 1rem;
 }
 
 dl {
   display: flex;
   flex-flow: row wrap;
-  margin: $gutter 0;
+  margin: 1rem 0;
 
   dt {
     color: #555;

@@ -2,7 +2,7 @@ import { Component, NgZone } from '@angular/core';
 import { NavParams } from "ionic-angular";
 import { Page } from "ionic-angular/navigation/nav-util";
 import { Figure } from "src/entity/figure";
-import { IonViewWillEnter } from "src/ionic-lifecycle";
+import { IonViewDidEnter } from "src/ionic-lifecycle";
 import { FigureEditPageComponent } from "src/pages/figure-edit-page.component";
 import { SearchPageComponent } from "src/pages/search-page.component";
 import { FigureRange, FigureService } from "src/service/figure.service";
@@ -13,7 +13,7 @@ import { FigureRange, FigureService } from "src/service/figure.service";
     <ion-header>
 
       <ion-navbar>
-        <ion-title>{{range?.name || 'All Figures'}}</ion-title>
+        <ion-title>{{range?.name || 'My Figures'}}</ion-title>
 
         <ion-buttons start>
           <button ion-button [navPush]="searchPage">
@@ -26,35 +26,31 @@ import { FigureRange, FigureService } from "src/service/figure.service";
 
     <ion-content>
 
-      <ng-container *ngIf="figures?.length; else emptyState">
-        
-        <bc-figure-list [figures]="figures"></bc-figure-list>
+      <ion-spinner *ngIf="!figures"></ion-spinner>
 
-        <ion-fab bottom right>
-          <button ion-fab [navPush]="figureEditPage" [navParams]="{range: range}">
-            <ion-icon name="add"></ion-icon>
-          </button>
-        </ion-fab>
+      <bc-figure-list [figures]="figures" *ngIf="figures?.length > 0"></bc-figure-list>
 
-      </ng-container>
+      <ion-fab bottom right *ngIf="figures">
+        <button ion-fab [navPush]="figureEditPage" [navParams]="{range: range}">
+          <ion-icon name="add"></ion-icon>
+        </button>
+      </ion-fab>
 
-      <ng-template #emptyState>
+      <ng-container *ngIf="figures?.length === 0">
 
         <article class="emptyState">
           <ion-icon name="person"></ion-icon>
 
           <h1>You have not added any figures.</h1>
           <p>Track your action figure collection by added figures here, and assigning them to ranges or collections.</p>
-
-          <button ion-button [navPush]="figureEditPage">Add figure</button>
         </article>
 
-      </ng-template>
+      </ng-container>
 
     </ion-content>
   `
 })
-export class FigureListPageComponent implements IonViewWillEnter {
+export class FigureListPageComponent implements IonViewDidEnter {
 
   range: FigureRange;
   limit: number;
@@ -75,7 +71,7 @@ export class FigureListPageComponent implements IonViewWillEnter {
   /**
    *  Update data whenever the view is opened or returned to.
    */
-  ionViewWillEnter(): void {
+  ionViewDidEnter(): void {
     this.figureService.getList({range: this.range}).then(figures => {
       this.zone.run(() => {
         this.limit = Math.min(figures.length, 12);

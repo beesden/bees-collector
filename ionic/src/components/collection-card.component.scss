@@ -1,20 +1,39 @@
 @import "../styles/variables";
 
-:host {
-  @include card;
-  position: relative;
-}
-
 figure {
   background: center center/cover no-repeat;
-  margin: #{-$gutter} #{-$gutter} 0;
-  padding-bottom: 75%;
-  border-bottom: 1px solid #ddd;
+  border-radius: 2px;
+  margin: 0;
+  padding-bottom: 100%;
+  position: relative;
+  width: 100%;
+
+  &:after {
+    background: linear-gradient(to top, rgba(#000, .2), rgba(#000, .05));
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+header {
+  line-height: 1.6;
+  padding: .5rem 0 1rem;
 }
 
 h2 {
-  font-size: 14px;
-  line-height: 1.5;
-  margin: $gutter 0 0;
-  text-align: center;
+  @include ellipsis;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+p {
+  color: $swatch-grey-dark;
+  font-size: 1rem;
+  margin: 0;
 }

@@ -4,7 +4,7 @@ import { ActionSheetController, AlertController, NavParams, ViewController } fro
 import { Page } from "ionic-angular/navigation/nav-util";
 import { Image } from "src/entity";
 import { Collection } from "src/entity/collection";
-import { IonViewWillEnter } from "src/ionic-lifecycle";
+import { IonViewDidEnter } from "src/ionic-lifecycle";
 import { CollectionEditPageComponent } from "src/pages/collection-edit-page.component";
 import { CollectionService } from "src/service/collection.service";
 
@@ -57,7 +57,7 @@ import { CollectionService } from "src/service/collection.service";
     </ion-content>
   `
 })
-export class CollectionViewPageComponent implements IonViewWillEnter {
+export class CollectionViewPageComponent implements IonViewDidEnter {
 
   collectionEditPage: Page = CollectionEditPageComponent;
   collection: Collection = new Collection();
@@ -76,7 +76,7 @@ export class CollectionViewPageComponent implements IonViewWillEnter {
    *
    *  e.g. If we want to refresh the collection after editing.
    */
-  ionViewWillEnter(): void {
+  ionViewDidEnter(): void {
 
     const collectionId = this.navParams.get('collectionId');
     if (!collectionId) {

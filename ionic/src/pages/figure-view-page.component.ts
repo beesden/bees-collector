@@ -4,7 +4,7 @@ import { ActionSheetController, AlertController, NavParams, ViewController } fro
 import { Page } from "ionic-angular/navigation/nav-util";
 import { Image } from "src/entity";
 import { Figure } from "src/entity/figure";
-import { IonViewWillEnter } from "src/ionic-lifecycle";
+import { IonViewDidEnter } from "src/ionic-lifecycle";
 import { FigureEditPageComponent } from "src/pages/figure-edit-page.component";
 import { FigureService } from "src/service/figure.service";
 
@@ -38,13 +38,14 @@ import { FigureService } from "src/service/figure.service";
 
       <header class="page-section">
         <h1>{{figure.name}}</h1>
-        <p>{{figure.series}} | {{figure.range}}</p>
+        <p>{{figure.notes}}</p>
       </header>
 
       <section class="page-section">
         <button ion-button block *ngIf="!figure.collected" (click)="addToCollection()">Add to Collection</button>
-        <h2>More info</h2>
       </section>
+
+      <h2>More info</h2>
 
       <section class="page-section">
         <dl>
@@ -70,31 +71,44 @@ import { FigureService } from "src/service/figure.service";
 
       <section class="page-section">
         <h2>Accessories</h2>
-
-        <div class="scroller">
-          <div class="accessory" *ngFor="let accessory of figure.accessories">
-            {{accessory.name}}
-          </div>
-          <div class="add-button" (click)="addAccessory()">
-            Add
-          </div>
-        </div>
-
       </section>
+
+      <ion-list>
+
+        <ion-item *ngFor="let accessory of figure.accessories">
+          <ion-icon item-left name="photos"></ion-icon>
+          <h2>{{accessory.name}}</h2>
+
+          <button ion-button>Collected</button>
+          <button ion-button>
+            <ion-icon name="close"></ion-icon>
+          </button>
+        </ion-item>
+
+        <ion-item>
+          <button ion-button>Add</button>
+        </ion-item>
+
+      </ion-list>
 
       <section class="page-section">
-        <h2>Collections:</h2>
-
-        <div class="grid">
-          <bc-collection-card [collection]="collection"
-                              *ngFor="let collection of figure.collections"></bc-collection-card>
-        </div>
+        <h2>In collections:</h2>
       </section>
+
+      <ion-list>
+        <ion-item *ngFor="let collection of figure.collections">
+          <ion-icon item-left name="photos"></ion-icon>
+          <h2>{{collection.name}}</h2>
+          <button ion-button>
+            <ion-icon name="trash"></ion-icon>
+          </button>
+        </ion-item>
+      </ion-list>
 
     </ion-content>
   `
 })
-export class FigureViewPageComponent implements IonViewWillEnter {
+export class FigureViewPageComponent implements IonViewDidEnter {
 
   figureEditPage: Page = FigureEditPageComponent;
   figure: Figure = new Figure();
@@ -113,7 +127,7 @@ export class FigureViewPageComponent implements IonViewWillEnter {
    *
    *  e.g. If we want to refresh the figure after editing.
    */
-  ionViewWillEnter(): void {
+  ionViewDidEnter(): void {
 
     const figureId = this.navParams.get('figureId');
 

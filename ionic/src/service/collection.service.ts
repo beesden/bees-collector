@@ -16,6 +16,7 @@ export class CollectionService {
 
     return this.repository.then(repo => repo.createQueryBuilder('collection')
       .leftJoinAndSelect('collection.image', 'image')
+      .loadRelationCountAndMap("collection.length", "collection.figures")
     );
 
   }

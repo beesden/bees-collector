@@ -1,12 +1,11 @@
 // TODO - Remove components not used from here.
-
 @import "~ionic-angular/themes/version";
 @import "~ionic-angular/themes/ionic.theme.default";
 
 $ionic-theme: "Custom";
 $font-path: "~ionic-angular/fonts";
 $colors: (
-  primary: #7d3f98,
+  primary: #4d65b5,
   secondary: #32db64,
   red: #900,
   green: #090
@@ -203,14 +202,12 @@ $colors: (
 
 @import "~ionic-angular/components/virtual-scroll/virtual-scroll";
 
-
 // Platforms
 // --------------------------------------------------
 @import "~ionic-angular/platform/cordova",
 "~ionic-angular/platform/cordova.ios",
 "~ionic-angular/platform/cordova.md",
 "~ionic-angular/platform/cordova.wp";
-
 
 // Fonts
 // --------------------------------------------------
@@ -221,18 +218,22 @@ ion-icon {
   font-size: 24px;
 }
 
+html {
+  font-size: 14px;
+}
+
 .content-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  grid-gap: 12px;
-  margin: 12px;
+  grid-gap: 1.5rem;
+  margin: 1rem;
 }
 
 @import "../styles/variables";
 
 fieldset {
   border: 0;
-  padding: 14px 0 0;
+  padding: 1rem 0 0;
 
   &:first-of-type legend {
     display: none;
@@ -272,7 +273,7 @@ ion-grid {
   flex-flow: column;
   height: 100%;
   justify-content: center;
-  padding: #{$gutter * 2};
+  padding: 2rem;
   text-align: center;
 
   ion-icon {
@@ -288,7 +289,37 @@ ion-grid {
   }
 
   button {
-    margin-top: #{$gutter * 2};
+    margin-top: 2rem;
   }
 
+}
+
+.spinner {
+  width: 100%;
+  height: 100%;
+
+  > svg {
+    margin: auto;
+    bottom: 0;
+    right: 0;
+    height: 48px;
+    width: 48px;
+
+    > circle {
+      //   animation: spinner 4000ms cubic-bezier(.35,0,.25,1) infinite;
+      stroke: $swatch-violet;
+    }
+  }
+}
+
+.toolbar-background-md {
+  background: none;
+}
+
+ion-header {
+  background: #4d65b5;
+}
+
+.toolbar-title-md {
+  color: #fff;
 }

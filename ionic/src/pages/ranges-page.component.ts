@@ -24,19 +24,37 @@ import { FigureRange, FigureService } from "src/service/figure.service";
 
     <ion-content>
 
-      <ion-list>
-        <ng-container *ngFor="let entry of entries">
+      <ion-spinner *ngIf="!groups"></ion-spinner>
 
-          <ion-list-header>{{entry.name}}</ion-list-header>
+      <dl class="groups" *ngIf="groups?.length > 0">
+        <ng-container *ngFor="let group of groups">
 
-          <ion-item *ngFor="let range of entry.ranges" [navPush]="figureListPage" [navParams]="{range: range}">
+          <dt class="series">{{group.name}}</dt>
+
+          <dd class="range" *ngFor="let range of group.ranges" [navPush]="figureListPage" [navParams]="{range: range}">
             <ion-icon item-left name="albums"></ion-icon>
-            <h2>{{range.name}} ({{range.owned}} / {{range.figures}})</h2>
-            <p>{{range.year | date: 'yyyy'}}</p>
-          </ion-item>
+
+            <header>
+              <h2>{{range.name}}</h2>
+              <p *ngIf="range.year">{{range.year | date: 'yyyy'}}</p>
+            </header>
+            
+            <div>{{range.owned}} / {{range.figures}}</div>
+          </dd>
 
         </ng-container>
-      </ion-list>
+      </dl>
+
+      <ng-container *ngIf="groups?.length === 0">
+
+        <article class="emptyState">
+          <ion-icon name="folder-open"></ion-icon>
+
+          <h1>You currently have not added any ranges.</h1>
+          <p>Set the series / range fields when adding or editing a Figure to group them.</p>
+        </article>
+
+      </ng-container>
 
     </ion-content>
   `
@@ -46,7 +64,7 @@ export class RangesPageComponent {
   searchPage: Page = SearchPageComponent;
   figureListPage: Page = FigureListPageComponent;
 
-  entries: { name: string, ranges: FigureRange[] }[];
+  groups: { name: string, ranges: FigureRange[] }[];
 
   constructor(figureService: FigureService) {
     figureService.getRanges().then(ranges => this.groupRanges(ranges));
@@ -59,14 +77,14 @@ export class RangesPageComponent {
    */
   private groupRanges(ranges: FigureRange[]) {
 
-    this.entries = [];
+    this.groups = [];
 
     ranges.forEach(range => {
-      const entry = this.entries.find(series => series.name === range.series);
-      if (entry) {
-        entry.ranges.push(range);
+      const group = this.groups.find(series => series.name === range.series);
+      if (group) {
+        group.ranges.push(range);
       } else {
-        this.entries.push({name: range.series, ranges: [range]});
+        this.groups.push({name: range.series, ranges: [range]});
       }
     });
 

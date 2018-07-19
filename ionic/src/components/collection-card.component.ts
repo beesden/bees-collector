@@ -1,15 +1,17 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { DomSanitizer, SafeStyle } from "@angular/platform-browser";
 import { Collection } from "src/entity";
 
 @Component({
   selector: 'bc-collection-card',
   styleUrls: ['./collection-card.component.scss'],
+  encapsulation: ViewEncapsulation.Native,
   template: `
     <figure [style.backgroundImage]="image"></figure>
 
     <header>
       <h2>{{collection.name}}</h2>
+      <p>{{collection.length}} figures</p>
     </header>
   `
 })

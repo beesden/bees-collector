@@ -105,6 +105,12 @@ export class FigureService {
    * @param figure
    */
   saveFigure(figure?: Figure): Promise<Figure> {
+
+    if (!figure.id) {
+      figure.dateCreated = new Date();
+    }
+    figure.dateUpdated = new Date();
+
     return this.repository.then(repo => repo.save(figure));
   }
 

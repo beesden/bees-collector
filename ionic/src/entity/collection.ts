@@ -22,18 +22,13 @@ export class Collection {
   @JoinTable()
   figures: Figure[];
 
+  length: number;
+
   /**
    * Return how many of the figures in the collection have been collected.
    */
   get collected(): number {
     return this.figures ? this.figures.filter(figure => figure.collected).length : 0;
-  }
-
-  /**
-   * Return the length of the figures in the collection..
-   */
-  get length(): number {
-    return this.figures ? this.figures.length : 0;
   }
 
 }

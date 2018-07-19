@@ -1,26 +1,30 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { DomSanitizer, SafeStyle } from "@angular/platform-browser";
-import { Figure } from "src/entity";
+import { Figure, FigureState } from "src/entity";
 
 @Component({
   selector: 'bc-figure-card',
   styleUrls: ['./figure-card.component.scss'],
+  encapsulation: ViewEncapsulation.Native,
   template: `
-    <figure [style.backgroundImage]="image"></figure>
+    <section [class]="'state-' + figure.status">
+      
+      <figure [style.backgroundImage]="image"></figure>
 
-    <header>
-      <h2>{{figure.name}}</h2>
-      <p class="range">
-        {{figure.range}}
-        <span *ngIf="figure.release">({{figure.release | date: 'yyyy'}})</span>
-      </p>
-      <p class="series">{{figure.series}}</p>
-    </header>
+      <header>
+        <h2>{{figure.name}}</h2>
+        
+        <p class="status">{{statusText}}</p>
+        
+        <p class="range">
+          {{figure.range}}
+          <span *ngIf="figure.release">({{figure.release | date: 'yyyy'}})</span>
+        </p>
+        
+        <p class="series">{{figure.series}}</p>
+      </header>
 
-    <aside class="completion">
-      <ion-icon name="checkmark" [color]="figure.collected ? 'green' : 'red'"></ion-icon>
-      <ion-icon name="briefcase" [color]="accessoryState"></ion-icon>
-    </aside>
+    </section>
 
   `
 })
@@ -41,25 +45,15 @@ export class FigureCardComponent {
     return this.sanitizer.bypassSecurityTrustStyle(`url(${this.defaultImage})`);
   }
 
-  /**
-   * Check status of collected accessories.
-   *
-   * Return 'green' if all accessories are 100% owned.
-   * Return 'orange' if some accessories are owned.
-   */
-  get accessoryState(): 'red' | 'orange' | 'green' {
-
-    const accessories = this.figure.accessories || [];
-    const collected = accessories.filter(accessory => accessory.collected);
-
-    if (collected.length === accessories.length) {
-      return 'green';
-    } else if (collected.length) {
-      return 'orange';
-    } else {
-      return 'red';
+  get statusText(): string {
+    switch (this.figure.status) {
+      case FigureState.COMPLETE:
+        return 'Complete';
+      case FigureState.INCOMPLETE:
+        return 'Incomplete';
+      case FigureState.UNOWNED:
+        return 'Unowned';
     }
-
   }
 
 

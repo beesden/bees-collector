@@ -4,6 +4,11 @@ import { FigureAccessory } from "src/entity/figure-accessory";
 import { FigureProperty } from "src/entity/figure-property";
 import { Column, Entity, ManyToMany, OneToMany } from "typeorm/browser";
 
+export enum FigureState {
+  COMPLETE,
+  INCOMPLETE,
+  UNOWNED
+}
 
 @Entity()
 export class Figure extends Collectable {
@@ -25,4 +30,21 @@ export class Figure extends Collectable {
 
   @ManyToMany(type => Collection, collection => collection.figures)
   collections: Collection[];
+
+  /**
+   * Return the current collection status of the figure.
+   */
+  get status(): FigureState {
+
+    const accessoriesCollected = this.accessories ? this.accessories.filter(accessory => accessory.collected) : [];
+
+    if (!this.collected) {
+      return FigureState.UNOWNED;
+    } else if(accessoriesCollected.length !== this.accessories.length) {
+      return FigureState.INCOMPLETE;
+    } else {
+      return FigureState.COMPLETE;
+    }
+
+  }
 }
