@@ -52,6 +52,7 @@ h2 {
 .range {
   color: #888;
   font-size: 1rem;
+  line-height: 1.2;
   font-weight: 600;
   margin: .5rem 0 .2rem;
 }
@@ -59,6 +60,7 @@ h2 {
 .series {
   color: #888;
   font-size: 1rem;
+  line-height: 1.2;
   margin: 0;
 }
 
@@ -70,6 +72,7 @@ aside {
   button {
     @include button;
     font-size: 1.4rem;
+    line-height: 1;
     padding: .5rem;
 
     &.collected {

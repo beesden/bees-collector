@@ -7,6 +7,14 @@ import { FigureViewPageComponent } from "src/pages";
   selector: 'bc-figure-list',
   styleUrls: ['./figure-list.component.scss'],
   template: `
+    <div class="filters">
+      
+    </div>
+    
+    <div class="count">
+      {{figures?.length || 0 | number}} figures
+    </div>
+    
     <bc-figure-card *ngFor="let figure of figures | slice: 0: limit"
                  [figure]="figure"
                  [navPush]="figureViewPage"
@@ -17,22 +25,13 @@ import { FigureViewPageComponent } from "src/pages";
     </ion-infinite-scroll>
   `
 })
-export class FigureListComponent implements OnChanges {
+export class FigureListComponent {
 
   @Input() figures: Figure[];
   @Input() perPage = 12;
 
   figureViewPage: Page = FigureViewPageComponent;
-  limit: number = 1;
-
-  /**
-   * Reset the limit whenever data is loaded.
-   */
-  ngOnChanges(): void {
-    if (this.figures) {
-      this.limit = Math.min(this.figures.length, this.perPage);
-    }
-  }
+  limit: number = 12;
 
   /**
    * Increment number of visible results shown on scroll.

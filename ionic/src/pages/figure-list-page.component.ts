@@ -11,6 +11,7 @@ import { FigureFilters, FigureRange, FigureService } from "src/service/figure.se
 
 @Component({
   selector: 'bp-figure-list',
+  styleUrls: ['./figure-view-page.component.scss'],
   template: `
     <ion-header>
 
@@ -36,9 +37,9 @@ import { FigureFilters, FigureRange, FigureService } from "src/service/figure.se
       <ion-spinner *ngIf="!figures"></ion-spinner>
 
       <ng-container *ngIf="figures?.length > 0">
-        <header>
-          <h2>{{filters.series}} | {{filters.range || 'All Figures'}}</h2>
-          <p>{{figures.length | number}} figures.</p>
+        <header *ngIf="filters.range || filters.series">
+          <h1>{{filters.series}}</h1>
+          <p>{{filters.range || 'All figures'}}</p>
         </header>
 
         <bc-figure-list [figures]="figures"></bc-figure-list>
@@ -134,6 +135,11 @@ export class FigureListPageComponent implements IonViewDidEnter {
     this.figureService.getRanges().then(ranges => this.groupRanges(ranges));
   }
 
+  /**
+   * Push a page into the parent navigation.
+   *
+   * @parma page
+   */
   openPage(page: Page): void {
 
     this.menu.close().then(() => {

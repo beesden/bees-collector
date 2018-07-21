@@ -81,7 +81,7 @@ import { FigureService } from "src/service/figure.service";
 
       </header>
 
-      <h2>Accessories</h2>
+      <h2 class="heading">Accessories</h2>
 
       <section class="scroller">
 
@@ -98,7 +98,7 @@ import { FigureService } from "src/service/figure.service";
 
 
       <ng-container *ngIf="figure.collections?.length">
-        <h2>Collected in:</h2>
+        <h2 class="heading">Collected in:</h2>
 
         <section class="scroller">
           <bc-collection-card *ngFor="let collection of figure.collections" [collection]="collection"></bc-collection-card>

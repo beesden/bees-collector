@@ -100,8 +100,11 @@ export class FigureEditPageComponent {
     const figureId = navParams.get('figureId');
     if (figureId) {
 
-      this.figureService.getOne(figureId)
-        .then(figure => this.figure = figure);
+      this.figureService.getOne(figureId).then(figure => {
+        this.figure = figure;
+        this.addProperty();
+      });
+
     } else {
       this.figure = new Figure();
 
@@ -110,9 +113,9 @@ export class FigureEditPageComponent {
         this.figure.range = range.name;
         this.figure.series = range.series;
       }
-    }
 
-    this.addProperty();
+      this.addProperty();
+    }
 
   }
 

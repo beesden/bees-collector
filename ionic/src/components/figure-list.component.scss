@@ -3,11 +3,14 @@
 :host {
   background: $swatch-smoke;
   display: block;
+}
+
+.count {
   padding: 1rem;
 }
 
 bc-figure-card {
-  margin: .6rem 0;
+  margin: 0 1rem .6rem;
 
   &:first-child {
     margin-top: 0;

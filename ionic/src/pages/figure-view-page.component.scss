@@ -14,15 +14,18 @@ header {
 
   h1 {
     font-size: 1.5rem;
-    line-height: 1.5;
-    margin: 1rem 0 0;
+    margin: 1rem 0;
+  }
+
+  p {
+    margin: 1rem 0;
   }
 
   [class^="status-"] {
     color: var(--status-color);
     font-size: 1rem;
     font-weight: 600;
-    margin: 0 0 1rem;
+    margin-top: -1rem;
     text-transform: uppercase;
   }
 
@@ -36,10 +39,6 @@ header {
 
   .status-2 {
     --status-color: #{$swatch-cranberry};
-  }
-
-  p {
-    font-size: 1rem;
   }
 
   hr {
@@ -79,7 +78,7 @@ header {
   }
 }
 
-h2 {
+.heading {
   background: $swatch-smoke;
   font-size: 1.2rem;
   padding: 1rem;
