@@ -1,0 +1,141 @@
+@import "./variables";
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+
+  // todo - what are these?
+  //-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  //-webkit-tap-highlight-color: transparent;
+  //-webkit-touch-callout: none;
+}
+
+html {
+  font: 87.5%/1.5 'Roboto', sans-serif;
+  font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  text-size-adjust: none;
+  touch-action: manipulation;
+  user-select: none;
+
+  --theme-primary:  #{$swatch-blue-dark};
+
+  --theme-header: #{$swatch-white};
+  --theme-header-bg: #{$swatch-blue-dark};
+
+  --theme-content: #{$swatch-grey-dark};
+  --theme-content-bg: #{$swatch-white};
+  --theme-content-break: #{$swatch-grey-light};
+  --theme-content-link: #{$swatch-violet};
+  --theme-content-title: #{$swatch-violet};
+  --theme-input: #{$swatch-grey-dark};
+  --theme-input-bg: #{$swatch-smoke};
+  --theme-input-value: #{$swatch-black};
+}
+
+:focus,
+:active {
+  outline: none;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--theme-content-break);
+}
+
+// Base app styles
+@import './ionic/layout';
+@import './ionic/navbar';
+@import './ionic/input';
+@import './ionic/menu';
+@import './ionic/tabs';
+
+@import './ionic';
+
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  grid-gap: 1.5rem;
+  margin: 1rem;
+}
+
+ion-grid {
+  margin: 0 -10px;
+
+  ion-col {
+    flex: 1;
+
+    &:last-child {
+      flex: 0;
+      align-items: center;
+      display: flex;
+    }
+  }
+}
+
+.emptyState {
+  align-items: center;
+  display: flex;
+  flex-flow: column;
+  min-height: 100%;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+
+  ion-icon {
+    color: var(--theme-primary);
+    font-size: 6rem;
+    line-height: 1;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    margin: 1rem;
+  }
+
+  p {
+    color: $swatch-grey-dark;
+    margin: 1rem 0 0;
+  }
+
+  button {
+    margin-top: 2rem;
+  }
+
+}
+
+.spinner {
+  width: 100%;
+  height: 100%;
+
+  > svg {
+    margin: auto;
+    bottom: 0;
+    right: 0;
+    height: 48px;
+    width: 48px;
+
+    > circle {
+      //   animation: spinner 4000ms cubic-bezier(.35,0,.25,1) infinite;
+      stroke: $swatch-violet;
+    }
+  }
+}
+
+button[bc-fab] {
+  @include button($swatch-white, $swatch-blue-dark);
+  font-size: 1.3rem;
+  border-radius: 50%;
+
+  height: 3.5rem;
+  width: 3.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  z-index: 999;
+  right: 1rem;
+  bottom: 1rem;
+}

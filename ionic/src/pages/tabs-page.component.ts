@@ -8,9 +8,7 @@ import { RangesPageComponent } from "src/pages/ranges-page.component";
   template: `
     <ion-tabs>
       <ion-tab tabIcon="person" tabTitle="Figures" [root]="figuresPage"></ion-tab>
-      <ion-tab tabIcon="folder-open" tabTitle="Ranges" [root]="rangesPage"></ion-tab>
       <ion-tab tabIcon="photos" tabTitle="Collections" [root]="collectionsPage"></ion-tab>
-      <ion-tab tabIcon="settings" tabTitle="Settings" [root]="rangesPage"></ion-tab>
     </ion-tabs>
   `
 })

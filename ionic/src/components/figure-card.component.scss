@@ -61,3 +61,32 @@ h2 {
   font-size: 1rem;
   margin: 0;
 }
+
+aside {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  button {
+    @include button;
+    font-size: 1.4rem;
+    padding: .5rem;
+
+    &.collected {
+      color: #900;
+
+      &.active {
+        color: #090;
+      }
+    }
+
+    &.favourite.active {
+      color: $swatch-grey-dark;
+
+      &.active {
+        color: #fc1;
+      }
+    }
+  }
+
+}

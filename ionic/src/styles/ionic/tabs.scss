@@ -1,0 +1,53 @@
+@import '../variables';
+
+ion-tabs {
+  @include fill;
+  display: flex;
+  flex-direction: column;
+
+  > ion-tab {
+    height: 100%;
+    position: relative;
+    contain: content;
+    opacity: 0;
+
+    &.show-tab {
+      opacity: 1;
+    }
+  }
+
+  > .tabbar {
+    background: $swatch-smoke;
+    border-top: 1px solid $swatch-grey-light;
+    display: flex;
+    order: 1;
+    width: 100%;
+
+    > .tab-button {
+      color: $swatch-grey-dark;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      padding: .6rem;
+      text-decoration: none;
+      align-items: center;
+      justify-content: flex-end;
+
+      @include ripple($swatch-blue-dark);
+
+      &[aria-selected="true"] {
+        color: var(--theme-header-bg);
+      }
+
+      > .tab-button-icon {
+        font-size: 1.5rem;
+      }
+
+      > .tab-button-text {
+        font-size: 0.8rem;
+      }
+    }
+
+  }
+
+}

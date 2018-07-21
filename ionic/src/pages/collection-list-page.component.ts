@@ -16,8 +16,8 @@ import { CollectionService } from "src/service";
       <ion-navbar>
         <ion-title>My Collections</ion-title>
 
-        <ion-buttons start>
-          <button ion-button [navPush]="searchPage">
+        <ion-buttons end>
+          <button [navPush]="searchPage">
             <ion-icon name="search"></ion-icon>
           </button>
         </ion-buttons>
@@ -29,11 +29,11 @@ import { CollectionService } from "src/service";
 
       <ion-spinner *ngIf="!collections"></ion-spinner>
 
-      <ion-fab bottom right *ngIf="collections">
-        <button ion-fab [navPush]="collectionEditPage" [navParams]="{range: range}">
+      <button bc-fab *ngIf="collections">
+        <button [navPush]="collectionEditPage" [navParams]="{range: range}">
           <ion-icon name="add"></ion-icon>
         </button>
-      </ion-fab>
+      </button>
 
       <div class="content-grid" *ngIf="collections?.length > 0">
         <bc-collection-card *ngFor="let collection of collections"

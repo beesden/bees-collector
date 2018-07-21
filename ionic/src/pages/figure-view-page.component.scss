@@ -56,12 +56,10 @@ header {
       color: #555;
       flex: 40% 0 0;
       font-weight: 600;
-      margin: 0;
     }
 
     dd {
       flex: 60% 0 0;
-      margin: 0;
 
       ~ dt, ~ dd {
         margin-top: .5rem;
@@ -84,7 +82,6 @@ header {
 h2 {
   background: $swatch-smoke;
   font-size: 1.2rem;
-  margin: 0;
   padding: 1rem;
 }
 

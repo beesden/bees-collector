@@ -12,7 +12,7 @@ import { CollectionService } from "src/service/collection.service";
         <ion-title>{{collection?.id ? 'Edit Collection' : 'Add Collection'}}</ion-title>
 
         <ion-buttons end>
-          <button ion-button (click)="saveChanges()">
+          <button (click)="saveChanges()">
             <ion-icon name="checkmark"></ion-icon>
           </button>
         </ion-buttons>

@@ -13,7 +13,7 @@ import { FigureRange, FigureService } from "src/service/figure.service";
         <ion-title>{{figure?.id ? 'Edit Figure' : 'Add Figure'}}</ion-title>
 
         <ion-buttons end>
-          <button ion-button (click)="saveChanges()">
+          <button (click)="saveChanges()">
             <ion-icon name="checkmark"></ion-icon>
           </button>
         </ion-buttons>
@@ -68,14 +68,12 @@ import { FigureRange, FigureService } from "src/service/figure.service";
             <ion-row *ngFor="let property of figure.properties; let idx = index">
               <ion-col>
                 <ion-item>
-                  <ion-input [name]="'property_name_' + idx" [(ngModel)]="property.name" placeholder="Name"
-                             required></ion-input>
+                  <ion-input (ionBlur)="addProperty()" [name]="'property_name_' + idx" [(ngModel)]="property.name" placeholder="Name" required></ion-input>
                 </ion-item>
               </ion-col>
               <ion-col>
                 <ion-item>
-                  <ion-input [name]="'property_value_' + idx" [(ngModel)]="property.value" placeholder="Value"
-                             required></ion-input>
+                  <ion-input (ionBlur)="addProperty()" [name]="'property_value_' + idx" [(ngModel)]="property.value" placeholder="Value" required></ion-input>
                 </ion-item>
               </ion-col>
               <ion-col>
@@ -83,10 +81,6 @@ import { FigureRange, FigureService } from "src/service/figure.service";
               </ion-col>
             </ion-row>
           </ion-grid>
-
-          <div padding text-end>
-            <button ion-button role="button" (click)="addProperty()">Add</button>
-          </div>
 
         </fieldset>
 
@@ -118,6 +112,8 @@ export class FigureEditPageComponent {
       }
     }
 
+    this.addProperty();
+
   }
 
   /**
@@ -127,6 +123,8 @@ export class FigureEditPageComponent {
     if (!this.figure.properties) {
       this.figure.properties = [];
     }
+
+    this.figure.properties = this.figure.properties.filter(prop => prop.name || prop.value);
 
     const prop = new FigureProperty();
     this.figure.properties.push(prop);

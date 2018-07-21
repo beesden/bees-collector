@@ -6,24 +6,24 @@ import { IonicApp, IonicModule } from "ionic-angular";
 import { AppRootComponent } from 'src/app-root.component';
 
 import { CollectionCardComponent, FigureCardComponent, FigureListComponent } from "src/components";
-import { CollectionViewPageComponent, FigureEditPageComponent, FigureListPageComponent, FigureViewPageComponent, RangesPageComponent, SearchPageComponent, TabsPageComponent } from "src/pages";
-import { CollectionEditPageComponent } from "src/pages/collection-edit-page.component";
-import { CollectionListPageComponent } from "src/pages/collection-list-page.component";
+import * as Pages from "src/pages";
 import { CollectionService, ConnectionService, FigureService } from "src/service";
 
 const pages = [
-  TabsPageComponent,
-  SearchPageComponent,
+  Pages.TabsPageComponent,
+  Pages.SearchPageComponent,
 
-  CollectionEditPageComponent,
-  CollectionListPageComponent,
-  CollectionViewPageComponent,
+  Pages.CollectionEditPageComponent,
+  Pages.CollectionListPageComponent,
+  Pages.CollectionViewPageComponent,
 
-  FigureListPageComponent,
-  FigureEditPageComponent,
-  FigureViewPageComponent,
+  Pages.FigureListPageComponent,
+  Pages.FigureEditPageComponent,
+  Pages.FigureViewPageComponent,
 
-  RangesPageComponent,
+  Pages.HighlightsPageComponent,
+
+  Pages.RangesPageComponent,
 ];
 
 @NgModule({
@@ -41,6 +41,8 @@ const pages = [
   imports: [
     BrowserModule,
     IonicModule.forRoot(AppRootComponent, {
+      mode: 'md',
+      scrollAssist: true,
       spinner: 'crescent',
       tabsHideOnSubPages: true
     })

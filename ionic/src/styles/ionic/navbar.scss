@@ -1,0 +1,82 @@
+@import '../variables';
+
+ion-navbar,
+ion-toolbar {
+
+  &.toolbar {
+    background: var(--theme-header-bg);
+    box-shadow: $shadow-large;
+    color: var(--theme-header);
+    min-height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    contain: content;
+    padding: 0 1rem;
+
+    // Title text
+    > .toolbar-content {
+      flex-grow: 1;
+      order: 2;
+
+      > .title {
+        @include ellipsis;
+        display: flex;
+        align-items: center;
+        font-size: 1.5rem;
+        font-weight: 500;
+
+        > .toolbar-title {
+          display: block;
+          width: 100%;
+        }
+      }
+
+    }
+
+    // Legacy background element
+    > .toolbar-background {
+      display: none;
+    }
+
+    // Navigation icons
+    > .back-button,
+    > [menuToggle] {
+      @include button;
+      font-size: 1.5rem;
+      padding: .5rem;
+      margin-right: 2rem;
+      flex-grow: 0;
+      order: 1;
+    }
+
+    // Back button visibility
+    .back-button {
+      display: none;
+
+      &.show-back-button {
+        display: initial;
+      }
+
+    }
+
+    // Action items
+    > ion-buttons {
+      display: flex;
+      font-size: 1.5rem;
+      order: 3;
+      flex-grow: 0;
+
+      > button {
+        @include button;
+        padding: .5rem;
+
+        + button {
+          margin-left: .8rem;
+        }
+      }
+    }
+  }
+
+}

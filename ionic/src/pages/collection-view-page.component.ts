@@ -16,10 +16,10 @@ import { CollectionService } from "src/service/collection.service";
       <ion-navbar>
 
         <ion-buttons end>
-          <button ion-button [navPush]="collectionEditPage" [navParams]="{collectionId: collection?.id}">
+          <button [navPush]="collectionEditPage" [navParams]="{collectionId: collection?.id}">
             <ion-icon name="create"></ion-icon>
           </button>
-          <button ion-button (click)="deleteCollection()">
+          <button (click)="deleteCollection()">
             <ion-icon name="trash"></ion-icon>
           </button>
         </ion-buttons>

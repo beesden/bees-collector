@@ -1,28 +1,37 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { DomSanitizer, SafeStyle } from "@angular/platform-browser";
 import { Figure, FigureState } from "src/entity";
+import { FigureService } from "src/service";
 
 @Component({
   selector: 'bc-figure-card',
   styleUrls: ['./figure-card.component.scss'],
-  encapsulation: ViewEncapsulation.Native,
   template: `
     <section [class]="'state-' + figure.status">
-      
+
       <figure [style.backgroundImage]="image"></figure>
 
       <header>
         <h2>{{figure.name}}</h2>
-        
+
         <p class="status">{{figure.statusText}}</p>
-        
+
         <p class="range">
           {{figure.range}}
           <span *ngIf="figure.release">({{figure.release | date: 'yyyy'}})</span>
         </p>
-        
+
         <p class="series">{{figure.series}}</p>
       </header>
+
+      <aside>
+        <button class="favourite" (click)="toggleFavourite($event)" [ngClass]="{active: figure.favourite}">
+          <ion-icon [name]="figure.favourite ? 'star' : 'star-outline'"></ion-icon>
+        </button>
+        <button class="collected" (click)="toggleCollected($event)" [ngClass]="{active: figure.collected}">
+          <ion-icon name="checkmark"></ion-icon>
+        </button>
+      </aside>
 
     </section>
 
@@ -32,7 +41,8 @@ export class FigureCardComponent {
 
   @Input() figure: Figure;
 
-  constructor(private sanitizer: DomSanitizer) {
+  constructor(private figureService: FigureService,
+              private sanitizer: DomSanitizer) {
   }
 
   // todo - directive
@@ -43,6 +53,18 @@ export class FigureCardComponent {
       return this.sanitizer.bypassSecurityTrustStyle(`url(${this.figure.images[0].url})`);
     }
     return this.sanitizer.bypassSecurityTrustStyle(`url(${this.defaultImage})`);
+  }
+
+  toggleCollected($event): void {
+    $event.stopPropagation();
+    this.figure.collected = !this.figure.collected;
+    this.figureService.saveFigure(this.figure);
+  }
+
+  toggleFavourite($event): void {
+    $event.stopPropagation();
+    this.figure.favourite = !this.figure.favourite;
+    this.figureService.saveFigure(this.figure);
   }
 
 

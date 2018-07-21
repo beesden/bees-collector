@@ -16,13 +16,13 @@ import { FigureService } from "src/service/figure.service";
       <ion-navbar>
 
         <ion-buttons end>
-          <button ion-button (click)="addPhoto()">
+          <button (click)="addPhoto()">
             <ion-icon name="camera"></ion-icon>
           </button>
-          <button ion-button (click)="deleteFigure()">
+          <button (click)="deleteFigure()">
             <ion-icon name="trash"></ion-icon>
           </button>
-          <button ion-button (click)="changeStatus()">
+          <button (click)="changeStatus()">
             <ion-icon [name]="figure.collected ? 'checkmark' : 'close'"></ion-icon>
           </button>
         </ion-buttons>

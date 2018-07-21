@@ -10,5 +10,6 @@ export * from './figure-list-page.component';
 export * from './figure-view-page.component';
 
 export * from './ranges-page.component';
+export * from './highlights-page.component';
 
 

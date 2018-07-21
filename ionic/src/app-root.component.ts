@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TabsPageComponent } from "src/pages/tabs-page.component";
+import { FigureListPageComponent } from "src/pages";
 
 @Component({
   selector: 'bc-app-root',
@@ -8,5 +8,5 @@ import { TabsPageComponent } from "src/pages/tabs-page.component";
   `
 })
 export class AppRootComponent {
-  rootPage: object = TabsPageComponent;
+  rootPage: object = FigureListPageComponent;
 }

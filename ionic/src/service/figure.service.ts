@@ -11,6 +11,12 @@ export interface FigureRange {
   owned: number;
 }
 
+export interface FigureFilters {
+  range?: string;
+  series?: string;
+  sort?: string;
+}
+
 @Injectable()
 export class FigureService {
 
@@ -57,23 +63,38 @@ export class FigureService {
   }
 
   /**
+   * List all figures marked as 'favourite'.
+   */
+  getFavourites(): Promise<Figure[]> {
+
+    return this.query.then(query => {
+        query.andWhere('figure.favourite = 1')
+        return query.getMany();
+      }
+    );
+
+  }
+
+  /**
    * List all figures in the database.
    *
    * @param filters
-   * @param filters.range
    */
-  getList(filters: { range?: FigureRange } = {}): Promise<Figure[]> {
+  getList(filters: FigureFilters = {}): Promise<Figure[]> {
 
     return this.query.then(query => {
 
-      if (filters.range) {
-        query
-          .andWhere(`series = "${filters.range.series}"`)
-          .andWhere(`range = "${filters.range.name}"`)
-      }
+        if (filters.series) {
+          query.andWhere(`series = "${filters.series}"`)
+        }
 
-      return query.getMany();
-    });
+        if (filters.range) {
+          query.andWhere(`range = "${filters.range}"`)
+        }
+
+        return query.getMany();
+      }
+    );
 
   }
 
@@ -105,13 +126,7 @@ export class FigureService {
    *
    * @param figure
    */
-  saveFigure(figure?: Figure): Promise<Figure> {
-
-    if (!figure.id) {
-      figure.dateCreated = new Date();
-    }
-    figure.dateUpdated = new Date();
-
+  saveFigure(figure ?: Figure): Promise<Figure> {
     return this.repository.then(repo => repo.save(figure));
   }
 

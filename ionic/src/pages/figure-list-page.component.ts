@@ -1,22 +1,31 @@
 import { Component, NgZone } from '@angular/core';
-import { NavParams } from "ionic-angular";
+import { MenuController, NavController, NavParams } from "ionic-angular";
 import { Page } from "ionic-angular/navigation/nav-util";
 import { Figure } from "src/entity/figure";
 import { IonViewDidEnter } from "src/ionic-lifecycle";
+import { CollectionListPageComponent } from "src/pages/collection-list-page.component";
+import { CollectionViewPageComponent } from "src/pages/collection-view-page.component";
+import { HighlightsPageComponent } from "src/pages/highlights-page.component";
 import { FigureEditPageComponent } from "src/pages/figure-edit-page.component";
 import { SearchPageComponent } from "src/pages/search-page.component";
-import { FigureRange, FigureService } from "src/service/figure.service";
+import { FigureFilters, FigureRange, FigureService } from "src/service/figure.service";
 
 @Component({
   selector: 'bp-figure-list',
+  styleUrls: ['./ranges-page.component.scss'],
   template: `
     <ion-header>
 
       <ion-navbar>
-        <ion-title>{{range?.name || 'My Figures'}}</ion-title>
 
-        <ion-buttons start>
-          <button ion-button [navPush]="searchPage">
+        <button menuToggle="menu2">
+          <ion-icon name="menu"></ion-icon>
+        </button>
+
+        <ion-title>My Figures</ion-title>
+
+        <ion-buttons end>
+          <button [navPush]="searchPage">
             <ion-icon name="search"></ion-icon>
           </button>
         </ion-buttons>
@@ -24,17 +33,19 @@ import { FigureRange, FigureService } from "src/service/figure.service";
 
     </ion-header>
 
-    <ion-content>
+    <ion-content #content>
 
       <ion-spinner *ngIf="!figures"></ion-spinner>
 
-      <bc-figure-list [figures]="figures" *ngIf="figures?.length > 0"></bc-figure-list>
+      <ng-container *ngIf="figures?.length > 0">
+        <header>
+          <h2>{{filters.series}} | {{filters.range || 'All Figures'}}</h2>
+          <p>{{figures.length | number}} figures.</p>
+        </header>
 
-      <ion-fab bottom right *ngIf="figures">
-        <button ion-fab [navPush]="figureEditPage" [navParams]="{range: range}">
-          <ion-icon name="add"></ion-icon>
-        </button>
-      </ion-fab>
+        <bc-figure-list [figures]="figures"></bc-figure-list>
+      </ng-container>
+
 
       <ng-container *ngIf="figures?.length === 0">
 
@@ -48,36 +59,127 @@ import { FigureRange, FigureService } from "src/service/figure.service";
       </ng-container>
 
     </ion-content>
+
+    <ion-menu id="menu2" [content]="content">
+
+      <!-- App navigation -->
+      <button class="menu-item" role="button" (click)="setFilter()" [ngClass]="{selected: !filters.range && !filters.series}">
+        <ion-icon name="body"></ion-icon>
+        <header>All Figures</header>
+      </button>
+      <button class="menu-item" (click)="openPage(favouritesPage)">
+        <ion-icon name="star-outline"></ion-icon>
+        <header>Favourites</header>
+      </button>
+      <button class="menu-item" (click)="openPage(collectionListPage)">
+        <ion-icon name="bookmark"></ion-icon>
+        <header>Collections</header>
+      </button>
+
+      <!-- Series -->
+      <ng-container *ngFor="let group of groups">
+        <hr/>
+        <h2 class="menu-title">{{group.name}}</h2>
+
+        <button class="menu-item" role="button" *ngFor="let range of group.ranges" (click)="setFilter(range.series, range.name)" [ngClass]="{selected: filters.range === range.name && filters.series === range.series}">
+          <ion-icon name="albums"></ion-icon>
+          <header>
+            {{range.name}}
+            <span *ngIf="range.year">{{range.year | date: 'yyyy'}}</span>
+          </header>
+          <aside>{{range.owned}} / {{range.figures}}</aside>
+        </button>
+
+        <!-- View all in series -->
+        <button class="menu-item" role="button" (click)="setFilter(group.name)" [ngClass]="{selected: !filters.range && filters.series === group.name}">
+          <ion-icon name="albums"></ion-icon>
+          <header>All</header>
+          <aside>{{group.owned}} / {{group.figures}}</aside>
+        </button>
+
+      </ng-container>
+
+    </ion-menu>
+
+    <button bc-fab *ngIf="figures" [navPush]="figureEditPage" [navParams]="{range: range}">
+      <ion-icon name="add"></ion-icon>
+    </button>
   `
 })
 export class FigureListPageComponent implements IonViewDidEnter {
 
-  range: FigureRange;
-  limit: number;
+  filters: FigureFilters = {};
 
+  groups: { name: string, figures: number, owned: number, ranges: FigureRange[] }[];
   figures: Figure[];
 
   searchPage: Page = SearchPageComponent;
+  collectionListPage: Page = CollectionListPageComponent;
+  favouritesPage: Page = HighlightsPageComponent;
   figureEditPage: Page = FigureEditPageComponent;
 
   constructor(private figureService: FigureService,
-              private zone: NgZone,
-              navParams: NavParams) {
-
-    this.range = navParams.get('range');
-
+              private menu: MenuController,
+              private nav: NavController,
+              private zone: NgZone) {
   }
 
   /**
    *  Update data whenever the view is opened or returned to.
    */
   ionViewDidEnter(): void {
-    this.figureService.getList({range: this.range}).then(figures => {
-      this.zone.run(() => {
-        this.limit = Math.min(figures.length, 12);
-        this.figures = figures;
-      });
+
+    this.figureService.getList(this.filters).then(figures => {
+      this.zone.run(() => this.figures = figures);
     });
+
+    this.figureService.getRanges().then(ranges => this.groupRanges(ranges));
+  }
+
+  openPage(page: Page): void {
+
+    this.menu.close().then(() => {
+      this.nav.push(page)
+    });
+
+  }
+
+  /**
+   * Apply filters and refresh the content.
+   *
+   * @param {string} series
+   * @param {string} range
+   */
+  setFilter(series ?: string, range ?: string) {
+
+    this.menu.close().then(() => {
+      this.filters.series = series;
+      this.filters.range = range;
+      this.ionViewDidEnter();
+    });
+
+  }
+
+  /**
+   * Group the ranges by series name.
+   *
+   * @param ranges
+   */
+  private groupRanges(ranges: FigureRange[]) {
+
+    this.groups = [];
+
+    ranges.forEach(range => {
+      const group = this.groups.find(series => series.name === range.series);
+      if (group) {
+        group.owned += range.owned;
+        group.figures += range.figures;
+        group.ranges.push(range);
+      } else {
+        this.groups.push({name: range.series, figures: range.figures, owned: range.owned, ranges: [range]});
+      }
+    });
+
   }
 
 }

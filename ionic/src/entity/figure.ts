@@ -22,6 +22,9 @@ export class Figure extends Collectable {
   @Column({nullable: true})
   release: string;
 
+  @Column({nullable: true})
+  favourite: boolean;
+
   @OneToMany(type => FigureAccessory, accessory => accessory.figure, {cascade: true, eager: true})
   accessories: FigureAccessory[];
 

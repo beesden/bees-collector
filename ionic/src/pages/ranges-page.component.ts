@@ -13,8 +13,8 @@ import { FigureRange, FigureService } from "src/service/figure.service";
       <ion-navbar>
         <ion-title>Ranges</ion-title>
 
-        <ion-buttons start>
-          <button ion-button [navPush]="searchPage">
+        <ion-buttons end>
+          <button [navPush]="searchPage">
             <ion-icon name="search"></ion-icon>
           </button>
         </ion-buttons>
