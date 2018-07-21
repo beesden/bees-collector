@@ -1,18 +1,16 @@
 import { Component, NgZone } from '@angular/core';
-import { MenuController, NavController, NavParams } from "ionic-angular";
+import { MenuController, NavController } from "ionic-angular";
 import { Page } from "ionic-angular/navigation/nav-util";
 import { Figure } from "src/entity/figure";
 import { IonViewDidEnter } from "src/ionic-lifecycle";
 import { CollectionListPageComponent } from "src/pages/collection-list-page.component";
-import { CollectionViewPageComponent } from "src/pages/collection-view-page.component";
-import { HighlightsPageComponent } from "src/pages/highlights-page.component";
 import { FigureEditPageComponent } from "src/pages/figure-edit-page.component";
+import { HighlightsPageComponent } from "src/pages/highlights-page.component";
 import { SearchPageComponent } from "src/pages/search-page.component";
 import { FigureFilters, FigureRange, FigureService } from "src/service/figure.service";
 
 @Component({
   selector: 'bp-figure-list',
-  styleUrls: ['./ranges-page.component.scss'],
   template: `
     <ion-header>
 
@@ -67,9 +65,9 @@ import { FigureFilters, FigureRange, FigureService } from "src/service/figure.se
         <ion-icon name="body"></ion-icon>
         <header>All Figures</header>
       </button>
-      <button class="menu-item" (click)="openPage(favouritesPage)">
+      <button class="menu-item" (click)="openPage(highlightsPage)">
         <ion-icon name="star-outline"></ion-icon>
-        <header>Favourites</header>
+        <header>Highlights</header>
       </button>
       <button class="menu-item" (click)="openPage(collectionListPage)">
         <ion-icon name="bookmark"></ion-icon>
@@ -115,7 +113,7 @@ export class FigureListPageComponent implements IonViewDidEnter {
 
   searchPage: Page = SearchPageComponent;
   collectionListPage: Page = CollectionListPageComponent;
-  favouritesPage: Page = HighlightsPageComponent;
+  highlightsPage: Page = HighlightsPageComponent;
   figureEditPage: Page = FigureEditPageComponent;
 
   constructor(private figureService: FigureService,

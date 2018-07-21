@@ -10,7 +10,7 @@ import * as Pages from "src/pages";
 import { CollectionService, ConnectionService, FigureService } from "src/service";
 
 const pages = [
-  Pages.TabsPageComponent,
+  Pages.HighlightsPageComponent,
   Pages.SearchPageComponent,
 
   Pages.CollectionEditPageComponent,
@@ -19,11 +19,7 @@ const pages = [
 
   Pages.FigureListPageComponent,
   Pages.FigureEditPageComponent,
-  Pages.FigureViewPageComponent,
-
-  Pages.HighlightsPageComponent,
-
-  Pages.RangesPageComponent,
+  Pages.FigureViewPageComponent
 ];
 
 @NgModule({

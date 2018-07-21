@@ -1,17 +1,10 @@
-import { Component, NgZone } from '@angular/core';
-import { MenuController, NavController, NavParams } from "ionic-angular";
-import { Page } from "ionic-angular/navigation/nav-util";
+import { Component } from '@angular/core';
 import { Figure } from "src/entity/figure";
 import { IonViewDidEnter } from "src/ionic-lifecycle";
-import { CollectionListPageComponent } from "src/pages/collection-list-page.component";
-import { CollectionViewPageComponent } from "src/pages/collection-view-page.component";
-import { FigureEditPageComponent } from "src/pages/figure-edit-page.component";
-import { SearchPageComponent } from "src/pages/search-page.component";
-import { FigureFilters, FigureRange, FigureService } from "src/service/figure.service";
+import { FigureService } from "src/service/figure.service";
 
 @Component({
   selector: 'bp-figure-list',
-  styleUrls: ['./ranges-page.component.scss'],
   template: `
     <ion-header>
 
@@ -55,7 +48,7 @@ export class HighlightsPageComponent implements IonViewDidEnter {
    *  Update data whenever the view is opened or returned to.
    */
   ionViewDidEnter(): void {
-    this.figureService.getFavourites().then(figures => this.figures = figures);
+    this.figureService.getHighlights().then(figures => this.figures = figures);
   }
 
 }

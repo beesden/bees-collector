@@ -63,13 +63,14 @@ export class FigureService {
   }
 
   /**
-   * List all figures marked as 'favourite'.
+   * List all highlighted figures.
    */
-  getFavourites(): Promise<Figure[]> {
+  getHighlights(): Promise<Figure[]> {
 
     return this.query.then(query => {
-        query.andWhere('figure.favourite = 1')
-        return query.getMany();
+        return query
+          .andWhere('figure.highlight = 1')
+          .getMany();
       }
     );
 

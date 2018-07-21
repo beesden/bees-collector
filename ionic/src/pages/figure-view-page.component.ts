@@ -93,7 +93,7 @@ import { FigureService } from "src/service/figure.service";
         <ion-item>
           <button ion-button>Add</button>
         </ion-item>
-        
+
       </section>
 
 
@@ -205,7 +205,7 @@ export class FigureViewPageComponent implements IonViewDidEnter {
         image.url = path;
         image.name = path;
         this.figure.images.push(image)
-        this.figureService.saveFigure(this.figure);
+        return this.figureService.saveFigure(this.figure);
       })
       .catch(err => console.log(err));
 

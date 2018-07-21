@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Platform } from "ionic-angular";
 import { Collection, Figure, Image } from "src/entity";
-import { sampleData } from "src/entity/data";
 import { FigureAccessory } from "src/entity/figure-accessory";
 import { FigureProperty } from "src/entity/figure-property";
 import { Connection, createConnection } from "typeorm/browser";

@@ -1,6 +1,6 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { DomSanitizer, SafeStyle } from "@angular/platform-browser";
-import { Figure, FigureState } from "src/entity";
+import { Figure } from "src/entity";
 import { FigureService } from "src/service";
 
 @Component({
@@ -25,8 +25,8 @@ import { FigureService } from "src/service";
       </header>
 
       <aside>
-        <button class="favourite" (click)="toggleFavourite($event)" [ngClass]="{active: figure.favourite}">
-          <ion-icon [name]="figure.favourite ? 'star' : 'star-outline'"></ion-icon>
+        <button class="highlight" (click)="toggleHighlight($event)" [ngClass]="{active: figure.highlight}">
+          <ion-icon [name]="figure.highlight ? 'star' : 'star-outline'"></ion-icon>
         </button>
         <button class="collected" (click)="toggleCollected($event)" [ngClass]="{active: figure.collected}">
           <ion-icon name="checkmark"></ion-icon>
@@ -61,9 +61,9 @@ export class FigureCardComponent {
     this.figureService.saveFigure(this.figure);
   }
 
-  toggleFavourite($event): void {
+  toggleHighlight($event): void {
     $event.stopPropagation();
-    this.figure.favourite = !this.figure.favourite;
+    this.figure.highlight = !this.figure.highlight;
     this.figureService.saveFigure(this.figure);
   }
 

@@ -21,7 +21,7 @@ import { FigureService } from "src/service/figure.service";
 
       <section class="section" *ngIf="collections?.length">
         <h2>Collections</h2>
-        <bc-collection-card *ngFor="let collection of collections"></bc-collection-card>
+        <bc-collection-card *ngFor="let collection of collections" [collection]="collection"></bc-collection-card>
       </section>
       
       <section class="section" *ngIf="figures?.length">
