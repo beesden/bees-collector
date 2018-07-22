@@ -64,6 +64,12 @@ export class ConnectionService {
    */
   private populate(connection: Connection): Promise<Connection> {
 
+    if (localStorage.getItem('dataLoaded') === 'true') {
+      return Promise.resolve(connection);
+    }
+
+    localStorage.setItem('dataLoaded', 'true');
+
     const figures: Figure[] = sampleData.map(item => {
 
       const figure = new Figure();

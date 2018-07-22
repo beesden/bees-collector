@@ -7,13 +7,13 @@ ion-toolbar {
     background: var(--theme-primary);
     box-shadow: $shadow-large;
     color: var(--theme-secondary);
-    min-height: 4.3rem;
+    min-height: 56px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
     contain: content;
-    padding: 0 1rem;
+    padding: 0 $display-base;
 
     // Title text
     > .toolbar-content {
@@ -44,9 +44,9 @@ ion-toolbar {
     > .back-button,
     > [menuToggle] {
       @include button;
-      font-size: 1.5rem;
-      padding: .5rem;
-      margin-right: 2rem;
+      font-size: 1.8rem;
+      padding: #{$display-base / 2};
+      margin-right: #{$display-base * 2};
       flex-grow: 0;
       order: 1;
     }
@@ -64,16 +64,16 @@ ion-toolbar {
     // Action items
     > ion-buttons {
       display: flex;
-      font-size: 1.5rem;
+      font-size: 1.8rem;
       order: 3;
       flex-grow: 0;
 
       > button {
         @include button;
-        padding: .5rem;
+        padding: #{$display-base / 2};
 
         + button {
-          margin-left: .8rem;
+          margin-left: $display-base;
         }
       }
     }

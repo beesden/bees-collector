@@ -5,17 +5,17 @@ import { Component } from '@angular/core';
   styles: [`
     .page-section {
       border-bottom: 1px solid #ddd;
-      padding: 1rem;
+      padding: 12px;
     }
 
     .page-section > h1 {
       font-weight: 300;
       font-size: 2rem;
-      margin: 1rem 0;
+      margin: 12px 0;
     }
 
     .page-section > p {
-      margin: 1rem 0;
+      margin: 12px 0;
     }
 
     .page-section > h2 {
@@ -24,12 +24,12 @@ import { Component } from '@angular/core';
     }
 
     .page-section > ul {
-      margin: 1rem 0;
+      margin: 12px 0;
     }
 
     .page-section > ul > li {
       list-style: none;
-      margin: .5rem 0;
+      margin: 6px 0;
     }
 
     .page-section > .container {

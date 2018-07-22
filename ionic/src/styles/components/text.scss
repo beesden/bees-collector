@@ -5,17 +5,17 @@
   &-header {
     background: #fff;
     box-shadow: $shadow-small;
-    padding: 2rem 2rem 1.5rem;
+    padding: #{$display-base * 2} #{$display-base * 2} #{$display-base * 1.5};
   }
 
   &-title {
     color: var(--theme-title);
     font-size: 2rem;
     font-weight: 300;
-    margin: 1rem;
+    margin: $display-base;
 
     + .bc-type-subtitle {
-      margin-top: -1rem;
+      margin-top: #{-$display-base};
     }
   }
 
@@ -24,12 +24,12 @@
     font-size: .9rem;
     letter-spacing: .5px;
     font-weight: 600;
-    margin: 1rem;
+    margin: $display-base;
     text-transform: uppercase;
   }
 
   &-text {
-    margin: 1rem;
+    margin: $display-base;
   }
 
 }

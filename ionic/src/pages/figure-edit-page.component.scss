@@ -2,11 +2,11 @@
 
 .figure-properties {
   display: flex;
-  margin-bottom: 1rem;
+  margin-bottom: $display-base;
 
   ion-item {
     flex: 2;
-    margin-right: 1rem;
+    margin-right: $display-base;
     margin-bottom: 0;
 
     &:first-child {
@@ -17,6 +17,6 @@
 }
 
 .figure-property-add {
-  margin-bottom: 1rem;
+  margin-bottom: $display-base;
   text-align: right;
 }

@@ -25,19 +25,19 @@ ion-menu {
     bottom: 0;
     transform: translate3d(-9999px, 0, 0);
     display: block;
-    max-width: 22rem;
+    max-width: 320px;
     width: 80%;
     height: 100%;
     contain: strict;
     overflow-y: auto;
-    padding-bottom: 9rem;
+    padding-bottom: #{$display-base * 4};
   }
 
   .menu-title {
     color: $swatch-grey-dark;
     font-size: 0.9rem;
     font-weight: 400;
-    padding: 1rem;
+    padding: $display-base;
   }
 
   .menu-item {
@@ -46,8 +46,7 @@ ion-menu {
     border-radius: 2px;
     color: $swatch-grey-dark;
     display: flex;
-    height: 3.5rem;
-    padding: 0 1rem;
+    padding: $display-base;
     text-align: left;
     width: 100%;
 
@@ -57,10 +56,11 @@ ion-menu {
     }
 
     ion-icon {
-      margin-right: 1.5rem;
+      margin-right: #{$display-base * 1.5};
     }
 
     header {
+      @include ellipsis;
       flex: 1;
       font-weight: 600;
 
@@ -75,11 +75,8 @@ ion-menu {
 
     aside {
       font-size: 0.9rem;
+      margin-left: $display-base;
     }
-  }
-
-  hr {
-    margin: 1rem 0;
   }
 
   ion-backdrop {

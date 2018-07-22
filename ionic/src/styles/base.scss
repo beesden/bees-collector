@@ -46,6 +46,7 @@ html {
 hr {
   border: none;
   border-top: 1px solid var(--theme-content);
+  margin: $display-base 0;
   opacity: 0.3;
 }
 

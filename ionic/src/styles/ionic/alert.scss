@@ -12,10 +12,10 @@ ion-alert {
     background: $swatch-white;
     border-radius: 4px;
     z-index: 10;
-    max-width: 24rem;
+    max-width: #{$display-base * 25};
     max-height: 90%;
     opacity: 0;
-    padding: 0 .5rem;
+    padding: 0 #{$display-base / 2};
     width: 80%;
   }
 
@@ -23,7 +23,7 @@ ion-alert {
   .alert-message {
     font-size: 1.2rem;
     color: $swatch-grey-dark;
-    margin: 1.5rem;
+    margin: #{$display-base * 1.5};
 
     h2 {
       font: inherit;
@@ -33,15 +33,16 @@ ion-alert {
   .alert-radio-group {
     border-top: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
-    margin: 1.5rem;
-    padding: 1rem 0;
+    margin: #{$display-base * 1.5};
+    overflow-y: auto;
+    padding: $display-base 0;
   }
 
   .alert-radio {
     @include button;
     display: flex;
     text-align: left;
-    padding: .6rem 0;
+    padding: #{$display-base} 0;
     position: relative;
     width: 100%;
 
@@ -84,14 +85,13 @@ ion-alert {
   .alert-button-group {
     display: flex;
     justify-content: flex-end;
-    margin-top: 1.5rem;
-    padding-top: .5rem;
+    margin-top: #{$display-base * 1.5};
   }
 
   .alert-button {
     @include button(var(--theme-primary));
     font-weight: 500;
-    padding: 1rem;
+    padding: $display-base;
     letter-spacing: .5px;
     text-transform: uppercase;
   }

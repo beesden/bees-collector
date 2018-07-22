@@ -22,7 +22,7 @@ figure {
 
 header {
   line-height: 1.6;
-  padding: .5rem 0 1rem;
+  padding: #{$display-base / 2} 0 $display-base;
 }
 
 h2 {
@@ -34,6 +34,5 @@ h2 {
 }
 
 p {
-  font-size: 1rem;
   margin: 0;
 }

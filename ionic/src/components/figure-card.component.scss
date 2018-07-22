@@ -8,9 +8,9 @@
 figure {
   background: center top/cover no-repeat;
   border-bottom: 1px solid #ddd;
-  margin: 0 1rem 0 0;
-  flex: 75px 0 0;
-  height: 100px;
+  margin: 0 $display-base 0 0;
+  flex: #{$display-base * 6} 0 0;
+  height: #{$display-base * 8};
 }
 
 header {
@@ -29,7 +29,7 @@ h2 {
   font-size: 1rem;
   line-height: 1.2;
   font-weight: 600;
-  margin: .5rem 0 .2rem;
+  margin: #{$display-base / 2} 0 0;
 }
 
 .series {
@@ -47,7 +47,7 @@ aside {
     @include button;
     font-size: 1.6rem;
     line-height: 1;
-    padding: .5rem;
+    padding: #{$display-base /2};
 
     &.collected.active {
       color: var(--status-complete);

@@ -10,7 +10,7 @@
   font-size: .9rem;
   font-weight: 600;
   letter-spacing: .5px;
-  padding: .8rem 1rem;
+  padding: $display-base #{$display-base * 2};
   position: relative;
   transition: color 320ms ease-in-out;
   text-transform: uppercase;
@@ -46,8 +46,8 @@
 
   &--fab {
     border-radius: 50%;
-    height: 3.5rem;
-    width: 3.5rem;
+    height: #{$display-base * 4};
+    width: #{$display-base * 4};
     padding: 0;
 
     display: flex;
@@ -56,11 +56,11 @@
 
     position: absolute;
     z-index: 999;
-    right: 1rem;
-    bottom: 1rem;
+    right: $display-base;
+    bottom: $display-base;
 
     > ion-icon:only-child {
-      font-size: 1.6rem;
+      font-size: #{$display-base * 2}
     }
   }
 

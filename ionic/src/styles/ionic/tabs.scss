@@ -28,7 +28,7 @@ ion-tabs {
       display: flex;
       flex-direction: column;
       flex: 1;
-      padding: .6rem;
+      padding: #{$display-base / 2};
       text-decoration: none;
       align-items: center;
       justify-content: flex-end;

@@ -1,7 +1,7 @@
 @import '../variables';
 
 form {
-  padding: 1rem;
+  padding: $display-base;
 
   .info {
     color: var(--theme-primary);
@@ -12,7 +12,7 @@ form {
 
 fieldset {
   border: 0;
-  margin: 1rem 0;
+  margin: $display-base 0;
 
   &:first-of-type legend {
     display: none;
@@ -27,14 +27,14 @@ fieldset {
 legend {
   color: var(--theme-title);
   font-weight: 600;
-  padding-bottom: 1rem;
+  padding-bottom: $display-base;
 }
 
 ion-item {
   display: block;
   position: relative;
   border-radius: 2px 2px 0 0;
-  margin-bottom: 1rem;
+  margin-bottom: $display-base;
 
   // Labels
   .label {
@@ -44,7 +44,7 @@ ion-item {
     position: absolute;
     transform-origin: 0 0;
     transition: all 180ms ease-in-out;
-    transform: translateY(1.2rem);
+    transform: translateY(1rem);
 
     span {
       color: var(--theme-primary);
@@ -56,7 +56,7 @@ ion-item {
 
     .label {
       color: var(--theme-primary);
-      transform: translateY(.5rem) scale(.8);
+      transform: translateY(0) scale(.8);
     }
 
     .input,
@@ -70,7 +70,7 @@ ion-item {
   .input {
     border-bottom: 2px solid var(--theme-input);
     display: block;
-    padding: 1.5rem 0 .5rem;
+    padding: 1rem 0 #{$display-base / 2};
 
     &.ng-touched.ng-invalid {
       border-bottom-color: #900;
@@ -82,7 +82,7 @@ ion-item {
       color: var(--theme-input-value);
       font: inherit;
       font-size: 1.1rem;
-      line-height: 1.5rem;
+      line-height: 1.5;
       width: 100%;
     }
 
@@ -96,11 +96,11 @@ ion-item {
   .datetime {
     border-bottom: 2px solid var(--theme-input);
     display: block;
-    padding: 1.5rem 0 .5rem;
+    padding: 1rem 0 #{$display-base / 2};
 
     > .datetime-text {
       color: var(--theme-input-value);
-      line-height: 1.5rem;
+      line-height: 1.5;
       min-height: 1.5rem;
       font-size: 1.1rem;
     }
@@ -108,6 +108,7 @@ ion-item {
     > .item-cover {
       @include button;
       @include fill;
+      width: 100%;
     }
 
   }

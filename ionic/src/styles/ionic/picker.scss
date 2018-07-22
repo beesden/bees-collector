@@ -31,8 +31,9 @@ ion-picker-cmp {
     .picker-button {
       @include ripple();
       @include button(var(--theme-primary));
-      font-weight: 500;
-      padding: 1rem;
+      font-size: 15px;
+      font-weight: 600;
+      padding: $display-base;
       letter-spacing: .5px;
       text-transform: uppercase;
     }
@@ -69,7 +70,7 @@ ion-picker-cmp {
 
   .picker-opt {
     @include button($swatch-charcoal);
-    font-size: 1.5rem;
+    font-size: 18px;
     line-height: 42px;
     position: absolute;
     top: 84px;

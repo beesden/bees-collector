@@ -2,13 +2,13 @@
 
 .bc-info {
   @include card;
-  margin: 1rem;
+  margin: $display-base;
   padding-top: 0;
 
   ion-slides {
     background: #333;
     height: 200px;
-    margin: 0 -.6rem 0;
+    margin: 0 #{$display-base / 2} 0;
 
     img {
       display: block;
@@ -20,26 +20,22 @@
   h1 {
     color: var(--theme-title);
     font-size: 1.5rem;
-    margin: 1rem 0;
+    margin: $display-base 0;
 
     + .bc-status {
-      margin-top: -1rem;
+      margin-top: #{-$display-base};
     }
   }
 
   p {
-    margin: 1rem 0;
-  }
-
-  hr {
-    margin: 1rem 0;
+    margin: $display-base 0;
   }
 
   dl {
     display: flex;
     flex-flow: row wrap;
     font-size: .9rem;
-    margin: 1rem 0;
+    margin: $display-base 0;
 
     dt {
       color: var(--theme-title);
@@ -55,7 +51,7 @@
       flex: 60% 0 0;
 
       ~ dt, ~ dd {
-        margin-top: .5rem;
+        margin-top: #{$display-base / 3};
       }
     }
   }

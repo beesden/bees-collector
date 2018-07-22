@@ -2,15 +2,15 @@
 
 :host {
   display: block;
-  margin: 1rem;
+  margin: $display-base;
 }
 
 .count {
-  margin: 0 0 1rem;
+  margin: 0 0 $display-base;
 }
 
 .figures {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
-  grid-gap: .6rem;
+  grid-template-columns: repeat(auto-fill, minmax(#{$display-base * 20}, 1fr));
+  grid-gap: #{$display-base * .75};
 }
