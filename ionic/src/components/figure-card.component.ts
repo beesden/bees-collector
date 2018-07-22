@@ -7,34 +7,29 @@ import { FigureService } from "src/service";
   selector: 'bc-figure-card',
   styleUrls: ['./figure-card.component.scss'],
   template: `
-    <section [class]="'state-' + figure.status">
+    <figure [style.backgroundImage]="image"></figure>
 
-      <figure [style.backgroundImage]="image"></figure>
+    <header>
+      <h2>{{figure.name}}</h2>
 
-      <header>
-        <h2>{{figure.name}}</h2>
+      <p class="bc-status" [ngClass]="'bc-status--' + figure.status">{{figure.statusText}}</p>
 
-        <p class="status">{{figure.statusText}}</p>
+      <p class="range">
+        {{figure.range}}
+        <span *ngIf="figure.release">({{figure.release | date: 'yyyy'}})</span>
+      </p>
 
-        <p class="range">
-          {{figure.range}}
-          <span *ngIf="figure.release">({{figure.release | date: 'yyyy'}})</span>
-        </p>
+      <p class="series">{{figure.series}}</p>
+    </header>
 
-        <p class="series">{{figure.series}}</p>
-      </header>
-
-      <aside>
-        <button class="highlight" (click)="toggleHighlight($event)" [ngClass]="{active: figure.highlight}">
-          <ion-icon [name]="figure.highlight ? 'star' : 'star-outline'"></ion-icon>
-        </button>
-        <button class="collected" (click)="toggleCollected($event)" [ngClass]="{active: figure.collected}">
-          <ion-icon name="checkmark"></ion-icon>
-        </button>
-      </aside>
-
-    </section>
-
+    <aside>
+      <button class="highlight" (click)="toggleHighlight($event)" [ngClass]="{active: figure.highlight}">
+        <ion-icon [name]="figure.highlight ? 'star' : 'star-outline'"></ion-icon>
+      </button>
+      <button class="collected" (click)="toggleCollected($event)" [ngClass]="{active: figure.collected}">
+        <ion-icon [name]="figure.collected ? 'checkbox-outline' : 'square-outline'"></ion-icon>
+      </button>
+    </aside>
   `
 })
 export class FigureCardComponent {

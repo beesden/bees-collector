@@ -22,18 +22,14 @@ import { FigureService } from "src/service/figure.service";
         <bc-figure-list [figures]="figures"></bc-figure-list>
       </ng-container>
 
-      <ng-container *ngIf="figures?.length === 0">
+      <article class="bc-empty" *ngIf="figures?.length === 0">
+        <ion-icon name="star"></ion-icon>
 
-        <article class="emptyState">
-          <ion-icon name="star"></ion-icon>
-
-          <h1>You have not added any highlights.</h1>
-          <p>Highlights can be used to temporarily mark a set of figures, for example to track figures that haven't been delivered yet.</p>
-          <p>To more permanently add figures to a set, create a collection.</p>
-        </article>
-
-      </ng-container>
-
+        <h1 class="bc-type-title">You have not added any highlights.</h1>
+        <p class="bc-type-text">Highlights can be used to temporarily mark a set of figures, for example to track figures that haven't been delivered yet.</p>
+        <p class="bc-type-text">To more permanently add figures to a set, create a collection.</p>
+      </article>
+      
     </ion-content>
   `
 })

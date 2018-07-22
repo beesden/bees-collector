@@ -12,29 +12,30 @@
 }
 
 html {
-  font: 87.5%/1.5 'Roboto', sans-serif;
+  font: 87.5%/1.3 'Roboto', sans-serif;
   font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   text-size-adjust: none;
   touch-action: manipulation;
   user-select: none;
 
-  --theme-bg: #{$swatch-white};
-  --theme-content: #{$swatch-charcoal};
-  --theme-primary: #{$swatch-blue-dark};
+  // Typography
+  --theme-bg: #{$swatch-smoke};
+  --theme-title: #{$swatch-black};
+  --theme-content: #{$swatch-grey-dark};
+
+  // Material colours
+  --theme-primary: #08c;
   --theme-secondary: #{$swatch-white};
 
-  // todo - remove unwanted
-  --theme-action: #{$swatch-blue-dark};
-  --theme-header: #{$swatch-white};
-  --theme-header-bg: #{$swatch-blue-dark};
-  --theme-content-bg: #{$swatch-white};
-  --theme-content-break: #{$swatch-grey-light};
-  --theme-content-link: #{$swatch-violet};
-  --theme-content-title: #{$swatch-violet};
-  --theme-input: #{$swatch-grey-dark};
-  --theme-input-bg: #{$swatch-smoke};
+  // Inputs
+  --theme-input: #ddd;
   --theme-input-value: #{$swatch-black};
+
+  // Figure statuses
+  --status-complete: #292;
+  --status-incomplete: #929;
+  --status-unowned: #922;
 }
 
 :focus,
@@ -44,7 +45,13 @@ html {
 
 hr {
   border: none;
-  border-top: 1px solid var(--theme-content-break);
+  border-top: 1px solid var(--theme-content);
+  opacity: 0.3;
+}
+
+// Remove ionic global button effects
+.button-effect {
+  display: none;
 }
 
 // Custom ionic sass
@@ -54,7 +61,6 @@ hr {
 @import './ionic/navbar';
 @import './ionic/menu';
 @import './ionic/alert';
-@import './ionic/input';
 @import './ionic/picker';
 
 // Unupdated
@@ -71,58 +77,12 @@ hr {
 $font-path: '~ionic-angular/fonts';
 @import "~ionic-angular/fonts/noto-sans", "~ionic-angular/fonts/roboto";
 
-// Component styles
+// Component / Typography styles
+@import './components/form';
 @import './components/button';
+@import './components/text';
+@import './components/empty';
+@import './components/info';
 @import './components/overflow-menu';
-
-.content-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  grid-gap: 1.5rem;
-  margin: 1rem;
-}
-
-ion-grid {
-  margin: 0 -10px;
-
-  ion-col {
-    flex: 1;
-
-    &:last-child {
-      flex: 0;
-      align-items: center;
-      display: flex;
-    }
-  }
-}
-
-.emptyState {
-  align-items: center;
-  display: flex;
-  flex-flow: column;
-  min-height: 100%;
-  justify-content: center;
-  padding: 2rem;
-  text-align: center;
-
-  ion-icon {
-    color: var(--theme-primary);
-    font-size: 6rem;
-    line-height: 1;
-  }
-
-  h1 {
-    font-size: 1.5rem;
-    margin: 1rem;
-  }
-
-  p {
-    color: $swatch-grey-dark;
-    margin: 1rem 0 0;
-  }
-
-  button {
-    margin-top: 2rem;
-  }
-
-}
+@import './components/scroller';
+@import './components/status';

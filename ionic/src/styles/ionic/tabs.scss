@@ -33,10 +33,10 @@ ion-tabs {
       align-items: center;
       justify-content: flex-end;
 
-      @include ripple($swatch-blue-dark);
+      @include ripple(var(--theme-primary));
 
       &[aria-selected="true"] {
-        color: var(--theme-header-bg);
+        color: var(--theme-primary);
       }
 
       > .tab-button-icon {

@@ -121,11 +121,11 @@ export class ConnectionService {
         collection.figures = figures.slice(figures.length - 17, figures.length);
 
         const collection2 = new Collection();
-        collection2.name = 'Early Bird Mail-In';
+        collection2.name = 'Kenner';
         collection2.image = new Image();
         collection2.image.url = 'http://i161.photobucket.com/albums/t222/cocofstar/early_bird_display_with_fig.jpg';
         collection2.image.name = 'Cover';
-        collection2.figures = figures.slice(figures.length - 17, figures.length);
+        collection2.figures = figures;
 
         const collection3 = new Collection();
         collection3.name = 'Droids';

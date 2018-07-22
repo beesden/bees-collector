@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Page } from "ionic-angular/navigation/nav-util";
 import { Figure } from "src/entity/figure";
 import { FigureViewPageComponent } from "src/pages";
@@ -8,17 +8,19 @@ import { FigureViewPageComponent } from "src/pages";
   styleUrls: ['./figure-list.component.scss'],
   template: `
     <div class="filters">
-      
+
     </div>
-    
+
     <div class="count">
       {{figures?.length || 0 | number}} figures
     </div>
-    
-    <bc-figure-card *ngFor="let figure of figures | slice: 0: limit"
-                 [figure]="figure"
-                 [navPush]="figureViewPage"
-                 [navParams]="{figureId: figure.id}"></bc-figure-card>
+
+    <section class="figures">
+      <bc-figure-card *ngFor="let figure of figures | slice: 0: limit"
+                      [figure]="figure"
+                      [navPush]="figureViewPage"
+                      [navParams]="{figureId: figure.id}"></bc-figure-card>
+    </section>
 
     <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
       <ion-infinite-scroll-content></ion-infinite-scroll-content>

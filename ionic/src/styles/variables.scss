@@ -7,12 +7,6 @@ $swatch-cranberry: #ad2c2c;
 $swatch-violet: #7d3f98;
 $swatch-teal: #3f9863;
 
-// Material colours
-$swatch-blue-dark: #3f51b5;
-
-// iOS colours
-$swatch-blue: #387ef5;
-
 // Grey swatches
 $swatch-charcoal: #414141;
 $swatch-grey-dark: #646464;
@@ -70,6 +64,7 @@ $shadow-small: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14),
 }
 
 @mixin button( $color: inherit, $background: none) {
+  appearance: none;
   background: $background;
   color: $color;
   border: 0;

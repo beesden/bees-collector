@@ -4,9 +4,9 @@ ion-navbar,
 ion-toolbar {
 
   &.toolbar {
-    background: var(--theme-header-bg);
+    background: var(--theme-primary);
     box-shadow: $shadow-large;
-    color: var(--theme-header);
+    color: var(--theme-secondary);
     min-height: 4.3rem;
     display: flex;
     align-items: center;
@@ -49,10 +49,6 @@ ion-toolbar {
       margin-right: 2rem;
       flex-grow: 0;
       order: 1;
-
-      .button-effect {
-        display: none;
-      }
     }
 
     // Back button visibility

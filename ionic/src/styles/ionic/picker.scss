@@ -30,15 +30,11 @@ ion-picker-cmp {
 
     .picker-button {
       @include ripple();
-      @include button($swatch-blue-dark);
+      @include button(var(--theme-primary));
       font-weight: 500;
       padding: 1rem;
       letter-spacing: .5px;
       text-transform: uppercase;
-
-      .button-effect {
-        display: none;
-      }
     }
   }
 
@@ -80,6 +76,6 @@ ion-picker-cmp {
   }
 
   .picker-opt-selected {
-    color: $swatch-blue-dark;
+    color: var(--theme-primary);
   }
 }

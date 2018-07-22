@@ -2,21 +2,24 @@ import { Component, NgZone } from '@angular/core';
 import { Camera, CameraOptions, DestinationType, MediaType, PictureSourceType } from "@ionic-native/camera";
 import { ActionSheetController, AlertController, NavParams, ViewController } from "ionic-angular";
 import { Page } from "ionic-angular/navigation/nav-util";
-import { Image } from "src/entity";
+import { Collection, Image } from "src/entity";
 import { Figure } from "src/entity/figure";
 import { IonViewDidEnter } from "src/ionic-lifecycle";
 import { FigureEditPageComponent } from "src/pages/figure-edit-page.component";
+import { CollectionService } from "src/service";
 import { FigureService } from "src/service/figure.service";
 
 @Component({
   selector: 'bp-figure-view',
-  styleUrls: ['./figure-view-page.component.scss'],
   template: `
     <ion-header>
       <ion-navbar>
 
         <ion-buttons end>
-          <button class="highlight" (click)="toggleHighlight($event)" [ngClass]="{active: figure.highlight}">
+          <button class="highlight" (click)="toggleCollected()" [ngClass]="{active: figure.highlight}">
+            <ion-icon [name]="figure.collected ? 'checkbox-outline' : 'square-outline'"></ion-icon>
+          </button>
+          <button class="highlight" (click)="toggleHighlight()" [ngClass]="{active: figure.highlight}">
             <ion-icon [name]="figure.highlight ? 'star' : 'star-outline'"></ion-icon>
           </button>
           <button (click)="moreOptions = !moreOptions">
@@ -27,19 +30,19 @@ import { FigureService } from "src/service/figure.service";
       </ion-navbar>
     </ion-header>
 
-    <nav class="bc-overflow" [ngClass]="{reveal: moreOptions}">
-      <ion-backdrop (click)="moreOptions = false"></ion-backdrop>
+    <nav class="bc-overflow" [ngClass]="{reveal: moreOptions}" (click)="moreOptions = false">
+      <ion-backdrop></ion-backdrop>
       <div class="options">
         <button [navPush]="figureEditPage" [navParams]="{figureId: figure?.id}">Edit</button>
-        <button (click)="toggleCollected()">{{figure.collected ? 'Mark unowned' : 'Mark as owned'}}</button>
-        <button [navPush]="figureEditPage" [navParams]="{figureId: figure?.id}">Add to collection</button>
+        <button (click)="addPhoto()">Change images</button>
+        <button (click)="addToCollection()">Add to collection</button>
         <button (click)="deleteFigure()">Delete</button>
       </div>
     </nav>
 
     <ion-content>
 
-      <header class="figure-view">
+      <header class="bc-info">
 
         <ion-slides class="image-preview" [loop]="true" [pager]="true">
           <ion-slide *ngFor="let image of figure.images"><img [src]="image.url"/></ion-slide>
@@ -47,7 +50,7 @@ import { FigureService } from "src/service/figure.service";
 
         <!-- Main title -->
         <h1>{{figure.name}}</h1>
-        <div [class]="'status-' + figure.status">{{figure.statusText}}</div>
+        <div class="bc-status" [ngClass]="'bc-status--' + figure.status">{{figure.statusText}}</div>
 
         <!-- Notes -->
         <ng-container *ngIf="figure.notes">
@@ -87,7 +90,7 @@ import { FigureService } from "src/service/figure.service";
 
       </header>
 
-      <h2 class="heading">Accessories</h2>
+      <h2 class="bc-type-subtitle">Accessories</h2>
 
       <section class="scroller">
 
@@ -102,10 +105,10 @@ import { FigureService } from "src/service/figure.service";
 
 
       <ng-container *ngIf="figure.collections?.length">
-        <h2 class="heading">Collected in:</h2>
+        <h2 class="bc-type-subtitle">In collections:</h2>
 
-        <section class="scroller">
-          <bc-collection-card *ngFor="let collection of figure.collections" [collection]="collection"></bc-collection-card>
+        <section class="bc-scroller">
+          <bc-collection-card class="scroll-item" *ngFor="let collection of figure.collections" [collection]="collection"></bc-collection-card>
         </section>
       </ng-container>
 
@@ -122,6 +125,7 @@ export class FigureViewPageComponent implements IonViewDidEnter {
               private alertCtrl: AlertController,
               private camera: Camera,
               private figureService: FigureService,
+              private collectionService: CollectionService,
               private zone: NgZone,
               private viewCtrl: ViewController,
               private navParams: NavParams) {
@@ -155,6 +159,38 @@ export class FigureViewPageComponent implements IonViewDidEnter {
 
   addAccessory(): void {
     console.log('Add accessory');
+  }
+
+  /**
+   * Add the figure to a collection.
+   */
+  addToCollection(): void {
+
+    this.collectionService.getList().then(collections => {
+      const options = this.alertCtrl.create()
+        .setTitle('Add to collection')
+        .addButton({text: 'Cancel', role: 'cancel'})
+        .addButton({
+          text: 'OK',
+          handler: (collectionId: string) => {
+            console.log(collectionId);
+            if (collectionId) {
+              this.collectionService.addFigureToCollection(parseInt(collectionId), this.figure)
+                .then(() => this.ionViewDidEnter());
+            }
+          }
+        });
+
+      collections.forEach(collection => {
+        options.addInput({
+          type: 'radio',
+          label: collection.name,
+          value: collection.id.toString()
+        })
+      });
+
+      return options.present();
+    });
   }
 
   /**

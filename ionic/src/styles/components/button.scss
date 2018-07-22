@@ -15,6 +15,10 @@
   transition: color 320ms ease-in-out;
   text-transform: uppercase;
 
+  > ion-icon:only-child {
+    font-size: 1.3rem;
+  }
+
   &[disabled] {
     cursor: default;
     opacity: .4;
@@ -41,12 +45,11 @@
   }
 
   &--fab {
-    font-size: 1.3rem;
     border-radius: 50%;
-
     height: 3.5rem;
     width: 3.5rem;
     padding: 0;
+
     display: flex;
     justify-content: center;
     align-items: center;
@@ -55,10 +58,10 @@
     z-index: 999;
     right: 1rem;
     bottom: 1rem;
-  }
 
-  > ion-icon:only-child {
-    font-size: 1.3rem;
+    > ion-icon:only-child {
+      font-size: 1.6rem;
+    }
   }
 
 }

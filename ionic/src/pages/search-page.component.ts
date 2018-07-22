@@ -6,41 +6,29 @@ import { FigureService } from "src/service/figure.service";
 
 @Component({
   selector: 'bp-search',
-  styleUrls: ['./search-page.component.scss'],
   template: `
     <ion-header>
 
       <ion-navbar>
-        <ion-searchbar [(ngModel)]="query" (ionChange)="search(query)" [showCancelButton]="true"
-                       autofocus></ion-searchbar>
+        <ion-searchbar [(ngModel)]="queryInput" (ionChange)="search(queryInput)" (ionClear)="search()"></ion-searchbar>
       </ion-navbar>
 
     </ion-header>
 
     <ion-content>
 
-      <section class="section" *ngIf="collections?.length">
-        <h2>Collections</h2>
-        <bc-collection-card *ngFor="let collection of collections" [collection]="collection"></bc-collection-card>
-      </section>
-      
-      <section class="section" *ngIf="figures?.length">
-        <h2>Figures</h2>
-        <bc-figure-list [figures]="figures"></bc-figure-list>
-      </section>
-      
+      <p class="bc-type-text" *ngIf="queryInput && figures && !figures?.length">No results found. Please try again.</p>
+      <bc-figure-list *ngIf="figures?.length" [figures]="figures"></bc-figure-list>
+
     </ion-content>
   `
 })
 export class SearchPageComponent {
 
-  query: string;
-
-  collections: Collection[];
+  queryInput: string;
   figures: Figure[];
 
-  constructor(private figureService: FigureService,
-              private collectionService: CollectionService) {
+  constructor(private figureService: FigureService) {
   }
 
   /**
@@ -48,15 +36,16 @@ export class SearchPageComponent {
    *
    * @param query
    */
-  search(query: string) {
+  search(query: string = '') {
+
+    if (!query) {
+      delete this.figures;
+      return;
+    }
 
     this.figureService.search(query).then(figures => {
       this.figures = figures;
     });
-
-    this.collectionService.search(query).then(collections => {
-      this.collections = collections;
-    })
 
   }
 

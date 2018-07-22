@@ -10,7 +10,6 @@ import { CollectionService } from "src/service/collection.service";
 
 @Component({
   selector: 'bp-collection-view',
-  styleUrls: ['./figure-view-page.component.scss'],
   template: `
     <ion-header>
       <ion-navbar>
@@ -29,27 +28,24 @@ import { CollectionService } from "src/service/collection.service";
 
     <ion-content>
 
-      <div class="image-preview">
-        <button class="bc-button" (click)="setPhoto()">
-          <ion-icon name="camera"></ion-icon>
-        </button>
-        <img [src]="collection.image?.url"/>
-      </div>
+      <header class="bc-info">
 
-      <header class="page-section">
+        <ion-slides class="image-preview">
+          <ion-slide>
+            <img [src]="collection.image?.url"/>
+          </ion-slide>
+        </ion-slides>
+
         <h1>{{collection.name}}</h1>
         <p>{{collection.description}}</p>
 
         <dl>
-          <dt>Figures in Collection:</dt>
+          <dt>Figures in Collection</dt>
           <dd>{{collection.length}}</dd>
-          <dt>Owned:</dt>
+          <dt>Owned</dt>
           <dd>{{collection.collected}}</dd>
         </dl>
-        
-        <hr />
 
-        <h2>Figures:</h2>
       </header>
 
       <bc-figure-list [figures]="collection.figures"></bc-figure-list>

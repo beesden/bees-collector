@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Collection } from "src/entity";
+import { Collection, Figure } from "src/entity";
 import { ConnectionService } from "src/service/connection.service";
 import { Repository, SelectQueryBuilder } from "typeorm/browser";
 
@@ -69,6 +69,30 @@ export class CollectionService {
     return this.query.then(query => query
       .andWhere(`collection.name LIKE '%${queryString}%'`)
       .getMany())
+
+  }
+
+  /**
+   * Add a figure to an existing collection.
+   * If the figure is already in the collection, it won't be added again.
+   *
+   * @param collectionId
+   * @param figure
+   */
+  addFigureToCollection(collectionId: number, figure: Figure): Promise<Collection> {
+
+    return this.getOne(collectionId).then(collection => {
+
+      if (!collection.figures) {
+        collection.figures = [];
+      }
+
+      if (!collection.figures.find(entry => entry.id === figure.id)) {
+        collection.figures.push(figure);
+        return this.saveCollection(collection);
+      }
+
+    });
 
   }
 

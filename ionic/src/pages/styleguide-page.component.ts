@@ -1,8 +1,4 @@
 import { Component } from '@angular/core';
-import { Collection } from "src/entity";
-import { Figure } from "src/entity/figure";
-import { CollectionService } from "src/service";
-import { FigureService } from "src/service/figure.service";
 
 @Component({
   selector: 'bp-search',
@@ -61,6 +57,18 @@ import { FigureService } from "src/service/figure.service";
         <p>This page is simply to demonstrate all variations of the app's styleguide.</p>
         <p>This page should not reach production.</p>
 
+      </section>
+
+      <section class="page-section">
+        
+        <div class="bc-text">
+          <h1>This is a title</h1>
+          <p>This is some text</p>
+          
+          <h2>This is a subtitle</h2>
+          <p>This is some more text</p>
+        </div>
+        
       </section>
 
       <section class="page-section">

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Form, NgForm } from "@angular/forms";
+import { NgForm } from "@angular/forms";
 import { NavParams, ViewController } from "ionic-angular";
 import { Figure } from "src/entity/figure";
 import { FigureProperty } from "src/entity/figure-property";
@@ -26,12 +26,14 @@ import { FigureRange, FigureService } from "src/service/figure.service";
     <ion-content>
 
       <form #form="ngForm" id="form" *ngIf="figure" (ngSubmit)="saveChanges(form)">
+        
+        <p class="info">* indicates required fields</p>
 
         <fieldset>
           <legend>Figure name</legend>
 
           <ion-item>
-            <ion-label>Name</ion-label>
+            <ion-label>Name <span>*</span></ion-label>
             <ion-input name="name" [(ngModel)]="figure.name" required></ion-input>
           </ion-item>
 
@@ -46,7 +48,7 @@ import { FigureRange, FigureService } from "src/service/figure.service";
           <legend>Series / Range</legend>
 
           <ion-item>
-            <ion-label>Series</ion-label>
+            <ion-label>Series <span>*</span></ion-label>
             <ion-input name="series" [(ngModel)]="figure.series" required></ion-input>
           </ion-item>
 
@@ -68,12 +70,12 @@ import { FigureRange, FigureService } from "src/service/figure.service";
           <div class="figure-properties" *ngFor="let property of figure.properties; let idx = index">
 
             <ion-item>
-              <ion-label>Label</ion-label>
+              <ion-label>Label <span>*</span></ion-label>
               <ion-input [name]="'property_name_' + idx" [(ngModel)]="property.name" required></ion-input>
             </ion-item>
 
             <ion-item>
-              <ion-label>Value</ion-label>
+              <ion-label>Value <span>*</span></ion-label>
               <ion-input [name]="'property_value_' + idx" [(ngModel)]="property.value" required></ion-input>
             </ion-item>
 

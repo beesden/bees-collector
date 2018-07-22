@@ -1,0 +1,16 @@
+@import '../variables';
+
+.bc-scroller {
+  display: flex;
+  overflow-x: scroll;
+
+  > .scroll-title {
+    flex: 100%;
+  }
+
+  > .scroll-item {
+    flex: 10rem 0 0;
+    margin: 1rem;
+  }
+
+}

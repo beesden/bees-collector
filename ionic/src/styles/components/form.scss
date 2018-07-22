@@ -2,6 +2,12 @@
 
 form {
   padding: 1rem;
+
+  .info {
+    color: var(--theme-primary);
+    font-size: 0.8rem;
+    text-align: right;
+  }
 }
 
 fieldset {
@@ -24,10 +30,9 @@ legend {
   padding-bottom: 1rem;
 }
 
-.item {
+ion-item {
   display: block;
   position: relative;
-  background: var(--theme-input-bg);
   border-radius: 2px 2px 0 0;
   margin-bottom: 1rem;
 
@@ -35,11 +40,15 @@ legend {
   .label {
     color: var(--theme-content);
     display: block;
-    left: 1rem;
+    left: 0;
     position: absolute;
     transform-origin: 0 0;
     transition: all 180ms ease-in-out;
     transform: translateY(1.2rem);
+
+    span {
+      color: var(--theme-primary);
+    }
   }
 
   // Input focus modifiers
@@ -59,13 +68,9 @@ legend {
 
   // Text input
   .input {
-    border-bottom: 2px solid var(--theme-input-bg);
+    border-bottom: 2px solid var(--theme-input);
     display: block;
-    padding: 1.5rem 1rem .5rem;
-
-    &[required] {
-      border-bottom-color: $swatch-grey-light;
-    }
+    padding: 1.5rem 0 .5rem;
 
     &.ng-touched.ng-invalid {
       border-bottom-color: #900;
@@ -89,9 +94,9 @@ legend {
 
   // Date input
   .datetime {
-    border-bottom: 2px solid var(--theme-input-bg);
+    border-bottom: 2px solid var(--theme-input);
     display: block;
-    padding: 1.5rem 1rem .5rem;
+    padding: 1.5rem 0 .5rem;
 
     > .datetime-text {
       color: var(--theme-input-value);

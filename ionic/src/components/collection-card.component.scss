@@ -27,13 +27,13 @@ header {
 
 h2 {
   @include ellipsis;
+  color: var(--theme-title);
   font-size: 1.1rem;
   font-weight: 500;
   margin: 0;
 }
 
 p {
-  color: $swatch-grey-dark;
   font-size: 1rem;
   margin: 0;
 }

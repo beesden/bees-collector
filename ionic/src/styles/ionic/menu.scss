@@ -30,8 +30,7 @@ ion-menu {
     height: 100%;
     contain: strict;
     overflow-y: auto;
-    // todo - replace with image?
-    padding-top: 9rem;
+    padding-bottom: 9rem;
   }
 
   .menu-title {
@@ -47,7 +46,8 @@ ion-menu {
     border-radius: 2px;
     color: $swatch-grey-dark;
     display: flex;
-    padding: 1rem;
+    height: 3.5rem;
+    padding: 0 1rem;
     text-align: left;
     width: 100%;
 
@@ -63,6 +63,14 @@ ion-menu {
     header {
       flex: 1;
       font-weight: 600;
+
+      > div {
+        font-weight: 300;
+
+        span + span:before {
+          content: ' - ';
+        }
+      }
     }
 
     aside {

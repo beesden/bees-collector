@@ -6,7 +6,8 @@ import { Repository, SelectQueryBuilder } from "typeorm/browser";
 export interface FigureRange {
   name: string;
   series: string;
-  year: string;
+  startYear: string;
+  endYear: string;
   figures: number;
   owned: number;
 }
@@ -108,13 +109,14 @@ export class FigureService {
       return repo.createQueryBuilder('f')
         .select('count(*)', 'figures')
         .addSelect('f.range', 'name')
-        .addSelect(' MIN(f.release)', 'year')
+        .addSelect(' MIN(f.release)', 'startYear')
+        .addSelect(' MAX(f.release)', 'endYear')
         .addSelect('f.series', 'series')
         .addSelect('sum(f.collected = 1)', 'owned')
         .addGroupBy('f.range')
         .addGroupBy('f.series')
         .addOrderBy('series')
-        .addOrderBy('year')
+        .addOrderBy('startYear')
         .addOrderBy('range')
         .andWhere('range is not null')
         .andWhere('range != ""')

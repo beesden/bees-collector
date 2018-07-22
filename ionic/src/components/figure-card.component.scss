@@ -1,24 +1,8 @@
 @import "../styles/variables";
 
 :host {
-  display: block;
-}
-
-section {
   @include card;
   display: flex;
-}
-
-.state-0 {
-  --status-color: #{$swatch-teal};
-}
-
-.state-1 {
-  --status-color: #{$swatch-violet};
-}
-
-.state-2 {
-  --status-color: #{$swatch-cranberry};
 }
 
 figure {
@@ -35,22 +19,13 @@ header {
 }
 
 h2 {
-  color: $swatch-black;
+  color: var(--theme-title);
   font-size: 1.1rem;
   line-height: 1.5;
   margin: 0;
 }
 
-.status {
-  color: var(--status-color);
-  font-size: 0.9rem;
-  font-weight: 600;
-  margin: 0;
-  text-transform: uppercase;
-}
-
 .range {
-  color: #888;
   font-size: 1rem;
   line-height: 1.2;
   font-weight: 600;
@@ -58,7 +33,6 @@ h2 {
 }
 
 .series {
-  color: #888;
   font-size: 1rem;
   line-height: 1.2;
   margin: 0;
@@ -71,24 +45,16 @@ aside {
 
   button {
     @include button;
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     line-height: 1;
     padding: .5rem;
 
-    &.collected {
-      color: #900;
-
-      &.active {
-        color: #090;
-      }
+    &.collected.active {
+      color: var(--status-complete);
     }
 
     &.highlight.active {
-      color: $swatch-grey-dark;
-
-      &.active {
-        color: #fc1;
-      }
+      color: #fc1;
     }
   }
 

@@ -39,11 +39,12 @@ export class Figure extends Collectable {
    */
   get status(): FigureState {
 
-    const accessoriesCollected = this.accessories ? this.accessories.filter(accessory => accessory.collected) : [];
+    const accessories = this.accessories ? this.accessories.length : 0;
+    const accessoriesCollected = this.accessories ? this.accessories.filter(accessory => accessory.collected).length : 0;
 
     if (!this.collected) {
       return FigureState.UNOWNED;
-    } else if(accessoriesCollected.length !== this.accessories.length) {
+    } else if(accessoriesCollected !== accessories) {
       return FigureState.INCOMPLETE;
     } else {
       return FigureState.COMPLETE;

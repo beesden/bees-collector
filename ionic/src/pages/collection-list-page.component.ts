@@ -1,10 +1,5 @@
 import { Component, NgZone } from "@angular/core";
-import { Page } from "ionic-angular/navigation/nav-util";
 import { Collection } from "src/entity";
-import { IonViewDidEnter } from "src/ionic-lifecycle";
-import { CollectionEditPageComponent } from "src/pages/collection-edit-page.component";
-import { CollectionViewPageComponent } from "src/pages/collection-view-page.component";
-import { SearchPageComponent } from "src/pages/search-page.component";
 import { CollectionService } from "src/service";
 
 
@@ -22,49 +17,30 @@ import { CollectionService } from "src/service";
     <ion-content>
 
       <ion-spinner *ngIf="!collections"></ion-spinner>
+      
+      <bc-collection-list *ngIf="collections?.length > 0" [collections]="collections"></bc-collection-list>
 
-      <div class="content-grid" *ngIf="collections?.length > 0">
-        <bc-collection-card *ngFor="let collection of collections"
-                            [collection]="collection"
-                            [navPush]="collectionViewPage"
-                            [navParams]="{collectionId: collection.id}">
-        </bc-collection-card>
-      </div>
-
-      <article class="emptyState" *ngIf="collections?.length === 0">
+      <article class="bc-empty" *ngIf="collections?.length === 0">
         <ion-icon name="albums"></ion-icon>
 
-        <h1>You do not have any collections.</h1>
-        <p>Collections can be used to categorise, group and organise your figures.</p>
+        <h1 class="bc-type-title">You do not have any collections.</h1>
+        <p class="bc-type-text">Collections can be used to categorise, group and organise your figures.</p>
       </article>
 
     </ion-content>
   `
 })
-export class CollectionListPageComponent implements IonViewDidEnter {
-
-  limit: number;
+export class CollectionListPageComponent {
 
   collections: Collection[];
 
-  searchPage: Page = SearchPageComponent;
-  collectionEditPage: Page = CollectionEditPageComponent;
-  collectionViewPage: Page = CollectionViewPageComponent;
-
   constructor(private collectionService: CollectionService,
               private zone: NgZone) {
-  }
 
-  /**
-   *  Update data whenever the view is opened or returned to.
-   */
-  ionViewDidEnter(): void {
     this.collectionService.getList().then(collections => {
-      this.zone.run(() => {
-        this.limit = Math.min(collections.length, 12);
-        this.collections = collections;
-      });
+      this.zone.run(() => this.collections = collections);
     });
+
   }
 
 }

@@ -6,6 +6,7 @@ import { IonicApp, IonicModule } from "ionic-angular";
 import { AppRootComponent } from 'src/app-root.component';
 
 import { CollectionCardComponent, FigureCardComponent, FigureListComponent } from "src/components";
+import { CollectionListComponent } from "src/components/collection-list.component";
 import * as Pages from "src/pages";
 import { CollectionService, ConnectionService, FigureService } from "src/service";
 
@@ -26,9 +27,13 @@ const pages = [
 @NgModule({
   declarations: [
     AppRootComponent,
+
     CollectionCardComponent,
+    CollectionListComponent,
+
     FigureListComponent,
     FigureCardComponent,
+
     ...pages
   ],
   entryComponents: [

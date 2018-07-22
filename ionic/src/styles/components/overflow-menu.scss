@@ -24,7 +24,7 @@
     width: 15rem;
 
     > button {
-      @include button($swatch-grey-dark, $swatch-white);
+      @include button(#151515, #fff);
       display: block;
       padding: .8rem 1rem;
       text-align: left;

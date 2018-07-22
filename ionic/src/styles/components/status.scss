@@ -1,0 +1,19 @@
+@import '../variables';
+
+.bc-status {
+  font-weight: 600;
+  text-transform: uppercase;
+
+  &--0 {
+    color: var(--status-complete);
+  }
+
+  &--1 {
+    color: var(--status-incomplete);
+  }
+
+  &--2 {
+    color: var(--status-unowned);
+  }
+
+}
