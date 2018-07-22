@@ -119,7 +119,7 @@ export class FigureListPageComponent implements IonViewDidEnter {
 
   filters: FigureFilters = {};
 
-  groups: { name: string, figures: number, owned: number, ranges: FigureRange[] }[];
+  groups: Array<{ name: string, figures: number, owned: number, ranges: FigureRange[] }>;
   figures: Figure[];
 
   searchPage: Page = SearchPageComponent;
@@ -153,7 +153,8 @@ export class FigureListPageComponent implements IonViewDidEnter {
   openPage(page: Page): void {
 
     this.menu.close().then(() => {
-      this.nav.push(page)
+      // noinspection JSIgnoredPromiseFromCall
+      this.nav.push(page);
     });
 
   }

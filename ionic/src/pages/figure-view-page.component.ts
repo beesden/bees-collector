@@ -2,7 +2,7 @@ import { Component, NgZone } from '@angular/core';
 import { Camera, CameraOptions, DestinationType, MediaType, PictureSourceType } from "@ionic-native/camera";
 import { ActionSheetController, AlertController, NavParams, ViewController } from "ionic-angular";
 import { Page } from "ionic-angular/navigation/nav-util";
-import { Collection, Image } from "src/entity";
+import { Image } from "src/entity";
 import { Figure } from "src/entity/figure";
 import { IonViewDidEnter } from "src/ionic-lifecycle";
 import { FigureEditPageComponent } from "src/pages/figure-edit-page.component";
@@ -148,11 +148,13 @@ export class FigureViewPageComponent implements IonViewDidEnter {
 
   toggleCollected(): void {
     this.figure.collected = !this.figure.collected;
+    // noinspection JSIgnoredPromiseFromCall
     this.figureService.saveFigure(this.figure);
   }
 
   toggleHighlight(): void {
     this.figure.highlight = !this.figure.highlight;
+    // noinspection JSIgnoredPromiseFromCall
     this.figureService.saveFigure(this.figure);
   }
 
@@ -175,7 +177,7 @@ export class FigureViewPageComponent implements IonViewDidEnter {
           handler: (collectionId: string) => {
             console.log(collectionId);
             if (collectionId) {
-              this.collectionService.addFigureToCollection(parseInt(collectionId), this.figure)
+              this.collectionService.addFigureToCollection(Number.parseInt(collectionId), this.figure)
                 .then(() => this.ionViewDidEnter());
             }
           }
@@ -186,7 +188,7 @@ export class FigureViewPageComponent implements IonViewDidEnter {
           type: 'radio',
           label: collection.name,
           value: collection.id.toString()
-        })
+        });
       });
 
       return options.present();
@@ -198,6 +200,7 @@ export class FigureViewPageComponent implements IonViewDidEnter {
    */
   addPhoto(): void {
 
+    // noinspection JSIgnoredPromiseFromCall
     this.actionSheetCtrl.create()
       .addButton({icon: 'camera', text: 'Add new photo', handler: () => this.photoUpload(PictureSourceType.CAMERA)})
       .addButton({
@@ -215,6 +218,7 @@ export class FigureViewPageComponent implements IonViewDidEnter {
   changeStatus(): void {
 
     this.figure.collected = !this.figure.collected;
+    // noinspection JSIgnoredPromiseFromCall
     this.figureService.saveFigure(this.figure);
 
   }
@@ -224,6 +228,7 @@ export class FigureViewPageComponent implements IonViewDidEnter {
    */
   deleteFigure(): void {
 
+    // noinspection JSIgnoredPromiseFromCall
     this.alertCtrl.create()
       .setMessage(`Delete ${this.figure.name}?`)
       .addButton({text: 'Cancel', role: 'cancel'})
@@ -254,7 +259,7 @@ export class FigureViewPageComponent implements IonViewDidEnter {
         const image = new Image();
         image.url = path;
         image.name = path;
-        this.figure.images.push(image)
+        this.figure.images.push(image);
         return this.figureService.saveFigure(this.figure);
       })
       .catch(err => console.log(err));

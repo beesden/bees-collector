@@ -95,6 +95,7 @@ export class CollectionViewPageComponent implements IonViewDidEnter {
    */
   setPhoto(): void {
 
+    // noinspection JSIgnoredPromiseFromCall
     this.actionSheetCtrl.create()
       .addButton({icon: 'camera', text: 'Take photo', handler: () => this.photoUpload(PictureSourceType.CAMERA)})
       .addButton({
@@ -111,6 +112,7 @@ export class CollectionViewPageComponent implements IonViewDidEnter {
    */
   deleteCollection(): void {
 
+    // noinspection JSIgnoredPromiseFromCall
     this.alertCtrl.create()
       .setMessage(`Delete ${this.collection.name}?`)
       .addButton({text: 'Cancel', role: 'cancel'})
@@ -140,6 +142,7 @@ export class CollectionViewPageComponent implements IonViewDidEnter {
       .then(path => {
         this.collection.image = new Image();
         this.collection.image.url = path;
+        // noinspection JSIgnoredPromiseFromCall
         this.collectionService.saveCollection(this.collection);
       })
       .catch(err => console.log(err));

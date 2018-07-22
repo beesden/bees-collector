@@ -87,11 +87,11 @@ export class FigureService {
     return this.query.then(query => {
 
         if (filters.series) {
-          query.andWhere(`series = "${filters.series}"`)
+          query.andWhere(`series = "${filters.series}"`);
         }
 
         if (filters.range) {
-          query.andWhere(`range = "${filters.range}"`)
+          query.andWhere(`range = "${filters.range}"`);
         }
 
         return query.getMany();
@@ -147,7 +147,7 @@ export class FigureService {
     return this.query.then(query => query
       .andWhere(`figure.name LIKE '%${queryString}%'`)
       .orWhere(`figure.notes LIKE '%${queryString}%'`)
-      .getMany())
+      .getMany());
 
   }
 

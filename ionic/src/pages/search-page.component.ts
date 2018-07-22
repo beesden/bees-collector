@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Collection } from "src/entity";
 import { Figure } from "src/entity/figure";
 import { CollectionService } from "src/service";
 import { FigureService } from "src/service/figure.service";

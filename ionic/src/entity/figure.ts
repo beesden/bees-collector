@@ -63,6 +63,8 @@ export class Figure extends Collectable {
         return 'Incomplete';
       case FigureState.UNOWNED:
         return 'Unowned';
+      default:
+        return '???';
     }
   }
 

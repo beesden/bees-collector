@@ -161,11 +161,12 @@ export class FigureEditPageComponent {
 
       this.viewCtrl.dismiss().then(() => {
         if (!figureId) {
-          nav.push(FigureViewPageComponent, {figureId: figure.id})
+          // noinspection JSIgnoredPromiseFromCall
+          nav.push(FigureViewPageComponent, {figureId: figure.id});
         }
-      })
-    })
+      });
+    });
 
-  };
+  }
 
 }

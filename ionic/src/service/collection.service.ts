@@ -68,7 +68,7 @@ export class CollectionService {
 
     return this.query.then(query => query
       .andWhere(`collection.name LIKE '%${queryString}%'`)
-      .getMany())
+      .getMany());
 
   }
 

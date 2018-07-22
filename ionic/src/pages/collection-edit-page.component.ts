@@ -74,9 +74,10 @@ export class CollectionEditPageComponent {
 
       this.viewCtrl.dismiss().then(() => {
         if (!collectionId) {
-          nav.push(CollectionViewPageComponent, {collectionId: collection.id})
+          // noinspection JSIgnoredPromiseFromCall
+          nav.push(CollectionViewPageComponent, {collectionId: collection.id});
         }
-      })
+      });
 
     });
   }

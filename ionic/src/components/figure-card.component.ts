@@ -53,12 +53,14 @@ export class FigureCardComponent {
   toggleCollected($event): void {
     $event.stopPropagation();
     this.figure.collected = !this.figure.collected;
+    // noinspection JSIgnoredPromiseFromCall
     this.figureService.saveFigure(this.figure);
   }
 
   toggleHighlight($event): void {
     $event.stopPropagation();
     this.figure.highlight = !this.figure.highlight;
+    // noinspection JSIgnoredPromiseFromCall
     this.figureService.saveFigure(this.figure);
   }
 
