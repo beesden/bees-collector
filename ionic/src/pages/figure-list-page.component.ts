@@ -17,7 +17,7 @@ import { FigureFilters, FigureRange, FigureService } from "src/service/figure.se
 
       <ion-navbar>
 
-        <button menuToggle="menu2">
+        <button menuToggle="menu">
           <ion-icon name="menu"></ion-icon>
         </button>
 
@@ -35,7 +35,7 @@ import { FigureFilters, FigureRange, FigureService } from "src/service/figure.se
     <ion-content #content>
 
       <ion-spinner *ngIf="!figures"></ion-spinner>
-
+      
       <ng-container *ngIf="figures?.length > 0">
         <header *ngIf="filters.range || filters.series">
           <h1>{{filters.series}}</h1>
@@ -59,7 +59,7 @@ import { FigureFilters, FigureRange, FigureService } from "src/service/figure.se
 
     </ion-content>
 
-    <ion-menu id="menu2" [content]="content">
+    <ion-menu id="menu" [content]="content">
 
       <!-- App navigation -->
       <button class="menu-item" role="button" (click)="setFilter()" [ngClass]="{selected: !filters.range && !filters.series}">
@@ -71,7 +71,7 @@ import { FigureFilters, FigureRange, FigureService } from "src/service/figure.se
         <header>Highlights</header>
       </button>
       <button class="menu-item" (click)="openPage(collectionListPage)">
-        <ion-icon name="bookmark"></ion-icon>
+        <ion-icon name="albums"></ion-icon>
         <header>Collections</header>
       </button>
 
@@ -80,8 +80,16 @@ import { FigureFilters, FigureRange, FigureService } from "src/service/figure.se
         <hr/>
         <h2 class="menu-title">{{group.name}}</h2>
 
+        <!-- View all in series -->
+        <button class="menu-item" role="button" (click)="setFilter(group.name)" [ngClass]="{selected: !filters.range && filters.series === group.name}">
+          <ion-icon name="bookmark"></ion-icon>
+          <header>All in series</header>
+          <aside>{{group.owned}} / {{group.figures}}</aside>
+        </button>
+
+        <!-- Filter by range -->
         <button class="menu-item" role="button" *ngFor="let range of group.ranges" (click)="setFilter(range.series, range.name)" [ngClass]="{selected: filters.range === range.name && filters.series === range.series}">
-          <ion-icon name="albums"></ion-icon>
+          <ion-icon name="bookmark"></ion-icon>
           <header>
             {{range.name}}
             <span *ngIf="range.year">{{range.year | date: 'yyyy'}}</span>
@@ -89,18 +97,11 @@ import { FigureFilters, FigureRange, FigureService } from "src/service/figure.se
           <aside>{{range.owned}} / {{range.figures}}</aside>
         </button>
 
-        <!-- View all in series -->
-        <button class="menu-item" role="button" (click)="setFilter(group.name)" [ngClass]="{selected: !filters.range && filters.series === group.name}">
-          <ion-icon name="albums"></ion-icon>
-          <header>All</header>
-          <aside>{{group.owned}} / {{group.figures}}</aside>
-        </button>
-
       </ng-container>
 
     </ion-menu>
 
-    <button bc-fab *ngIf="figures" [navPush]="figureEditPage" [navParams]="{range: range}">
+    <button class="bc-button bc-button--fab"  *ngIf="figures" [navPush]="figureEditPage" [navParams]="{range: range}">
       <ion-icon name="add"></ion-icon>
     </button>
   `

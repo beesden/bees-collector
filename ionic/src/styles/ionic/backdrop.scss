@@ -1,0 +1,15 @@
+@import '../variables';
+
+ion-backdrop {
+  @include fill;
+
+  background: $swatch-black;
+  z-index: 2;
+  display: block;
+  opacity: .01;
+  transition: opacity 320ms;
+
+  &.backdrop-no-tappable {
+    cursor: auto;
+  }
+}

@@ -1,5 +1,6 @@
 export * from './search-page.component';
 export * from './highlights-page.component';
+export * from './styleguide-page.component';
 
 export * from './collection-edit-page.component';
 export * from './collection-list-page.component';

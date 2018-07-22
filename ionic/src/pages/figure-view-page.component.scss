@@ -1,16 +1,22 @@
 @import "../styles/variables";
 
-ion-slides {
-  background: #333;
-  height: 200px;
-
-  img {
-    height: 200px;
-  }
+:host {
+  --theme-bg: #{$swatch-smoke};
 }
 
-header {
-  padding: 0 1rem;
+.figure-view {
+  @include card;
+  margin: 1rem;
+
+  ion-slides {
+    background: #333;
+    height: 200px;
+    margin: -.6rem -.6rem 0;
+
+    img {
+      height: 200px;
+    }
+  }
 
   h1 {
     font-size: 1.5rem;
@@ -67,14 +73,7 @@ header {
   }
 
   nav {
-    margin: 1rem 0;
-
-    button {
-      font-size: 1rem;
-      height: auto;
-      line-height: 1;
-      padding: 0;
-    }
+    text-align: right;
   }
 }
 

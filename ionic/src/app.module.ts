@@ -12,6 +12,7 @@ import { CollectionService, ConnectionService, FigureService } from "src/service
 const pages = [
   Pages.HighlightsPageComponent,
   Pages.SearchPageComponent,
+  Pages.StyleguidePageComponent,
 
   Pages.CollectionEditPageComponent,
   Pages.CollectionListPageComponent,

@@ -1,0 +1,35 @@
+@import '../variables';
+
+.bc-overflow {
+  @include fill;
+ transform: translateX(100%);
+  z-index: 500;
+
+  &.reveal {
+    transform: none;
+
+    > .options {
+      opacity: 1;
+    }
+  }
+
+  > .options {
+    box-shadow: $shadow-small;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: opacity 320ms;
+    z-index: 5;
+    width: 15rem;
+
+    > button {
+      @include button($swatch-grey-dark, $swatch-white);
+      display: block;
+      padding: .8rem 1rem;
+      text-align: left;
+      width: 100%;
+    }
+  }
+
+}

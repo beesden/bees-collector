@@ -1,0 +1,85 @@
+@import '../variables';
+
+ion-picker-cmp {
+  @include fill;
+  z-index: 1000;
+  contain: strict;
+  display: block;
+
+  .picker-wrapper {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    transform: translate3d(0, 100%, 0);
+    position: absolute;
+    z-index: 10;
+    width: 100%;
+    max-width: 500px;
+    contain: strict;
+    height: 260px;
+    border-top: 1px solid $swatch-grey-light;
+    background: $swatch-white;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .picker-toolbar {
+    display: flex;
+    justify-content: flex-end;
+
+    .picker-button {
+      @include ripple();
+      @include button($swatch-blue-dark);
+      font-weight: 500;
+      padding: 1rem;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+
+      .button-effect {
+        display: none;
+      }
+    }
+  }
+
+  .picker-columns {
+    display: flex;
+    overflow: hidden;
+  }
+
+  .picker-col {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    height: 215px;
+    position: relative;
+
+    &.picker-opts-left {
+      justify-content: flex-start;
+    }
+
+    &.picker-opts-right {
+      justify-content: flex-end;
+    }
+  }
+
+  .picker-opts {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .picker-opt {
+    @include button($swatch-charcoal);
+    font-size: 1.5rem;
+    line-height: 42px;
+    position: absolute;
+    top: 84px;
+  }
+
+  .picker-opt-selected {
+    color: $swatch-blue-dark;
+  }
+}

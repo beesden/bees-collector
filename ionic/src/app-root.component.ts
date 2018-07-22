@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FigureListPageComponent } from "src/pages";
+import { FigureListPageComponent, StyleguidePageComponent } from "src/pages";
 
 @Component({
   selector: 'bc-app-root',
@@ -9,4 +9,6 @@ import { FigureListPageComponent } from "src/pages";
 })
 export class AppRootComponent {
   rootPage: object = FigureListPageComponent;
+
+  //  rootPage: object = StyleguidePageComponent;
 }

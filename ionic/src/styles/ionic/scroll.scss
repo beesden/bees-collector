@@ -1,0 +1,52 @@
+@import '../variables';
+
+/**
+ * TODO
+ */
+
+
+
+ion-infinite-scroll {
+  display: block;
+  width: 100%;
+}
+
+ion-infinite-scroll-content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  min-height: 84px;
+}
+
+.infinite-loading {
+  display: none;
+  width: 100%;
+  margin: 0 0 32px;
+}
+
+.infinite-loading-text {
+  color: #666;
+  margin: 4px 32px 0;
+}
+
+.infinite-loading-spinner .spinner-ios line,
+.infinite-loading-spinner .spinner-ios-small line,
+.infinite-loading-spinner .spinner-crescent circle {
+  stroke: #666;
+}
+
+.infinite-loading-spinner .spinner-bubbles circle,
+.infinite-loading-spinner .spinner-circles circle,
+.infinite-loading-spinner .spinner-dots circle {
+  fill: #666;
+}
+
+ion-infinite-scroll-content[state=loading] .infinite-loading {
+  display: block;
+}
+
+ion-infinite-scroll-content[state=disabled] {
+  display: none;
+}

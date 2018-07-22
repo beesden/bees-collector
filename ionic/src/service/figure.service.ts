@@ -116,6 +116,10 @@ export class FigureService {
         .addOrderBy('series')
         .addOrderBy('year')
         .addOrderBy('range')
+        .andWhere('range is not null')
+        .andWhere('range != ""')
+        .andWhere('series is not null')
+        .andWhere('series != ""')
         .getRawMany()
         .then((data: FigureRange[]) => data);
     });

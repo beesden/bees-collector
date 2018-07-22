@@ -7,7 +7,7 @@ ion-toolbar {
     background: var(--theme-header-bg);
     box-shadow: $shadow-large;
     color: var(--theme-header);
-    min-height: 4rem;
+    min-height: 4.3rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -49,6 +49,10 @@ ion-toolbar {
       margin-right: 2rem;
       flex-grow: 0;
       order: 1;
+
+      .button-effect {
+        display: none;
+      }
     }
 
     // Back button visibility
@@ -76,6 +80,15 @@ ion-toolbar {
           margin-left: .8rem;
         }
       }
+    }
+
+    // Additional options dropdown
+    // todo - directive?
+    .dropdown {
+      position: absolute;
+      right: 0;
+      top: 0;
+
     }
   }
 

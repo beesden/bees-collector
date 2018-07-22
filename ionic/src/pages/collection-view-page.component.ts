@@ -30,7 +30,7 @@ import { CollectionService } from "src/service/collection.service";
     <ion-content>
 
       <div class="image-preview">
-        <button ion-button (click)="setPhoto()">
+        <button class="bc-button" (click)="setPhoto()">
           <ion-icon name="camera"></ion-icon>
         </button>
         <img [src]="collection.image?.url"/>
@@ -116,11 +116,10 @@ export class CollectionViewPageComponent implements IonViewDidEnter {
   deleteCollection(): void {
 
     this.alertCtrl.create()
-      .setTitle('Delete Collection?')
-      .setMessage(`Are you sure you wish to delete ${this.collection.name}?`)
+      .setMessage(`Delete ${this.collection.name}?`)
       .addButton({text: 'Cancel', role: 'cancel'})
       .addButton({
-        text: 'Yes I\'m Sure',
+        text: 'Delete',
         handler: () => {
           this.collectionService.deleteOne(this.collection.id).then(() => this.viewCtrl.dismiss());
         }

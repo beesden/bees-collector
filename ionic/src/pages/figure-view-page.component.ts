@@ -16,27 +16,34 @@ import { FigureService } from "src/service/figure.service";
       <ion-navbar>
 
         <ion-buttons end>
-          <button (click)="addPhoto()">
-            <ion-icon name="camera"></ion-icon>
+          <button class="highlight" (click)="toggleHighlight($event)" [ngClass]="{active: figure.highlight}">
+            <ion-icon [name]="figure.highlight ? 'star' : 'star-outline'"></ion-icon>
           </button>
-          <button (click)="deleteFigure()">
-            <ion-icon name="trash"></ion-icon>
-          </button>
-          <button (click)="changeStatus()">
-            <ion-icon [name]="figure.collected ? 'checkmark' : 'close'"></ion-icon>
+          <button (click)="moreOptions = !moreOptions">
+            <ion-icon name="more"></ion-icon>
           </button>
         </ion-buttons>
 
       </ion-navbar>
     </ion-header>
 
+    <nav class="bc-overflow" [ngClass]="{reveal: moreOptions}">
+      <ion-backdrop (click)="moreOptions = false"></ion-backdrop>
+      <div class="options">
+        <button [navPush]="figureEditPage" [navParams]="{figureId: figure?.id}">Edit</button>
+        <button (click)="toggleCollected()">{{figure.collected ? 'Mark unowned' : 'Mark as owned'}}</button>
+        <button [navPush]="figureEditPage" [navParams]="{figureId: figure?.id}">Add to collection</button>
+        <button (click)="deleteFigure()">Delete</button>
+      </div>
+    </nav>
+
     <ion-content>
 
-      <ion-slides class="image-preview" [loop]="true" [pager]="true">
-        <ion-slide *ngFor="let image of figure.images"><img [src]="image.url"/></ion-slide>
-      </ion-slides>
+      <header class="figure-view">
 
-      <header class="page-section">
+        <ion-slides class="image-preview" [loop]="true" [pager]="true">
+          <ion-slide *ngFor="let image of figure.images"><img [src]="image.url"/></ion-slide>
+        </ion-slides>
 
         <!-- Main title -->
         <h1>{{figure.name}}</h1>
@@ -50,20 +57,27 @@ import { FigureService } from "src/service/figure.service";
 
         <hr/>
 
-        <!-- Additional Info -->
+        <!-- Metadata -->
         <dl>
-          <dt>Series</dt>
-          <dd>{{figure.series}}</dd>
+
+          <!-- Series -->
+          <ng-container *ngIf="figure.series">
+            <dt>Series</dt>
+            <dd>{{figure.series}}</dd>
+          </ng-container>
+
           <!-- Figure range -->
           <ng-container *ngIf="figure.range">
             <dt>Range</dt>
             <dd>{{figure.range}}</dd>
           </ng-container>
+
           <!-- Release date -->
           <ng-container *ngIf="figure.release">
             <dt>Release date</dt>
             <dd>{{figure.release | date: 'yyyy'}}</dd>
           </ng-container>
+
           <!-- Extra info -->
           <ng-container *ngFor="let property of figure.properties">
             <dt>{{property.name}}</dt>
@@ -71,28 +85,18 @@ import { FigureService } from "src/service/figure.service";
           </ng-container>
         </dl>
 
-        <!-- Action bar -->
-        <ng-container *ngIf="!figure.collected">
-          <hr/>
-          <nav text-end>
-            <button ion-button clear [navPush]="figureEditPage" [navParams]="{figureId: figure?.id}">Edit Details</button>
-          </nav>
-        </ng-container>
-
       </header>
 
       <h2 class="heading">Accessories</h2>
 
       <section class="scroller">
 
-        <ion-item *ngFor="let accessory of figure.accessories">
+        <div *ngFor="let accessory of figure.accessories">
           <img item-left [src]="accessory.images ? accessory.images[0].url : ''"/>
           <div>{{accessory.name}}</div>
-        </ion-item>
+        </div>
 
-        <ion-item>
-          <button ion-button>Add</button>
-        </ion-item>
+        <button class="bc-button bc-button--outline">Add</button>
 
       </section>
 
@@ -110,6 +114,7 @@ import { FigureService } from "src/service/figure.service";
 })
 export class FigureViewPageComponent implements IonViewDidEnter {
 
+  moreOptions: boolean;
   figureEditPage: Page = FigureEditPageComponent;
   figure: Figure = new Figure();
 
@@ -135,6 +140,16 @@ export class FigureViewPageComponent implements IonViewDidEnter {
       this.zone.run(() => this.figure = figure);
     });
 
+  }
+
+  toggleCollected(): void {
+    this.figure.collected = !this.figure.collected;
+    this.figureService.saveFigure(this.figure);
+  }
+
+  toggleHighlight(): void {
+    this.figure.highlight = !this.figure.highlight;
+    this.figureService.saveFigure(this.figure);
   }
 
 
@@ -174,11 +189,10 @@ export class FigureViewPageComponent implements IonViewDidEnter {
   deleteFigure(): void {
 
     this.alertCtrl.create()
-      .setTitle('Delete Figure?')
-      .setMessage(`Are you sure you wish to delete ${this.figure.name}?`)
+      .setMessage(`Delete ${this.figure.name}?`)
       .addButton({text: 'Cancel', role: 'cancel'})
       .addButton({
-        text: 'Yes I\'m Sure',
+        text: 'Delete',
         handler: () => {
           this.figureService.deleteOne(this.figure.id).then(() => this.viewCtrl.dismiss());
         }

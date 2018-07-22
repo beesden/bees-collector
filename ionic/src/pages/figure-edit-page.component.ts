@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Form, NgForm } from "@angular/forms";
 import { NavParams, ViewController } from "ionic-angular";
 import { Figure } from "src/entity/figure";
 import { FigureProperty } from "src/entity/figure-property";
@@ -7,13 +8,14 @@ import { FigureRange, FigureService } from "src/service/figure.service";
 
 @Component({
   selector: 'bp-figure-edit',
+  styleUrls: ['./figure-edit-page.component.scss'],
   template: `
     <ion-header>
       <ion-navbar>
         <ion-title>{{figure?.id ? 'Edit Figure' : 'Add Figure'}}</ion-title>
 
         <ion-buttons end>
-          <button (click)="saveChanges()">
+          <button form="form">
             <ion-icon name="checkmark"></ion-icon>
           </button>
         </ion-buttons>
@@ -23,7 +25,7 @@ import { FigureRange, FigureService } from "src/service/figure.service";
 
     <ion-content>
 
-      <form #form="ngForm" *ngIf="figure">
+      <form #form="ngForm" id="form" *ngIf="figure" (ngSubmit)="saveChanges(form)">
 
         <fieldset>
           <legend>Figure name</legend>
@@ -63,24 +65,27 @@ import { FigureRange, FigureService } from "src/service/figure.service";
         <fieldset>
           <legend>Additional info</legend>
 
-          <!-- TODO - component -->
-          <ion-grid>
-            <ion-row *ngFor="let property of figure.properties; let idx = index">
-              <ion-col>
-                <ion-item>
-                  <ion-input (ionBlur)="addProperty()" [name]="'property_name_' + idx" [(ngModel)]="property.name" placeholder="Name" required></ion-input>
-                </ion-item>
-              </ion-col>
-              <ion-col>
-                <ion-item>
-                  <ion-input (ionBlur)="addProperty()" [name]="'property_value_' + idx" [(ngModel)]="property.value" placeholder="Value" required></ion-input>
-                </ion-item>
-              </ion-col>
-              <ion-col>
-                <ion-icon item-end name="trash" role="button" (click)="removeProperty(idx)"></ion-icon>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
+          <div class="figure-properties" *ngFor="let property of figure.properties; let idx = index">
+
+            <ion-item>
+              <ion-label>Label</ion-label>
+              <ion-input [name]="'property_name_' + idx" [(ngModel)]="property.name" required></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label>Value</ion-label>
+              <ion-input [name]="'property_value_' + idx" [(ngModel)]="property.value" required></ion-input>
+            </ion-item>
+
+            <button class="bc-button bc-button--text" type="button" (click)="removeProperty(idx)">
+              <ion-icon name="close"></ion-icon>
+            </button>
+
+          </div>
+
+          <div class="figure-property-add">
+            <button class="bc-button bc-button--text" type="button" (click)="addProperty()">Add</button>
+          </div>
 
         </fieldset>
 
@@ -100,37 +105,34 @@ export class FigureEditPageComponent {
     const figureId = navParams.get('figureId');
     if (figureId) {
 
+      // Edit an existing figure
       this.figureService.getOne(figureId).then(figure => {
         this.figure = figure;
-        this.addProperty();
+        this.figure.properties = this.figure.properties || [];
       });
 
     } else {
-      this.figure = new Figure();
 
+      // Create a new figure
+      this.figure = new Figure();
+      this.figure.properties = [];
+
+      // Pre-populate
       const range = navParams.get('range') as FigureRange;
       if (range) {
         this.figure.range = range.name;
         this.figure.series = range.series;
       }
 
-      this.addProperty();
     }
 
   }
 
   /**
-   * Add a custom property row to the form.
+   * Add the new property into the form.
    */
   addProperty(): void {
-    if (!this.figure.properties) {
-      this.figure.properties = [];
-    }
-
-    this.figure.properties = this.figure.properties.filter(prop => prop.name || prop.value);
-
-    const prop = new FigureProperty();
-    this.figure.properties.push(prop);
+    this.figure.properties.push(new FigureProperty());
   }
 
   /**
@@ -143,7 +145,13 @@ export class FigureEditPageComponent {
   /**
    * Save any changes made in the form.
    */
-  saveChanges(): void {
+  saveChanges(form: NgForm): void {
+
+    if (!form.valid) {
+      Object.values(form.controls).forEach(control => control.markAsTouched());
+      return;
+    }
+
     this.figureService.saveFigure(this.figure).then(figure => {
 
       const figureId = this.navParams.get('figureId');

@@ -1,0 +1,64 @@
+@import '../variables';
+
+.bc-button {
+  @include button(var(--theme-secondary), var(--theme-primary));
+  @include ellipsis;
+
+  border: 1px solid var(--theme-primary);
+  border-radius: 4px;
+  box-shadow: $shadow-small;
+  font-size: .9rem;
+  font-weight: 600;
+  letter-spacing: .5px;
+  padding: .8rem 1rem;
+  position: relative;
+  transition: color 320ms ease-in-out;
+  text-transform: uppercase;
+
+  &[disabled] {
+    cursor: default;
+    opacity: .4;
+    pointer-events: none;
+  }
+
+  &--outline {
+    color: var(--theme-primary);
+    background: none;
+    border-color: var(--theme-primary);
+  }
+
+  &--text {
+    background: none;
+    border: none;
+    box-shadow: none;
+    display: inline;
+    color: var(--theme-primary);
+  }
+
+  &--block {
+    display: block;
+    width: 100%;
+  }
+
+  &--fab {
+    font-size: 1.3rem;
+    border-radius: 50%;
+
+    height: 3.5rem;
+    width: 3.5rem;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    z-index: 999;
+    right: 1rem;
+    bottom: 1rem;
+  }
+
+  > ion-icon:only-child {
+    font-size: 1.3rem;
+  }
+
+}

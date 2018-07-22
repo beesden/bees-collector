@@ -19,12 +19,15 @@ html {
   touch-action: manipulation;
   user-select: none;
 
-  --theme-primary:  #{$swatch-blue-dark};
+  --theme-bg: #{$swatch-white};
+  --theme-content: #{$swatch-charcoal};
+  --theme-primary: #{$swatch-blue-dark};
+  --theme-secondary: #{$swatch-white};
 
+  // todo - remove unwanted
+  --theme-action: #{$swatch-blue-dark};
   --theme-header: #{$swatch-white};
   --theme-header-bg: #{$swatch-blue-dark};
-
-  --theme-content: #{$swatch-grey-dark};
   --theme-content-bg: #{$swatch-white};
   --theme-content-break: #{$swatch-grey-light};
   --theme-content-link: #{$swatch-violet};
@@ -44,14 +47,33 @@ hr {
   border-top: 1px solid var(--theme-content-break);
 }
 
-// Base app styles
-@import './ionic/layout';
+// Custom ionic sass
+@import 'ionic/page';
+@import 'ionic/click-block';
+@import './ionic/backdrop';
 @import './ionic/navbar';
-@import './ionic/input';
 @import './ionic/menu';
-@import './ionic/tabs';
+@import './ionic/alert';
+@import './ionic/input';
+@import './ionic/picker';
 
-@import './ionic';
+// Unupdated
+@import './ionic/action-sheet';
+@import './ionic/scroll';
+@import './ionic/slides';
+@import './ionic/searchbar';
+@import './ionic/spinner';
+
+// Updated but unused
+// @import './ionic/tabs';
+
+// Ionic fonts
+$font-path: '~ionic-angular/fonts';
+@import "~ionic-angular/fonts/noto-sans", "~ionic-angular/fonts/roboto";
+
+// Component styles
+@import './components/button';
+@import './components/overflow-menu';
 
 .content-grid {
   display: grid;
@@ -103,39 +125,4 @@ ion-grid {
     margin-top: 2rem;
   }
 
-}
-
-.spinner {
-  width: 100%;
-  height: 100%;
-
-  > svg {
-    margin: auto;
-    bottom: 0;
-    right: 0;
-    height: 48px;
-    width: 48px;
-
-    > circle {
-      //   animation: spinner 4000ms cubic-bezier(.35,0,.25,1) infinite;
-      stroke: $swatch-violet;
-    }
-  }
-}
-
-button[bc-fab] {
-  @include button($swatch-white, $swatch-blue-dark);
-  font-size: 1.3rem;
-  border-radius: 50%;
-
-  height: 3.5rem;
-  width: 3.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  position: absolute;
-  z-index: 999;
-  right: 1rem;
-  bottom: 1rem;
 }
