@@ -1,6 +1,12 @@
 import { Image } from "src/entity/image";
 import { Column, CreateDateColumn, JoinTable, ManyToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm/browser";
 
+export enum CollectableState {
+  COMPLETE,
+  INCOMPLETE,
+  UNOWNED
+}
+
 export abstract class Collectable {
 
   @PrimaryGeneratedColumn()

@@ -5,13 +5,14 @@ import { SQLite } from "@ionic-native/sqlite";
 import { IonicApp, IonicModule } from "ionic-angular";
 import { AppRootComponent } from 'src/app-root.component';
 
-import { CollectionCardComponent, FigureCardComponent, FigureListComponent } from "src/components";
+import { CollectionCardComponent, FigureCardComponent, FigureListComponent, StatusButtonComponent } from "src/components";
 import { AccessoryCardComponent } from "src/components/accessory-card.component";
 import { CollectionListComponent } from "src/components/collection-list.component";
 import * as Pages from "src/pages";
 import { AccessoryService, CollectionService, ConnectionService, FigureService } from "src/service";
 
 const pages = [
+
   Pages.HighlightsPageComponent,
   Pages.SearchPageComponent,
   Pages.StyleguidePageComponent,
@@ -39,6 +40,8 @@ const pages = [
     FigureCardComponent,
 
     AccessoryCardComponent,
+
+    StatusButtonComponent,
 
     ...pages
   ],

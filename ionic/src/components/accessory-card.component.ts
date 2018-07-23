@@ -1,7 +1,8 @@
 import { Component, HostBinding, Input } from '@angular/core';
 import { DomSanitizer, SafeStyle } from "@angular/platform-browser";
-import { AlertController } from "ionic-angular";
+import { ActionSheetController, AlertController, NavController } from "ionic-angular";
 import { FigureAccessory } from "src/entity/figure-accessory";
+import { AccessoryEditPageComponent } from "src/pages";
 import { FigureService } from "src/service";
 import { AccessoryService } from "src/service/accessory.service";
 
@@ -16,16 +17,15 @@ import { AccessoryService } from "src/service/accessory.service";
       <p *ngIf="accessory.notes">{{accessory.notes}}</p>
     </header>
 
-    <nav>
-      <button class="bc-button bc-button--text" type="button" (click)="deleteAccessory()">
-        <ion-icon name="trash"></ion-icon>
+    <nav class="more">
+      <button (click)="showMenu()">
+        <ion-icon name="more"></ion-icon>
       </button>
-      <button class="bc-button bc-button--text" type="button" (click)="toggleCollected()">
-        <ion-icon name="camera"></ion-icon>
-      </button>
-      <button class="bc-button bc-button--text" type="button" (click)="toggleCollected()">
-        <ion-icon [name]="accessory.collected ? 'checkbox-outline' : 'square-outline'"></ion-icon>
-      </button>
+
+    </nav>
+
+    <nav class="status">
+      <bc-status-button [status]="accessory.status" (toggle)="toggleCollected()"></bc-status-button>
     </nav>
   `
 })
@@ -36,6 +36,8 @@ export class AccessoryCardComponent {
 
   constructor(private accessoryService: AccessoryService,
               private alertCtrl: AlertController,
+              private actionSheetCtrl: ActionSheetController,
+              private navCtrl: NavController,
               private sanitizer: DomSanitizer) {
   }
 
@@ -47,6 +49,19 @@ export class AccessoryCardComponent {
       return this.sanitizer.bypassSecurityTrustStyle(`url(${this.accessory.images[0].url})`);
     }
     return this.sanitizer.bypassSecurityTrustStyle(`url(${this.defaultImage})`);
+  }
+
+  /**
+   * Show additional options.
+   */
+  showMenu(): void {
+
+    this.actionSheetCtrl.create()
+      .addButton({icon: 'create', text: 'Edit', handler: () => this.editAccessory()})
+      .addButton({icon: 'trash', text: 'Delete', handler: () => this.deleteAccessory()})
+      .addButton({icon: 'photo', text: 'Update image', handler: () => this.changeImage()})
+      .present();
+
   }
 
   /**
@@ -72,6 +87,13 @@ export class AccessoryCardComponent {
       })
       .present();
 
+  }
+
+  /**
+   * Open the edit accessory page.
+   */
+  editAccessory(): void {
+    this.navCtrl.push(AccessoryEditPageComponent, {accessoryId: this.accessory.id});
   }
 
   /**

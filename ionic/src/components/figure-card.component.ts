@@ -12,8 +12,6 @@ import { FigureService } from "src/service";
     <header>
       <h2>{{figure.name}}</h2>
 
-      <p class="bc-status" [ngClass]="'bc-status--' + figure.status">{{figure.statusText}}</p>
-
       <p class="range">
         {{figure.range}}
         <span *ngIf="figure.release">({{figure.release | date: 'yyyy'}})</span>
@@ -26,10 +24,9 @@ import { FigureService } from "src/service";
       <button class="highlight" (click)="toggleHighlight($event)" [ngClass]="{active: figure.highlight}">
         <ion-icon [name]="figure.highlight ? 'star' : 'star-outline'"></ion-icon>
       </button>
-      <button class="collected" (click)="toggleCollected($event)" [ngClass]="{active: figure.collected}">
-        <ion-icon [name]="figure.collected ? 'checkbox-outline' : 'square-outline'"></ion-icon>
-      </button>
     </aside>
+
+    <bc-status-button [status]="figure.status" (toggle)="toggleCollected()"></bc-status-button>
   `
 })
 export class FigureCardComponent {
@@ -50,8 +47,7 @@ export class FigureCardComponent {
     return this.sanitizer.bypassSecurityTrustStyle(`url(${this.defaultImage})`);
   }
 
-  toggleCollected($event): void {
-    $event.stopPropagation();
+  toggleCollected(): void {
     this.figure.collected = !this.figure.collected;
     this.figureService.save(this.figure);
   }

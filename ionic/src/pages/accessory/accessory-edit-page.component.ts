@@ -3,6 +3,7 @@ import { NgForm } from "@angular/forms";
 import { NavParams, ViewController } from "ionic-angular";
 import { Figure } from "src/entity/figure";
 import { FigureAccessory } from "src/entity/figure-accessory";
+import { AccessoryService } from "src/service";
 import { FigureService } from "src/service/figure.service";
 
 @Component({
@@ -49,29 +50,20 @@ import { FigureService } from "src/service/figure.service";
 })
 export class AccessoryEditPageComponent {
 
-  private figure: Figure;
   accessory: FigureAccessory;
 
   constructor(private viewCtrl: ViewController,
+              private accessoryService: AccessoryService,
               private figureService: FigureService,
               private navParams: NavParams) {
 
-    const figureId = navParams.get('figureId');
     const accessoryId = navParams.get('accessoryId');
 
-    this.figureService.getOne(figureId).then(figure => {
-
-      this.figure = figure;
-      this.figure.accessories = this.figure.accessories || [];
-
-      if (accessoryId) {
-        this.accessory = figure.accessories.find(accessory => accessory.id === accessoryId);
-      } else {
-        this.accessory = new FigureAccessory();
-        this.figure.accessories.push(this.accessory);
-      }
-    });
-
+    if (accessoryId) {
+      this.accessoryService.getOne(accessoryId).then(accessory => this.accessory = accessory);
+    } else {
+      this.accessory = new FigureAccessory();
+    }
   }
 
   /**
@@ -84,7 +76,13 @@ export class AccessoryEditPageComponent {
       return;
     }
 
-    this.figureService.save(this.figure)
+    this.accessoryService.save(this.accessory)
+      .then(accessory => {
+        const figureId = this.navParams.get('figureId');
+        if (figureId) {
+          return this.figureService.addAccessoryToFigure(figureId, accessory);
+        }
+      })
       .then(() => this.viewCtrl.dismiss());
 
   }

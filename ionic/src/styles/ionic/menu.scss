@@ -51,6 +51,10 @@ ion-menu {
     text-align: left;
     width: 100%;
 
+    &:first-of-type {
+      margin-top: 1rem;
+    }
+
     &.selected {
       color: var(--theme-primary);
     }
@@ -62,9 +66,10 @@ ion-menu {
     header {
       @include ellipsis;
       flex: 1;
-      font-weight: 600;
+      font-weight: 500;
 
       > div {
+        font-size: 0.9rem;
         font-weight: 300;
 
         span + span:before {

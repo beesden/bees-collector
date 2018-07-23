@@ -3,7 +3,7 @@
 .bc-info {
   @include card;
   margin: $display-base;
-  padding: 0 $display-base $display-base;
+  padding: 0 $display-base;
 
   ion-slides {
     background: #333;
@@ -21,10 +21,10 @@
     color: var(--theme-title);
     font-size: 1.5rem;
     margin: $display-base 0;
+  }
 
-    + .bc-status {
-      margin-top: #{-$display-base};
-    }
+  hr {
+    margin: 0;
   }
 
   p {
@@ -40,7 +40,7 @@
     dt {
       color: var(--theme-title);
       flex: 40% 0 0;
-      font-weight: 600;
+      font-weight: 500;
 
       &:after {
         content: ':';

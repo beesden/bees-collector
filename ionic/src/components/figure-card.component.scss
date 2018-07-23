@@ -2,57 +2,51 @@
 
 :host {
   @include card;
-  display: flex;
-  padding: #{$display-base / 2};
+  display: grid;
+  grid-template-columns: #{$display-base * 8} 1fr 0fr;
 }
 
 figure {
   background: center top/cover no-repeat;
-  border-bottom: 1px solid #ddd;
-  margin: 0 $display-base 0 0;
-  flex: #{$display-base * 6} 0 0;
-  height: #{$display-base * 8};
+  grid-row: 1 / 5;
+  min-height: #{$display-base * 10};
 }
 
 header {
   border-radius: 4px;
   flex: 1;
+  padding: $display-base $display-base 0;
 }
 
 h2 {
   color: var(--theme-title);
-  font-size: 1.1rem;
-  line-height: 1.5;
-  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 500;
+  margin: 0 0 $display-base;
 }
 
 .range {
   font-size: 1rem;
   line-height: 1.2;
-  font-weight: 500;
-  margin: #{$display-base / 2} 0 0;
 }
 
 .series {
   font-size: 1rem;
   line-height: 1.2;
-  margin: 0;
+  font-weight: 300;
+}
+
+bc-status-button {
+  grid-column: 2 / 4;
+  margin-left: auto;
 }
 
 aside {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-
   button {
     @include button;
     font-size: 1.6rem;
     line-height: 1;
-    padding: #{$display-base /2};
-
-    &.collected.active {
-      color: var(--status-complete);
-    }
+    padding: #{$display-base / 2};
 
     &.highlight.active {
       color: #fc1;

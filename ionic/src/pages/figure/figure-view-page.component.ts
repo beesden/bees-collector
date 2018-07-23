@@ -22,9 +22,6 @@ import { FigureService } from "src/service/figure.service";
       <ion-navbar>
 
         <ion-buttons end>
-          <button class="highlight" (click)="toggleCollected()" [ngClass]="{active: figure.highlight}">
-            <ion-icon [name]="figure.collected ? 'checkbox-outline' : 'square-outline'"></ion-icon>
-          </button>
           <button class="highlight" (click)="toggleHighlight()" [ngClass]="{active: figure.highlight}">
             <ion-icon [name]="figure.highlight ? 'star' : 'star-outline'"></ion-icon>
           </button>
@@ -56,13 +53,7 @@ import { FigureService } from "src/service/figure.service";
 
         <!-- Main title -->
         <h1>{{figure.name}}</h1>
-        <div class="bc-status" [ngClass]="'bc-status--' + figure.status">{{figure.statusText}}</div>
-
-        <!-- Notes -->
-        <ng-container *ngIf="figure.notes">
-          <hr/>
-          <p>{{figure.notes}}</p>
-        </ng-container>
+        <p *ngIf="figure.notes">{{figure.notes}}</p>
 
         <hr/>
 
@@ -93,6 +84,12 @@ import { FigureService } from "src/service/figure.service";
             <dd>{{property.value}}</dd>
           </ng-container>
         </dl>
+
+        <hr/>
+
+        <nav>
+          <bc-status-button [status]="figure.status" (toggle)="toggleCollected()"></bc-status-button>
+        </nav>
 
       </header>
 
@@ -214,7 +211,7 @@ export class FigureViewPageComponent implements IonViewDidEnter {
   /**
    * Toggles the 'colected' field and saves the change to the DB.
    */
-  changeStatus(): void {
+  toggleStatus(): void {
 
     this.figure.collected = !this.figure.collected;
     this.figureService.save(this.figure);

@@ -1,14 +1,8 @@
-import { Collectable } from "src/entity";
+import { Collectable, CollectableState } from "src/entity";
 import { Collection } from "src/entity/collection";
 import { FigureAccessory } from "src/entity/figure-accessory";
 import { FigureProperty } from "src/entity/figure-property";
 import { Column, Entity, ManyToMany, OneToMany } from "typeorm/browser";
-
-export enum FigureState {
-  COMPLETE,
-  INCOMPLETE,
-  UNOWNED
-}
 
 @Entity()
 export class Figure extends Collectable {
@@ -37,35 +31,19 @@ export class Figure extends Collectable {
   /**
    * Return the current collection status of the figure.
    */
-  get status(): FigureState {
+  get status(): CollectableState {
 
     const accessories = this.accessories ? this.accessories.length : 0;
     const accessoriesCollected = this.accessories ? this.accessories.filter(accessory => accessory.collected).length : 0;
 
     if (!this.collected) {
-      return FigureState.UNOWNED;
+      return CollectableState.UNOWNED;
     } else if(accessoriesCollected !== accessories) {
-      return FigureState.INCOMPLETE;
+      return CollectableState.INCOMPLETE;
     } else {
-      return FigureState.COMPLETE;
+      return CollectableState.COMPLETE;
     }
 
-  }
-
-  /**
-   * Return appropriate text for the current status.
-   */
-  get statusText(): string {
-    switch (this.status) {
-      case FigureState.COMPLETE:
-        return 'Complete';
-      case FigureState.INCOMPLETE:
-        return 'Incomplete';
-      case FigureState.UNOWNED:
-        return 'Unowned';
-      default:
-        return '???';
-    }
   }
 
 }

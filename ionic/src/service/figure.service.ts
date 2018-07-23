@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Figure } from "src/entity";
+import { Collection, Figure, FigureAccessory } from "src/entity";
 import { ConnectionService } from "src/service/connection.service";
 import { Repository, SelectQueryBuilder } from "typeorm/browser";
 
@@ -147,6 +147,30 @@ export class FigureService {
       .andWhere(`figure.name LIKE '%${queryString}%'`)
       .orWhere(`figure.notes LIKE '%${queryString}%'`)
       .getMany());
+
+  }
+
+  /**
+   * Add an accessory to an existing figure.
+   * If the figure already has the accessory, it won't be added again.
+   *
+   * @param figureId
+   * @param accessory
+   */
+  addAccessoryToFigure(figureId: number, accessory: FigureAccessory): Promise<Figure> {
+
+    return this.getOne(figureId).then(figure => {
+
+      if (!figure.accessories) {
+        figure.accessories = [];
+      }
+
+      if (!figure.accessories.find(entry => entry.id === accessory.id)) {
+        figure.accessories.push(accessory);
+        return this.save(figure);
+      }
+
+    });
 
   }
 

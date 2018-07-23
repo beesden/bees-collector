@@ -64,13 +64,14 @@ ion-toolbar {
     // Action items
     > ion-buttons {
       display: flex;
-      font-size: 1.8rem;
       order: 3;
       flex-grow: 0;
 
       > button {
         @include button;
         padding: #{$display-base / 2};
+        font-size: 25px;
+        width: 30px;
 
         + button {
           margin-left: $display-base;

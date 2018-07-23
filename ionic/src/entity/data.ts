@@ -2,7 +2,6 @@ export interface FigureData {
   id?: string;
   name?: string;
   series?: string;
-  description?: string;
   images?: string[];
   owned?: boolean;
   condition?: boolean;
@@ -16,7 +15,6 @@ export const sampleData: FigureData[] = [
   {
     id: 'Luke Skywalker',
     series: 'Star Wars',
-    description: 'Yellow hair, long saber',
     name: 'Luke Skywalker',
     range: 'Star Wars',
     images: [
