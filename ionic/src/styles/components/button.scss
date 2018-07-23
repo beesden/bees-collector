@@ -37,6 +37,7 @@
     box-shadow: none;
     display: inline;
     color: var(--theme-primary);
+    padding: $display-base;
   }
 
   &--block {

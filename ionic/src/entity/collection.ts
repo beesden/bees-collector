@@ -1,5 +1,4 @@
-import { Figure } from "src/entity/figure";
-import { Image } from "src/entity/image";
+import { Figure, Image } from "src/entity";
 import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm/browser";
 
 @Entity()

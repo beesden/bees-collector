@@ -1,4 +1,4 @@
-import { Collectable } from "src/entity/collectable";
+import { Collectable } from "src/entity";
 import { Collection } from "src/entity/collection";
 import { FigureAccessory } from "src/entity/figure-accessory";
 import { FigureProperty } from "src/entity/figure-property";

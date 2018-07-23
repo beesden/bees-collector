@@ -6,9 +6,10 @@ import { IonicApp, IonicModule } from "ionic-angular";
 import { AppRootComponent } from 'src/app-root.component';
 
 import { CollectionCardComponent, FigureCardComponent, FigureListComponent } from "src/components";
+import { AccessoryCardComponent } from "src/components/accessory-card.component";
 import { CollectionListComponent } from "src/components/collection-list.component";
 import * as Pages from "src/pages";
-import { CollectionService, ConnectionService, FigureService } from "src/service";
+import { AccessoryService, CollectionService, ConnectionService, FigureService } from "src/service";
 
 const pages = [
   Pages.HighlightsPageComponent,
@@ -21,7 +22,10 @@ const pages = [
 
   Pages.FigureListPageComponent,
   Pages.FigureEditPageComponent,
-  Pages.FigureViewPageComponent
+  Pages.FigureViewPageComponent,
+
+  Pages.AccessoryEditPageComponent,
+
 ];
 
 @NgModule({
@@ -33,6 +37,8 @@ const pages = [
 
     FigureListComponent,
     FigureCardComponent,
+
+    AccessoryCardComponent,
 
     ...pages
   ],
@@ -52,8 +58,9 @@ const pages = [
   providers: [
     // Local services
     ConnectionService,
-    CollectionService,
     FigureService,
+    AccessoryService,
+    CollectionService,
 
     // Ionic Native
     Camera,

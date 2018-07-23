@@ -2,10 +2,10 @@ import { Component, NgZone } from '@angular/core';
 import { Camera, CameraOptions, DestinationType, MediaType, PictureSourceType } from "@ionic-native/camera";
 import { ActionSheetController, AlertController, NavParams, ViewController } from "ionic-angular";
 import { Page } from "ionic-angular/navigation/nav-util";
-import { Image } from "src/entity";
 import { Collection } from "src/entity/collection";
+import { Image } from "src/entity/index";
 import { IonViewDidEnter } from "src/ionic-lifecycle";
-import { CollectionEditPageComponent } from "src/pages/collection-edit-page.component";
+import { CollectionEditPageComponent } from "src/pages/collection/collection-edit-page.component";
 import { CollectionService } from "src/service/collection.service";
 
 @Component({
@@ -95,7 +95,6 @@ export class CollectionViewPageComponent implements IonViewDidEnter {
    */
   setPhoto(): void {
 
-    // noinspection JSIgnoredPromiseFromCall
     this.actionSheetCtrl.create()
       .addButton({icon: 'camera', text: 'Take photo', handler: () => this.photoUpload(PictureSourceType.CAMERA)})
       .addButton({
@@ -112,7 +111,6 @@ export class CollectionViewPageComponent implements IonViewDidEnter {
    */
   deleteCollection(): void {
 
-    // noinspection JSIgnoredPromiseFromCall
     this.alertCtrl.create()
       .setMessage(`Delete ${this.collection.name}?`)
       .addButton({text: 'Cancel', role: 'cancel'})
@@ -142,7 +140,6 @@ export class CollectionViewPageComponent implements IonViewDidEnter {
       .then(path => {
         this.collection.image = new Image();
         this.collection.image.url = path;
-        // noinspection JSIgnoredPromiseFromCall
         this.collectionService.saveCollection(this.collection);
       })
       .catch(err => console.log(err));

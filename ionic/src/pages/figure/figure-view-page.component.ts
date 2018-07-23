@@ -5,12 +5,18 @@ import { Page } from "ionic-angular/navigation/nav-util";
 import { Image } from "src/entity";
 import { Figure } from "src/entity/figure";
 import { IonViewDidEnter } from "src/ionic-lifecycle";
-import { FigureEditPageComponent } from "src/pages/figure-edit-page.component";
+import { AccessoryEditPageComponent } from "src/pages";
+import { FigureEditPageComponent } from "src/pages/figure/figure-edit-page.component";
 import { CollectionService } from "src/service";
 import { FigureService } from "src/service/figure.service";
 
 @Component({
   selector: 'bp-figure-view',
+  styles: [`
+    .bc-type-subtitle {
+      margin-top: 2.5rem;
+    }`
+  ],
   template: `
     <ion-header>
       <ion-navbar>
@@ -34,7 +40,7 @@ import { FigureService } from "src/service/figure.service";
       <ion-backdrop></ion-backdrop>
       <div class="options">
         <button [navPush]="figureEditPage" [navParams]="{figureId: figure?.id}">Edit</button>
-        <button (click)="addPhoto()">Change images</button>
+        <button [navPush]="accessoryEditPage" [navParams]="{figureId: figure?.id}">Add accessory</button>
         <button (click)="addToCollection()">Add to collection</button>
         <button (click)="deleteFigure()">Delete</button>
       </div>
@@ -90,18 +96,13 @@ import { FigureService } from "src/service/figure.service";
 
       </header>
 
-      <h2 class="bc-type-subtitle">Accessories</h2>
+      <ng-container *ngIf="figure.accessories?.length">
+        <h2 class="bc-type-subtitle">Accessories</h2>
 
-      <section class="scroller">
-
-        <div *ngFor="let accessory of figure.accessories">
-          <img item-left [src]="accessory.images ? accessory.images[0].url : ''"/>
-          <div>{{accessory.name}}</div>
-        </div>
-
-        <button class="bc-button bc-button--outline">Add</button>
-
-      </section>
+        <section>
+          <bc-accessory-card class="scroll-item" [accessory]="accessory" *ngFor="let accessory of figure.accessories"></bc-accessory-card>
+        </section>
+      </ng-container>
 
 
       <ng-container *ngIf="figure.collections?.length">
@@ -118,6 +119,7 @@ import { FigureService } from "src/service/figure.service";
 export class FigureViewPageComponent implements IonViewDidEnter {
 
   moreOptions: boolean;
+  accessoryEditPage: Page = AccessoryEditPageComponent;
   figureEditPage: Page = FigureEditPageComponent;
   figure: Figure = new Figure();
 
@@ -148,14 +150,12 @@ export class FigureViewPageComponent implements IonViewDidEnter {
 
   toggleCollected(): void {
     this.figure.collected = !this.figure.collected;
-    // noinspection JSIgnoredPromiseFromCall
-    this.figureService.saveFigure(this.figure);
+    this.figureService.save(this.figure);
   }
 
   toggleHighlight(): void {
     this.figure.highlight = !this.figure.highlight;
-    // noinspection JSIgnoredPromiseFromCall
-    this.figureService.saveFigure(this.figure);
+    this.figureService.save(this.figure);
   }
 
 
@@ -200,7 +200,6 @@ export class FigureViewPageComponent implements IonViewDidEnter {
    */
   addPhoto(): void {
 
-    // noinspection JSIgnoredPromiseFromCall
     this.actionSheetCtrl.create()
       .addButton({icon: 'camera', text: 'Add new photo', handler: () => this.photoUpload(PictureSourceType.CAMERA)})
       .addButton({
@@ -218,8 +217,7 @@ export class FigureViewPageComponent implements IonViewDidEnter {
   changeStatus(): void {
 
     this.figure.collected = !this.figure.collected;
-    // noinspection JSIgnoredPromiseFromCall
-    this.figureService.saveFigure(this.figure);
+    this.figureService.save(this.figure);
 
   }
 
@@ -228,7 +226,6 @@ export class FigureViewPageComponent implements IonViewDidEnter {
    */
   deleteFigure(): void {
 
-    // noinspection JSIgnoredPromiseFromCall
     this.alertCtrl.create()
       .setMessage(`Delete ${this.figure.name}?`)
       .addButton({text: 'Cancel', role: 'cancel'})
@@ -260,7 +257,7 @@ export class FigureViewPageComponent implements IonViewDidEnter {
         image.url = path;
         image.name = path;
         this.figure.images.push(image);
-        return this.figureService.saveFigure(this.figure);
+        return this.figureService.save(this.figure);
       })
       .catch(err => console.log(err));
 

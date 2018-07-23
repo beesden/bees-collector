@@ -15,7 +15,6 @@ export interface FigureRange {
 export interface FigureFilters {
   range?: string;
   series?: string;
-  sort?: string;
 }
 
 @Injectable()
@@ -133,7 +132,7 @@ export class FigureService {
    *
    * @param figure
    */
-  saveFigure(figure ?: Figure): Promise<Figure> {
+  save(figure: Figure): Promise<Figure> {
     return this.repository.then(repo => repo.save(figure));
   }
 

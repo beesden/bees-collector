@@ -3,7 +3,7 @@ import { NgForm } from "@angular/forms";
 import { NavParams, ViewController } from "ionic-angular";
 import { Figure } from "src/entity/figure";
 import { FigureProperty } from "src/entity/figure-property";
-import { FigureViewPageComponent } from "src/pages/figure-view-page.component";
+import { FigureViewPageComponent } from "src/pages/figure/figure-view-page.component";
 import { FigureRange, FigureService } from "src/service/figure.service";
 
 @Component({
@@ -154,14 +154,13 @@ export class FigureEditPageComponent {
       return;
     }
 
-    this.figureService.saveFigure(this.figure).then(figure => {
+    this.figureService.save(this.figure).then(figure => {
 
       const figureId = this.navParams.get('figureId');
       const nav = this.viewCtrl.getNav();
 
       this.viewCtrl.dismiss().then(() => {
         if (!figureId) {
-          // noinspection JSIgnoredPromiseFromCall
           nav.push(FigureViewPageComponent, {figureId: figure.id});
         }
       });

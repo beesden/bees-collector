@@ -32,7 +32,7 @@ ion-picker-cmp {
       @include ripple();
       @include button(var(--theme-primary));
       font-size: 15px;
-      font-weight: 600;
+      font-weight: 500;
       padding: $display-base;
       letter-spacing: .5px;
       text-transform: uppercase;

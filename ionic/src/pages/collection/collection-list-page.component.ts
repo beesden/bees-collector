@@ -1,6 +1,6 @@
 import { Component, NgZone } from "@angular/core";
-import { Collection } from "src/entity";
-import { CollectionService } from "src/service";
+import { Collection } from "src/entity/index";
+import { CollectionService } from "src/service/index";
 
 
 @Component({

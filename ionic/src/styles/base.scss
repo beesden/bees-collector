@@ -20,17 +20,17 @@ html {
   user-select: none;
 
   // Typography
-  --theme-bg: #{$swatch-smoke};
-  --theme-title: #{$swatch-black};
-  --theme-content: #{$swatch-grey-dark};
+  --theme-bg: #f0f0f0;
+  --theme-title: #212121;
+  --theme-content: #6a6a6a;
 
   // Material colours
   --theme-primary: #08c;
-  --theme-secondary: #{$swatch-white};
+  --theme-secondary: #fff;
 
   // Inputs
   --theme-input: #ddd;
-  --theme-input-value: #{$swatch-black};
+  --theme-input-value: #333;
 
   // Figure statuses
   --status-complete: #292;

@@ -46,12 +46,12 @@ ion-menu {
     border-radius: 2px;
     color: $swatch-grey-dark;
     display: flex;
+    min-height: 3.5rem;
     padding: $display-base;
     text-align: left;
     width: 100%;
 
     &.selected {
-      background: $swatch-smoke;
       color: var(--theme-primary);
     }
 

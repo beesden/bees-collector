@@ -1,10 +1,10 @@
 import { Component, NgZone } from '@angular/core';
 import { MenuController, NavController } from "ionic-angular";
 import { Page } from "ionic-angular/navigation/nav-util";
-import { Figure } from "src/entity/figure";
+import { Figure, FigureState } from "src/entity/figure";
 import { IonViewDidEnter } from "src/ionic-lifecycle";
-import { CollectionListPageComponent } from "src/pages/collection-list-page.component";
-import { FigureEditPageComponent } from "src/pages/figure-edit-page.component";
+import { CollectionListPageComponent } from "src/pages/collection/collection-list-page.component";
+import { FigureEditPageComponent } from "src/pages/figure/figure-edit-page.component";
 import { HighlightsPageComponent } from "src/pages/highlights-page.component";
 import { SearchPageComponent } from "src/pages/search-page.component";
 import { FigureFilters, FigureRange, FigureService } from "src/service/figure.service";
@@ -138,11 +138,42 @@ export class FigureListPageComponent implements IonViewDidEnter {
    */
   ionViewDidEnter(): void {
 
-    this.figureService.getList(this.filters).then(figures => {
-      this.zone.run(() => this.figures = figures);
+    this.figureService.getList(this.filters).then(figures => this.sortFigures(figures));
+    this.figureService.getRanges().then(ranges => this.groupRanges(ranges));
+
+  }
+
+  /**
+   * Group the ranges by series name.
+   *
+   * @param ranges
+   */
+  private groupRanges(ranges: FigureRange[]) {
+
+    const groups = [];
+
+    ranges.forEach(range => {
+      const group = groups.find(series => series.name === range.series);
+      if (group) {
+        group.owned += range.owned;
+        group.figures += range.figures;
+        group.ranges.push(range);
+      } else {
+        groups.push({name: range.series, figures: range.figures, owned: range.owned, ranges: [range]});
+      }
     });
 
-    this.figureService.getRanges().then(ranges => this.groupRanges(ranges));
+    this.zone.run(() => this.groups = groups);
+
+  }
+
+  /**
+   * Apply sorting, filtering anetc to the returned figures.
+   *
+   * @param figures
+   */
+  private sortFigures(figures: Figure[]) {
+    this.zone.run(() => this.figures = figures);
   }
 
   /**
@@ -153,7 +184,6 @@ export class FigureListPageComponent implements IonViewDidEnter {
   openPage(page: Page): void {
 
     this.menu.close().then(() => {
-      // noinspection JSIgnoredPromiseFromCall
       this.nav.push(page);
     });
 
@@ -171,28 +201,6 @@ export class FigureListPageComponent implements IonViewDidEnter {
       this.filters.series = series;
       this.filters.range = range;
       this.ionViewDidEnter();
-    });
-
-  }
-
-  /**
-   * Group the ranges by series name.
-   *
-   * @param ranges
-   */
-  private groupRanges(ranges: FigureRange[]) {
-
-    this.groups = [];
-
-    ranges.forEach(range => {
-      const group = this.groups.find(series => series.name === range.series);
-      if (group) {
-        group.owned += range.owned;
-        group.figures += range.figures;
-        group.ranges.push(range);
-      } else {
-        this.groups.push({name: range.series, figures: range.figures, owned: range.owned, ranges: [range]});
-      }
     });
 
   }

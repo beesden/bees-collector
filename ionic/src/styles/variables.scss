@@ -10,7 +10,7 @@ $swatch-teal: #3f9863;
 // Grey swatches
 $swatch-charcoal: #414141;
 $swatch-grey-dark: #646464;
-$swatch-grey-light: #dcdcdc;
+$swatch-grey-light: #e8e8e8;
 
 // Base swatches
 $swatch-smoke: #f5f5f5;
@@ -78,6 +78,5 @@ $display-base: 12px;
   background: $swatch-white;
   box-shadow: $shadow-small;
   border-radius: 2px;
-  padding: #{$display-base / 2};
   transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1);
 }

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavParams, ViewController } from "ionic-angular";
 import { Collection } from "src/entity/collection";
-import { CollectionViewPageComponent } from "src/pages/collection-view-page.component";
+import { CollectionViewPageComponent } from "src/pages/collection/collection-view-page.component";
 import { CollectionService } from "src/service/collection.service";
 
 @Component({
@@ -74,7 +74,6 @@ export class CollectionEditPageComponent {
 
       this.viewCtrl.dismiss().then(() => {
         if (!collectionId) {
-          // noinspection JSIgnoredPromiseFromCall
           nav.push(CollectionViewPageComponent, {collectionId: collection.id});
         }
       });

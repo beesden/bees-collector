@@ -140,7 +140,6 @@ export class ConnectionService {
         collection3.image.name = 'Cover';
         collection3.figures = figures.slice(figures.length - 17, figures.length);
 
-        // noinspection JSIgnoredPromiseFromCall
         collectionRepo.save([collection, collection2, collection3]);
       })
       .then(() => connection);
