@@ -2,7 +2,8 @@
 
 .bc-overflow {
   @include fill;
- transform: translateX(100%);
+  transform: translate(100%, -100%);
+  transition: opacity 320ms, transform 320ms;
   z-index: 500;
 
   &.reveal {
