@@ -172,7 +172,6 @@ export class FigureViewPageComponent implements IonViewDidEnter {
         .addButton({
           text: 'OK',
           handler: (collectionId: string) => {
-            console.log(collectionId);
             if (collectionId) {
               this.collectionService.addFigureToCollection(Number.parseInt(collectionId), this.figure)
                 .then(() => this.ionViewDidEnter());

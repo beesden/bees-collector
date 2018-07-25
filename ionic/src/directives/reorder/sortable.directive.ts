@@ -74,8 +74,6 @@ export class SortableDirective implements AfterContentInit {
     const finalPosition = draggedItem.position + draggedItem.distance;
     const sortedArray = this.items.toArray().sort((a, b) => a.position - b.position);
 
-    console.log(finalPosition);
-
     const startIdx = sortedArray.findIndex(item => item === draggedItem);
     const targetIdx = sortedArray.findIndex(item => {
       if (draggedItem.distance > 0) {
