@@ -56,7 +56,7 @@ export class FigureService {
     return this.query.then(query => query
      .leftJoinAndSelect('figure.items', 'item')
      .leftJoinAndSelect('item.collection', 'collection')
-     .leftJoinAndSelect('collection.image', 'collection_image')
+     .leftJoinAndSelect('collection.images', 'collection_image')
      .loadRelationCountAndMap("collection.length", "collection.items")
       .whereInIds(figureId)
       .getOne()

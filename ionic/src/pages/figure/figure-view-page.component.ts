@@ -242,10 +242,11 @@ export class FigureViewPageComponent implements IonViewDidEnter {
 
     this.camera.getPicture(cameraOptions)
       .then(path => {
+        console.log(this.figure.images)
         const image = new Image();
         image.url = path;
         image.name = path;
-        this.figure.images.push(image);
+        this.figure.images[0] = image;
         return this.figureService.save(this.figure);
       })
       .catch(err => console.log(err));
