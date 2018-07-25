@@ -33,6 +33,9 @@ export const sampleData: FigureData[] = [
     series: 'Star Wars',
     name: 'Princess Leia',
     range: 'Star Wars',
+    images: [
+      'https://gfdbhgkjfdakjg.com/image.jpg'
+    ],
     properties: {Wave: 'A'},
     owned: false,
     condition: false,

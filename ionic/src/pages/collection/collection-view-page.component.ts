@@ -36,13 +36,9 @@ import { CollectionService } from "src/service/collection.service";
 
     <ion-content>
 
-      <header class="bc-info">
+      <aside class="bc-image-view" [bc-image-view]="collection.image?.url"></aside> 
 
-        <ion-slides class="image-preview">
-          <ion-slide>
-            <img [src]="collection.image?.url"/>
-          </ion-slide>
-        </ion-slides>
+      <header class="bc-info">
 
         <h1>{{collection.name}}</h1>
         <p>{{collection.description}}</p>

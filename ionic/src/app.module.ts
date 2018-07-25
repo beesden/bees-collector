@@ -8,7 +8,7 @@ import { AppRootComponent } from 'src/app-root.component';
 import { CollectionCardComponent, FigureCardComponent, FigureListComponent, StatusButtonComponent } from "src/components";
 import { AccessoryCardComponent } from "src/components/accessory-card.component";
 import { CollectionListComponent } from "src/components/collection-list.component";
-import { SortableDirective, SortableHandleDirective, SortableItemDirective } from "src/directives";
+import { ImageViewDirective, SortableDirective, SortableHandleDirective, SortableItemDirective } from "src/directives";
 import * as Pages from "src/pages";
 import { AccessoryService, CollectionService, ConnectionService, FigureService } from "src/service";
 
@@ -42,6 +42,7 @@ const pages = [
     AccessoryCardComponent,
     StatusButtonComponent,
 
+    ImageViewDirective,
     SortableDirective,
     SortableItemDirective,
     SortableHandleDirective,

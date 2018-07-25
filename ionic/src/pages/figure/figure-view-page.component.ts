@@ -12,11 +12,6 @@ import { FigureService } from "src/service/figure.service";
 
 @Component({
   selector: 'bp-figure-view',
-  styles: [`
-    .bc-type-subtitle {
-      margin-top: 2.5rem;
-    }`
-  ],
   template: `
     <ion-header>
       <ion-navbar>
@@ -45,11 +40,9 @@ import { FigureService } from "src/service/figure.service";
 
     <ion-content>
 
-      <header class="bc-info">
+      <aside class="bc-image-view" [bc-image-view]="figure.images ? figure.images[0] : ''"></aside>
 
-        <ion-slides class="image-preview" [loop]="true" [pager]="true">
-          <ion-slide *ngFor="let image of figure.images"><img [src]="image.url"/></ion-slide>
-        </ion-slides>
+      <header class="bc-info">
 
         <!-- Main title -->
         <h1>{{figure.name}}</h1>

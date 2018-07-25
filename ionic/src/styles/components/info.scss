@@ -1,21 +1,23 @@
 @import '../variables';
 
+.bc-image-view {
+  background: no-repeat center center/contain;
+  box-shadow: $shadow-small;
+  display: block;
+  margin: auto;
+  height: 200px;
+}
+
 .bc-info {
-  @include card;
+  background: $swatch-white;
+  box-shadow: $shadow-small;
   contain: content;
-  margin: $display-base;
+  margin: 0 0 #{$display-base * 3.5};
   padding: 0 $display-base;
 
-  ion-slides {
-    background: #333;
-    height: 200px;
+  .image-slides {
     margin: 0 #{-$display-base} 0;
-
-    img {
-      display: block;
-      margin: auto;
-      height: 200px;
-    }
+    height: 200px;
   }
 
   h1 {
