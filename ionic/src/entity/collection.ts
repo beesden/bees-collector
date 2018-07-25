@@ -14,9 +14,9 @@ export class Collection {
   @Column({nullable: true})
   description: string;
 
-  @OneToOne(type => Image, {cascade: true, eager: true})
-  @JoinColumn()
-  image: Image;
+  @ManyToMany(type => Image, {cascade: true, eager: true})
+  @JoinTable()
+  images: Image[];
 
   @OneToMany(type => CollectionItem, item => item.collection, {cascade: true})
   items: CollectionItem[];

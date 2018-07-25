@@ -6,6 +6,28 @@
   display: block;
   margin: auto;
   height: 200px;
+  position: relative;
+  padding: #{$display-base * 2};
+
+  > button {
+    @include button;
+
+    &.has-image {
+      color: $swatch-grey-dark;
+      font-size: 1.6rem;
+      padding: $display-base;
+      position: absolute;
+      left: #{$display-base / 2};
+      top: #{$display-base / 2};
+    }
+
+    &.no-image {
+      color: $swatch-grey-light;
+      font-size: #{$display-base * 8};
+      height: 100%;
+      width: 100%;
+    }
+  }
 }
 
 .bc-info {
@@ -14,11 +36,6 @@
   contain: content;
   margin: 0 0 #{$display-base * 3.5};
   padding: 0 $display-base;
-
-  .image-slides {
-    margin: 0 #{-$display-base} 0;
-    height: 200px;
-  }
 
   h1 {
     color: var(--theme-title);

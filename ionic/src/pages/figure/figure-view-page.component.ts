@@ -33,6 +33,7 @@ import { FigureService } from "src/service/figure.service";
       <div class="options">
         <button [navPush]="figureEditPage" [navParams]="{figureId: figure?.id}">Edit</button>
         <button [navPush]="accessoryEditPage" [navParams]="{figureId: figure?.id}">Add accessory</button>
+        <button (click)="changeImage()">Change image</button>
         <button (click)="addToCollection()">Add to collection</button>
         <button (click)="deleteFigure()">Delete</button>
       </div>
@@ -40,7 +41,11 @@ import { FigureService } from "src/service/figure.service";
 
     <ion-content>
 
-      <aside class="bc-image-view" [bc-image-view]="figure.images ? figure.images[0] : ''"></aside>
+      <aside class="bc-image-view" [bc-image-view]="figure.images ? figure.images[0] : ''">
+        <button [class]="figure.images && figure.images.length ? 'has-image' : 'no-image'" (click)="changeImage()">
+          <ion-icon name="camera"></ion-icon>
+        </button>
+      </aside>
 
       <header class="bc-info">
 
@@ -148,11 +153,6 @@ export class FigureViewPageComponent implements IonViewDidEnter {
     this.figureService.save(this.figure);
   }
 
-
-  addAccessory(): void {
-    console.log('Add accessory');
-  }
-
   /**
    * Add the figure to a collection.
    */
@@ -187,7 +187,7 @@ export class FigureViewPageComponent implements IonViewDidEnter {
   /**
    * Opens the additional editing options menu.
    */
-  addPhoto(): void {
+  changeImage(): void {
 
     this.actionSheetCtrl.create()
       .addButton({icon: 'camera', text: 'Add new photo', handler: () => this.photoUpload(PictureSourceType.CAMERA)})

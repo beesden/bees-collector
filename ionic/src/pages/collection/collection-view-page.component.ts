@@ -36,7 +36,11 @@ import { CollectionService } from "src/service/collection.service";
 
     <ion-content>
 
-      <aside class="bc-image-view" [bc-image-view]="collection.image?.url"></aside> 
+      <aside class="bc-image-view" [bc-image-view]="collection.images ? collection.images[0] : ''">
+        <button [class]="collection.images && collection.images.length ? 'has-image' : 'no-image'" (click)="changeImage()">
+          <ion-icon name="camera"></ion-icon>
+        </button>
+      </aside> 
 
       <header class="bc-info">
 
@@ -135,8 +139,8 @@ export class CollectionViewPageComponent implements IonViewDidEnter {
 
     this.camera.getPicture(cameraOptions)
       .then(path => {
-        this.collection.image = new Image();
-        this.collection.image.url = path;
+        this.collection.images = [new Image()];
+        this.collection.images[0].url = path;
         this.collectionService.saveCollection(this.collection);
       })
       .catch(err => console.log(err));

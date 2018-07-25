@@ -16,7 +16,7 @@ export class CollectionService {
   private get query(): Promise<SelectQueryBuilder<Collection>> {
 
     return this.repository.then(repo => repo.createQueryBuilder('collection')
-      .leftJoinAndSelect('collection.image', 'image')
+      .leftJoinAndSelect('collection.images', 'image')
       .loadRelationCountAndMap("collection.length", "collection.items")
     );
 

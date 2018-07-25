@@ -1,5 +1,4 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { DomSanitizer, SafeStyle } from "@angular/platform-browser";
 import { Collection } from "src/entity";
 
 @Component({
@@ -7,7 +6,7 @@ import { Collection } from "src/entity";
   styleUrls: ['./collection-card.component.scss'],
   encapsulation: ViewEncapsulation.Native,
   template: `
-    <figure [bc-image-view]="collection.image"></figure>
+    <figure [bc-image-view]="collection.images[0]"></figure>
 
     <header>
       <h2>{{collection.name}}</h2>
