@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Collection, Figure } from "src/entity";
+import { CollectionItem } from "src/entity/collection-item";
 import { ConnectionService } from "src/service/connection.service";
 import { Repository, SelectQueryBuilder } from "typeorm/browser";
 
@@ -16,7 +17,7 @@ export class CollectionService {
 
     return this.repository.then(repo => repo.createQueryBuilder('collection')
       .leftJoinAndSelect('collection.image', 'image')
-      .loadRelationCountAndMap("collection.length", "collection.figures")
+      .loadRelationCountAndMap("collection.length", "collection.items")
     );
 
   }
@@ -38,7 +39,10 @@ export class CollectionService {
   getOne(collectionId: number): Promise<Collection> {
 
     return this.query.then(query => query
-      .leftJoinAndSelect('collection.figures', 'figures')
+      .leftJoinAndSelect('collection.items', 'items')
+      .leftJoinAndSelect('items.figure', 'figure')
+      .leftJoinAndSelect('figure.images', 'figure_images')
+      .leftJoinAndSelect('figure.accessories', 'figure_accessories')
       .whereInIds(collectionId)
       .getOne()
     );
@@ -62,17 +66,6 @@ export class CollectionService {
   }
 
   /**
-   * Search for collections by query string.
-   */
-  search(queryString: string): Promise<Collection[]> {
-
-    return this.query.then(query => query
-      .andWhere(`collection.name LIKE '%${queryString}%'`)
-      .getMany());
-
-  }
-
-  /**
    * Add a figure to an existing collection.
    * If the figure is already in the collection, it won't be added again.
    *
@@ -81,14 +74,16 @@ export class CollectionService {
    */
   addFigureToCollection(collectionId: number, figure: Figure): Promise<Collection> {
 
+
     return this.getOne(collectionId).then(collection => {
 
-      if (!collection.figures) {
-        collection.figures = [];
-      }
-
       if (!collection.figures.find(entry => entry.id === figure.id)) {
-        collection.figures.push(figure);
+
+        const item = new CollectionItem();
+        item.figure = figure;
+        item.idx = collection.items.length;
+        collection.items.push(item);
+
         return this.saveCollection(collection);
       }
 

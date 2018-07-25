@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Figure, FigureAccessory } from "src/entity";
+import { Collection, Figure, FigureAccessory } from "src/entity";
 import { ConnectionService } from "src/service/connection.service";
 import { Repository, SelectQueryBuilder } from "typeorm/browser";
 
@@ -53,13 +53,13 @@ export class FigureService {
   getOne(figureId: number): Promise<Figure> {
 
     return this.query.then(query => query
-      .leftJoinAndSelect('figure.collections', 'collection')
-      .leftJoinAndSelect('collection.image', 'collection_image')
-      .loadRelationCountAndMap("collection.length", "collection.figures")
+     .leftJoinAndSelect('figure.items', 'item')
+     .leftJoinAndSelect('item.collection', 'collection')
+     .leftJoinAndSelect('collection.image', 'collection_image')
+     .loadRelationCountAndMap("collection.length", "collection.items")
       .whereInIds(figureId)
       .getOne()
     );
-
   }
 
   /**

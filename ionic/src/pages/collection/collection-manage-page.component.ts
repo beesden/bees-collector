@@ -78,11 +78,14 @@ export class CollectionManagePageComponent {
    */
   reorderItems(indexes: SortableEvent) {
 
-    const element = this.collection.figures[indexes.startIdx];
+    const element = this.collection.items[indexes.startIdx];
 
     this.zone.run(() => {
-      this.collection.figures.splice(indexes.startIdx, 1);
-      this.collection.figures.splice(indexes.targetIdx, 0, element);
+
+      this.collection.items.splice(indexes.startIdx, 1);
+      this.collection.items.splice(indexes.targetIdx, 0, element);
+      this.collection.items.forEach((item, idx) => item.idx = idx);
+
     });
 
   }

@@ -1,5 +1,9 @@
 @import '../../styles/variables';
 
+h1 {
+  margin: #{$display-base * 2};
+}
+
 .figure-list {
   margin: $display-base;
 
@@ -25,6 +29,7 @@
       flex: 1;
 
       h2 {
+        color: var(--theme-title);
         font-weight: 500;
         font-size: 1.15rem;
       }

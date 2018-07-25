@@ -1,5 +1,6 @@
 import { Figure, Image } from "src/entity";
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm/browser";
+import { CollectionItem } from "src/entity/collection-item";
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm/browser";
 
 @Entity()
 export class Collection {
@@ -17,9 +18,8 @@ export class Collection {
   @JoinColumn()
   image: Image;
 
-  @ManyToMany(type => Figure, figure => figure.collections)
-  @JoinTable()
-  figures: Figure[];
+  @OneToMany(type => CollectionItem, item => item.collection, {cascade: true})
+  items: CollectionItem[];
 
   length: number;
 
@@ -28,6 +28,17 @@ export class Collection {
    */
   get collected(): number {
     return this.figures ? this.figures.filter(figure => figure.collected).length : 0;
+  }
+
+  /**
+   * Get all items that have a figure.
+   */
+  get figures(): Figure[] {
+    return this.items ? this.items
+        .filter(item => item.figure)
+        .sort((a, b) => a.idx - b.idx)
+        .map(item => item.figure)
+      : [];
   }
 
 }

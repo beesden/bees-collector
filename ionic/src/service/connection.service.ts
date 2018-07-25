@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Platform } from "ionic-angular";
 import { Collection, Figure, Image } from "src/entity";
+import { CollectionItem } from "src/entity/collection-item";
 import { sampleData } from "src/entity/data";
 import { FigureAccessory } from "src/entity/figure-accessory";
 import { FigureProperty } from "src/entity/figure-property";
@@ -20,6 +21,7 @@ export class ConnectionService {
       FigureAccessory,
       FigureProperty,
       Collection,
+      CollectionItem,
       Image
     ];
 
@@ -68,7 +70,6 @@ export class ConnectionService {
       return Promise.resolve(connection);
     }
 
-    localStorage.setItem('dataLoaded', 'true');
 
     const figures: Figure[] = sampleData.map(item => {
 
@@ -124,24 +125,22 @@ export class ConnectionService {
         collection.image = new Image();
         collection.image.url = 'https://assets.catawiki.nl/assets/2017/12/12/e/7/8/e788e550-718b-4afe-81eb-ad4798f7ebfe.jpg';
         collection.image.name = 'Cover';
-        collection.figures = figures.slice(figures.length - 17, figures.length);
 
         const collection2 = new Collection();
         collection2.name = 'Kenner';
         collection2.image = new Image();
         collection2.image.url = 'http://i161.photobucket.com/albums/t222/cocofstar/early_bird_display_with_fig.jpg';
         collection2.image.name = 'Cover';
-        collection2.figures = figures;
 
         const collection3 = new Collection();
         collection3.name = 'Droids';
         collection3.image = new Image();
         collection3.image.url = 'http://news.toyark.com/wp-content/uploads/sites/4/2013/10/Star-Wars-Jumbo-Kenner-Droid-Special-Set-056.jpg';
         collection3.image.name = 'Cover';
-        collection3.figures = figures.slice(figures.length - 17, figures.length);
 
         collectionRepo.save([collection, collection2, collection3]);
       })
+      .then(() => localStorage.setItem('dataLoaded', 'true'))
       .then(() => connection);
 
   }
