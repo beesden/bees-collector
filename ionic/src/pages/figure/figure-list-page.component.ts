@@ -1,8 +1,7 @@
 import { Component, NgZone } from '@angular/core';
 import { MenuController, NavController } from "ionic-angular";
 import { Page } from "ionic-angular/navigation/nav-util";
-import { CollectableState } from "src/entity";
-import { Figure} from "src/entity/figure";
+import { Figure } from "src/entity/figure";
 import { IonViewDidEnter } from "src/ionic-lifecycle";
 import { CollectionListPageComponent } from "src/pages/collection/collection-list-page.component";
 import { FigureEditPageComponent } from "src/pages/figure/figure-edit-page.component";

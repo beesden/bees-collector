@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NgForm } from "@angular/forms";
 import { NavParams, ViewController } from "ionic-angular";
-import { Figure } from "src/entity/figure";
 import { FigureAccessory } from "src/entity/figure-accessory";
 import { AccessoryService } from "src/service";
 import { FigureService } from "src/service/figure.service";

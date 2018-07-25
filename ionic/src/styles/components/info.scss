@@ -2,6 +2,7 @@
 
 .bc-info {
   @include card;
+  contain: content;
   margin: $display-base;
   padding: 0 $display-base;
 

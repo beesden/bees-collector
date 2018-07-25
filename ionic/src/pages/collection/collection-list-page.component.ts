@@ -1,6 +1,7 @@
 import { Component, NgZone } from "@angular/core";
-import { Collection } from "src/entity/index";
-import { CollectionService } from "src/service/index";
+import { Collection } from "src/entity";
+import { IonViewWillEnter } from "src/ionic-lifecycle";
+import { CollectionService } from "src/service";
 
 
 @Component({
@@ -17,7 +18,7 @@ import { CollectionService } from "src/service/index";
     <ion-content>
 
       <ion-spinner *ngIf="!collections"></ion-spinner>
-      
+
       <bc-collection-list *ngIf="collections?.length > 0" [collections]="collections"></bc-collection-list>
 
       <article class="bc-empty" *ngIf="collections?.length === 0">
@@ -30,12 +31,15 @@ import { CollectionService } from "src/service/index";
     </ion-content>
   `
 })
-export class CollectionListPageComponent {
+export class CollectionListPageComponent implements IonViewWillEnter {
 
   collections: Collection[];
 
   constructor(private collectionService: CollectionService,
               private zone: NgZone) {
+  }
+
+  ionViewWillEnter(): void {
 
     this.collectionService.getList().then(collections => {
       this.zone.run(() => this.collections = collections);

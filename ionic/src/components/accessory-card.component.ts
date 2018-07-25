@@ -3,7 +3,6 @@ import { DomSanitizer, SafeStyle } from "@angular/platform-browser";
 import { ActionSheetController, AlertController, NavController } from "ionic-angular";
 import { FigureAccessory } from "src/entity/figure-accessory";
 import { AccessoryEditPageComponent } from "src/pages";
-import { FigureService } from "src/service";
 import { AccessoryService } from "src/service/accessory.service";
 
 @Component({

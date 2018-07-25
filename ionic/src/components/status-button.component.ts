@@ -1,10 +1,5 @@
-import { Component, EventEmitter, HostBinding, HostListener, Input, Output } from '@angular/core';
-import { DomSanitizer, SafeStyle } from "@angular/platform-browser";
-import { AlertController } from "ionic-angular";
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CollectableState } from "src/entity/collectable";
-import { FigureAccessory } from "src/entity/figure-accessory";
-import { FigureService } from "src/service";
-import { AccessoryService } from "src/service/accessory.service";
 
 @Component({
   selector: 'bc-status-button',

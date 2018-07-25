@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { FigureListPageComponent } from "src/pages";
+import { Page } from "ionic-angular/navigation/nav-util";
+import { CollectionManagePageComponent, FigureListPageComponent } from "src/pages";
 
 @Component({
   selector: 'bc-app-root',
@@ -9,6 +10,7 @@ import { FigureListPageComponent } from "src/pages";
 })
 export class AppRootComponent {
 
+  // rootPage: Page = CollectionManagePageComponent;
   rootPage: object = FigureListPageComponent;
   //rootPage: object = StyleguidePageComponent;
 

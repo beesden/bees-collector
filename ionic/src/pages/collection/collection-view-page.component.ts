@@ -3,9 +3,10 @@ import { Camera, CameraOptions, DestinationType, MediaType, PictureSourceType } 
 import { ActionSheetController, AlertController, NavParams, ViewController } from "ionic-angular";
 import { Page } from "ionic-angular/navigation/nav-util";
 import { Collection } from "src/entity/collection";
-import { Image } from "src/entity/index";
+import { Image } from "src/entity";
 import { IonViewDidEnter } from "src/ionic-lifecycle";
 import { CollectionEditPageComponent } from "src/pages/collection/collection-edit-page.component";
+import { CollectionManagePageComponent } from "src/pages/collection/collection-manage-page.component";
 import { CollectionService } from "src/service/collection.service";
 
 @Component({
@@ -15,16 +16,23 @@ import { CollectionService } from "src/service/collection.service";
       <ion-navbar>
 
         <ion-buttons end>
-          <button [navPush]="collectionEditPage" [navParams]="{collectionId: collection?.id}">
-            <ion-icon name="create"></ion-icon>
-          </button>
-          <button (click)="deleteCollection()">
-            <ion-icon name="trash"></ion-icon>
+          <button (click)="moreOptions = !moreOptions">
+            <ion-icon name="more"></ion-icon>
           </button>
         </ion-buttons>
 
       </ion-navbar>
     </ion-header>
+
+    <nav class="bc-overflow" [ngClass]="{reveal: moreOptions}" (click)="moreOptions = false">
+      <ion-backdrop></ion-backdrop>
+      <div class="options">        
+        <button [navPush]="collectionEditPage" [navParams]="{collectionId: collection?.id}">Edit</button>
+        <button [navPush]="collectionManagePage" [navParams]="{collectionId: collection?.id}">Manage</button>
+        <button (click)="changeImage()">Change image</button>
+        <button (click)="deleteCollection()">Delete</button>
+      </div>
+    </nav>
 
     <ion-content>
 
@@ -55,7 +63,9 @@ import { CollectionService } from "src/service/collection.service";
 })
 export class CollectionViewPageComponent implements IonViewDidEnter {
 
+  moreOptions: boolean;
   collectionEditPage: Page = CollectionEditPageComponent;
+  collectionManagePage: Page = CollectionManagePageComponent;
   collection: Collection = new Collection();
 
   constructor(private actionSheetCtrl: ActionSheetController,
@@ -75,25 +85,16 @@ export class CollectionViewPageComponent implements IonViewDidEnter {
   ionViewDidEnter(): void {
 
     const collectionId = this.navParams.get('collectionId');
-    if (!collectionId) {
-      //  this.viewCtrl.dismiss();
-    }
-
     this.collectionService.getOne(collectionId).then(collection => {
       this.zone.run(() => this.collection = collection);
     });
 
   }
 
-
-  addFigure(): void {
-    console.log('Add accessory');
-  }
-
   /**
    * Opens the additional editing options menu.
    */
-  setPhoto(): void {
+  changeImage(): void {
 
     this.actionSheetCtrl.create()
       .addButton({icon: 'camera', text: 'Take photo', handler: () => this.photoUpload(PictureSourceType.CAMERA)})

@@ -1,0 +1,38 @@
+@import '../../styles/variables';
+
+.figure-list {
+  margin: $display-base;
+
+  > div {
+    background: #fff;
+    border-bottom: 1px solid $swatch-grey-light;
+    align-items: center;
+    display: flex;
+    min-height: #{$display-base * 5};
+    position: relative;
+
+    > button {
+      @include button;
+      display: flex;
+      padding: 0 $display-base;
+      font-size: 25px;
+      height: 100%;
+    }
+
+    > header {
+      @include ellipsis;
+      padding: $display-base;
+      flex: 1;
+
+      h2 {
+        font-weight: 500;
+        font-size: 1.15rem;
+      }
+
+      p {
+        font-weight: 300;
+      }
+    }
+  }
+
+}

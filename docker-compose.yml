@@ -15,7 +15,7 @@ services:
     command: bash -c 'npm install && npm run build'
     environment:
       - CI=true
-    image: beesden/cordova
+    image: node
     working_dir: /build
     volumes:
       - /build/node_modules

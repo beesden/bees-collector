@@ -1,6 +1,6 @@
+import { CollectableState } from "src/entity";
 import { Collectable } from "src/entity/collectable";
 import { Figure } from "src/entity/figure";
-import { CollectableState } from "src/entity/index";
 import { Entity, ManyToOne } from "typeorm/browser";
 
 @Entity()

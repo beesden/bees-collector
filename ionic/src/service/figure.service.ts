@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Collection, Figure, FigureAccessory } from "src/entity";
+import { Figure, FigureAccessory } from "src/entity";
 import { ConnectionService } from "src/service/connection.service";
 import { Repository, SelectQueryBuilder } from "typeorm/browser";
 

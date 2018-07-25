@@ -4,6 +4,7 @@
   @include card;
   display: grid;
   grid-template-columns: #{$display-base * 8} 1fr 0fr;
+  grid-template-rows: 1fr 0fr;
 }
 
 figure {
