@@ -7,6 +7,7 @@ import { Image } from "src/entity";
 import { IonViewDidEnter } from "src/ionic-lifecycle";
 import { CollectionEditPageComponent } from "src/pages/collection/collection-edit-page.component";
 import { CollectionManagePageComponent } from "src/pages/collection/collection-manage-page.component";
+import { ImageService } from "src/service";
 import { CollectionService } from "src/service/collection.service";
 
 @Component({
@@ -26,7 +27,7 @@ import { CollectionService } from "src/service/collection.service";
 
     <nav class="bc-overflow" [ngClass]="{reveal: moreOptions}" (click)="moreOptions = false">
       <ion-backdrop></ion-backdrop>
-      <div class="options">        
+      <div class="options">
         <button [navPush]="collectionEditPage" [navParams]="{collectionId: collection?.id}">Edit</button>
         <button [navPush]="collectionManagePage" [navParams]="{collectionId: collection?.id}">Manage</button>
         <button (click)="changeImage()">Change image</button>
@@ -40,21 +41,23 @@ import { CollectionService } from "src/service/collection.service";
         <button [class]="collection.images && collection.images.length ? 'has-image' : 'no-image'" (click)="changeImage()">
           <ion-icon name="camera"></ion-icon>
         </button>
-      </aside> 
+      </aside>
 
-      <header class="bc-info">
+      <section class="bc-info">
+        <header class="info">
 
-        <h1>{{collection.name}}</h1>
-        <p>{{collection.description}}</p>
+          <h1>{{collection.name}}</h1>
+          <p *ngIf="collection.description">{{collection.description}}</p>
+          
+          <dl>
+            <dt>Figures in Collection</dt>
+            <dd>{{collection.length}}</dd>
+            <dt>Owned</dt>
+            <dd>{{collection.collected}}</dd>
+          </dl>
 
-        <dl>
-          <dt>Figures in Collection</dt>
-          <dd>{{collection.length}}</dd>
-          <dt>Owned</dt>
-          <dd>{{collection.collected}}</dd>
-        </dl>
-
-      </header>
+        </header>
+      </section>
 
       <bc-figure-list [figures]="collection.figures"></bc-figure-list>
 
@@ -70,7 +73,7 @@ export class CollectionViewPageComponent implements IonViewDidEnter {
 
   constructor(private actionSheetCtrl: ActionSheetController,
               private alertCtrl: AlertController,
-              private camera: Camera,
+              private imageService: ImageService,
               private collectionService: CollectionService,
               private zone: NgZone,
               private viewCtrl: ViewController,
@@ -96,14 +99,9 @@ export class CollectionViewPageComponent implements IonViewDidEnter {
    */
   changeImage(): void {
 
-    this.actionSheetCtrl.create()
-      .addButton({icon: 'camera', text: 'Take photo', handler: () => this.photoUpload(PictureSourceType.CAMERA)})
-      .addButton({
-        icon: 'images',
-        text: 'Select image',
-        handler: () => this.photoUpload(PictureSourceType.SAVEDPHOTOALBUM)
-      })
-      .present();
+    this.imageService.create()
+      .then(image => this.collection.images = [image])
+      .then(() => this.collectionService.saveCollection(this.collection));
 
   }
 
@@ -122,28 +120,6 @@ export class CollectionViewPageComponent implements IonViewDidEnter {
         }
       })
       .present();
-
-  }
-
-  /**
-   * Saves an uploaded image URL to the collection entity.
-   */
-  private photoUpload(sourceType: PictureSourceType): void {
-
-    const cameraOptions: CameraOptions = {
-      destinationType: DestinationType.FILE_URL,
-      mediaType: MediaType.PICTURE,
-      sourceType,
-      correctOrientation: true
-    };
-
-    this.camera.getPicture(cameraOptions)
-      .then(path => {
-        this.collection.images = [new Image()];
-        this.collection.images[0].url = path;
-        this.collectionService.saveCollection(this.collection);
-      })
-      .catch(err => console.log(err));
 
   }
 

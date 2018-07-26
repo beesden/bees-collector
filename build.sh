@@ -1,19 +1,31 @@
 #!/bin/bash -e
 
-# Clear workspace
-echo "Clearing workspace..."
-rm -rf dist
-docker-compose down
+TIMEFORMAT='Build completed in %R seconds...'
 
-# Build cordova app
-docker-compose up ionic
-docker-compose up cordova
-docker-compose up android_debug
-echo "todo ios build"
+time {
 
-echo "Deploying debug to device..."
-adb install -d -r dist/android/debug/app-debug.apk
+	# Clear workspace
+	echo "Clearing workspace..."
+	rm -rf dist
+	docker-compose down -v
 
-# Clear containers
-echo "Clearing containers..."
-docker-compose down
+	# Build cordova app
+	docker-compose up ionic
+	docker-compose up cordova
+	docker-compose up android_debug
+	echo "todo ios build"
+
+	#echo "Deploying debug to device..."
+	if adb shell pm list packages | grep org.beesden.collections
+	then
+		echo "Uninstall previous version..."
+		adb uninstall org.beesden.collections
+	fi
+	echo "Deploying app to device..."
+	adb install -d -r dist/android/debug/app-debug.apk
+
+	# Clear containers
+	echo "Clearing containers..."
+	docker-compose down -v
+
+}

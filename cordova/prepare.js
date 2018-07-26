@@ -80,7 +80,7 @@ runTask('Configuring environment', () => {
 	addElement(root, 'description', nodePackage.description);
 
 	// Config / Preferences
-	// addElement(root, 'content').set('src', 'www/index.html');
+	addElement(root, 'access').set('origin', 'cdvfile://*');
 
 	// Save
 	writeFileSync(configFile, new ElementTree(root).write({indent: 4}), 'utf-8');

@@ -7,7 +7,7 @@ import { Figure } from "src/entity/figure";
 import { IonViewDidEnter } from "src/ionic-lifecycle";
 import { AccessoryEditPageComponent } from "src/pages";
 import { FigureEditPageComponent } from "src/pages/figure/figure-edit-page.component";
-import { CollectionService } from "src/service";
+import { CollectionService, ImageService } from "src/service";
 import { FigureService } from "src/service/figure.service";
 
 @Component({
@@ -41,55 +41,63 @@ import { FigureService } from "src/service/figure.service";
 
     <ion-content>
 
-      <aside class="bc-image-view" [bc-image-view]="figure.images ? figure.images[0] : ''">
-        <button [class]="figure.images && figure.images.length ? 'has-image' : 'no-image'" (click)="changeImage()">
-          <ion-icon name="camera"></ion-icon>
-        </button>
-      </aside>
+      <section class="bc-info">
 
-      <header class="bc-info">
+        <aside class="bc-image-view" [bc-image-view]="figure.images ? figure.images[0] : ''">
+          <button [class]="figure.images && figure.images.length ? 'has-image' : 'no-image'" (click)="changeImage()">
+            <ion-icon name="camera"></ion-icon>
+          </button>
+        </aside>
 
-        <!-- Main title -->
-        <h1>{{figure.name}}</h1>
-        <p *ngIf="figure.notes">{{figure.notes}}</p>
+        <header class="info">
 
-        <hr/>
+          <!-- Main title -->
+          <h1>{{figure.name}}</h1>
+          <p *ngIf="figure.variant">{{figure.variant}}</p>
 
-        <!-- Metadata -->
-        <dl>
+          <!-- Metadata -->
+          <dl>
 
-          <!-- Series -->
-          <ng-container *ngIf="figure.series">
-            <dt>Series</dt>
-            <dd>{{figure.series}}</dd>
-          </ng-container>
+            <!-- Figure manufacturer -->
+            <ng-container *ngIf="figure.manufacturer">
+              <dt>Manufacturer</dt>
+              <dd>{{figure.manufacturer}}</dd>
+            </ng-container>
 
-          <!-- Figure range -->
-          <ng-container *ngIf="figure.range">
-            <dt>Range</dt>
-            <dd>{{figure.range}}</dd>
-          </ng-container>
+            <!-- Series -->
+            <ng-container *ngIf="figure.series">
+              <dt>Series</dt>
+              <dd>{{figure.series}}</dd>
+            </ng-container>
 
-          <!-- Release date -->
-          <ng-container *ngIf="figure.release">
-            <dt>Release date</dt>
-            <dd>{{figure.release | date: 'yyyy'}}</dd>
-          </ng-container>
+            <!-- Figure range -->
+            <ng-container *ngIf="figure.range">
+              <dt>Range</dt>
+              <dd>{{figure.range}}</dd>
+            </ng-container>
 
-          <!-- Extra info -->
-          <ng-container *ngFor="let property of figure.properties">
-            <dt>{{property.name}}</dt>
-            <dd>{{property.value}}</dd>
-          </ng-container>
-        </dl>
+            <!-- Release date -->
+            <ng-container *ngIf="figure.release">
+              <dt>Release date</dt>
+              <dd>{{figure.release | date: 'yyyy'}}</dd>
+            </ng-container>
 
-        <hr/>
+            <!-- Extra info -->
+            <ng-container *ngFor="let property of figure.properties">
+              <dt>{{property.name}}</dt>
+              <dd>{{property.value}}</dd>
+            </ng-container>
+          </dl>
 
-        <nav>
-          <bc-status-button [status]="figure.status" (toggle)="toggleCollected()"></bc-status-button>
-        </nav>
+          <nav>
+            <bc-status-button [status]="figure.status" (toggle)="toggleCollected()"></bc-status-button>
+          </nav>
 
-      </header>
+        </header>
+
+      </section>
+
+      <p class="bc-type-text" *ngIf="figure.notes">{{figure.notes}}</p>
 
       <ng-container *ngIf="figure.accessories?.length">
         <h2 class="bc-type-subtitle">Accessories</h2>
@@ -120,7 +128,7 @@ export class FigureViewPageComponent implements IonViewDidEnter {
 
   constructor(private actionSheetCtrl: ActionSheetController,
               private alertCtrl: AlertController,
-              private camera: Camera,
+              private imageService: ImageService,
               private figureService: FigureService,
               private collectionService: CollectionService,
               private zone: NgZone,
@@ -143,11 +151,17 @@ export class FigureViewPageComponent implements IonViewDidEnter {
 
   }
 
+  /**
+   * Toggle the figure collected state.
+   */
   toggleCollected(): void {
     this.figure.collected = !this.figure.collected;
     this.figureService.save(this.figure);
   }
 
+  /**
+   * Toggle the figure highlight state.
+   */
   toggleHighlight(): void {
     this.figure.highlight = !this.figure.highlight;
     this.figureService.save(this.figure);
@@ -189,29 +203,14 @@ export class FigureViewPageComponent implements IonViewDidEnter {
    */
   changeImage(): void {
 
-    this.actionSheetCtrl.create()
-      .addButton({icon: 'camera', text: 'Add new photo', handler: () => this.photoUpload(PictureSourceType.CAMERA)})
-      .addButton({
-        icon: 'images',
-        text: 'Select image',
-        handler: () => this.photoUpload(PictureSourceType.SAVEDPHOTOALBUM)
-      })
-      .present();
+    this.imageService.create()
+      .then(image => this.figure.images = [image])
+      .then(() => this.figureService.save(this.figure));
 
   }
 
   /**
-   * Toggles the 'colected' field and saves the change to the DB.
-   */
-  toggleStatus(): void {
-
-    this.figure.collected = !this.figure.collected;
-    this.figureService.save(this.figure);
-
-  }
-
-  /**
-   * Show a confimation to delete a figure - if confirmed, then remove the figure from the DB.
+   * Delete the figure, with a confirmation.
    */
   deleteFigure(): void {
 
@@ -225,31 +224,6 @@ export class FigureViewPageComponent implements IonViewDidEnter {
         }
       })
       .present();
-
-  }
-
-  /**
-   * Saves an uploaded image URL to the figure entity.
-   */
-  private photoUpload(sourceType: PictureSourceType): void {
-
-    const cameraOptions: CameraOptions = {
-      destinationType: DestinationType.FILE_URL,
-      mediaType: MediaType.PICTURE,
-      sourceType,
-      correctOrientation: true
-    };
-
-    this.camera.getPicture(cameraOptions)
-      .then(path => {
-        console.log(this.figure.images)
-        const image = new Image();
-        image.url = path;
-        image.name = path;
-        this.figure.images[0] = image;
-        return this.figureService.save(this.figure);
-      })
-      .catch(err => console.log(err));
 
   }
 

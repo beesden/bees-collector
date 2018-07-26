@@ -18,6 +18,9 @@ export class Figure extends Collectable {
   release: string;
 
   @Column({nullable: true})
+  manufacturer: string;
+
+  @Column({nullable: true})
   highlight: boolean;
 
   @OneToMany(type => FigureAccessory, accessory => accessory.figure, {cascade: true, eager: true})

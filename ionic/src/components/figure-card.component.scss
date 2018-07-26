@@ -5,36 +5,38 @@
   display: grid;
   grid-template-columns: #{$display-base * 8} 1fr 0fr;
   grid-template-rows: 1fr 0fr;
+  padding: 6px;
 }
 
 figure {
   background: center top/cover no-repeat;
-  grid-row: 1 / 5;
-  min-height: #{$display-base * 10};
+  grid-row: 1 / 3;
+  margin-right: $display-base;
+  padding-bottom: 100%;
 }
 
 header {
   border-radius: 4px;
   flex: 1;
-  padding: $display-base $display-base 0;
+  overflow: hidden;
+  padding: $display-base 0;
 }
 
 h2 {
+  @include ellipsis;
   color: var(--theme-title);
   font-size: 1.15rem;
   font-weight: 500;
-  margin: 0 0 $display-base;
+
+  span {
+    font-size: 1rem;
+    font-weight: 300;
+  }
 }
 
 .range {
-  font-size: 1rem;
-  line-height: 1.2;
-}
-
-.series {
-  font-size: 1rem;
-  line-height: 1.2;
-  font-weight: 300;
+  @include ellipsis;
+  margin: #{$display-base / 2} 0 0;
 }
 
 bc-status-button {
@@ -47,7 +49,7 @@ aside {
     @include button;
     font-size: 1.6rem;
     line-height: 1;
-    padding: #{$display-base / 2};
+    padding: 0 #{$display-base / 2};
 
     &.highlight.active {
       color: #fc1;

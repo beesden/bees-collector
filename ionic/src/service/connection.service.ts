@@ -92,6 +92,8 @@ export class ConnectionService {
         figure.release = item.release.toISOString();
       }
 
+      figure.manufacturer = 'Kenner';
+
       figure.properties = Object.entries(item.properties).map(entry => {
         const prop = new FigureProperty();
         prop.name = entry[0];

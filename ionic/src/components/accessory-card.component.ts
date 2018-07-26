@@ -1,8 +1,8 @@
 import { Component, HostBinding, Input } from '@angular/core';
-import { DomSanitizer, SafeStyle } from "@angular/platform-browser";
 import { ActionSheetController, AlertController, NavController } from "ionic-angular";
 import { FigureAccessory } from "src/entity/figure-accessory";
 import { AccessoryEditPageComponent } from "src/pages";
+import { ImageService } from "src/service";
 import { AccessoryService } from "src/service/accessory.service";
 
 @Component({
@@ -36,6 +36,7 @@ export class AccessoryCardComponent {
   constructor(private accessoryService: AccessoryService,
               private alertCtrl: AlertController,
               private actionSheetCtrl: ActionSheetController,
+              private imageService: ImageService,
               private navCtrl: NavController) {
   }
 
@@ -45,9 +46,9 @@ export class AccessoryCardComponent {
   showMenu(): void {
 
     this.actionSheetCtrl.create()
-      .addButton({icon: 'create', text: 'Edit', handler: () => this.editAccessory()})
-      .addButton({icon: 'trash', text: 'Delete', handler: () => this.deleteAccessory()})
-      .addButton({icon: 'photo', text: 'Update image', handler: () => this.changeImage()})
+      .addButton({icon: 'create', text: 'Edit info', handler: () => this.editAccessory()})
+      .addButton({icon: 'camera', text: 'Change image', handler: () => this.changeImage()})
+      .addButton({icon: 'trash', text: 'Remove accessory', handler: () => this.deleteAccessory()})
       .present();
 
   }
@@ -56,7 +57,11 @@ export class AccessoryCardComponent {
    * Change the accessory image.
    */
   changeImage(): void {
-    // todo - camera
+
+    this.imageService.create()
+      .then(image => this.accessory.images = [image])
+      .then(() => this.accessoryService.save(this.accessory));
+
   }
 
   /**

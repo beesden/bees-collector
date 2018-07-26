@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { DomSanitizer, SafeStyle } from "@angular/platform-browser";
 import { Figure } from "src/entity";
 import { FigureService } from "src/service";
 
@@ -10,14 +9,8 @@ import { FigureService } from "src/service";
     <figure [bc-image-view]="figure.images[0]"></figure>
 
     <header>
-      <h2>{{figure.name}}</h2>
-
-      <p class="range">
-        {{figure.range}}
-        <span *ngIf="figure.release">({{figure.release | date: 'yyyy'}})</span>
-      </p>
-
-      <p class="series">{{figure.series}}</p>
+      <h2>{{figure.name}} <span *ngIf="figure.variant">{{figure.variant}}</span></h2>
+      <p class="range">{{figure.range}}</p>      
     </header>
 
     <aside>

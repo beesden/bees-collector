@@ -30,7 +30,8 @@ legend {
   padding-bottom: $display-base;
 }
 
-.item-input {
+.item-input,
+.item-datetime {
   display: block;
   position: relative;
   border-radius: 2px 2px 0 0;

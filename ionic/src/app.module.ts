@@ -10,7 +10,7 @@ import { AccessoryCardComponent } from "src/components/accessory-card.component"
 import { CollectionListComponent } from "src/components/collection-list.component";
 import { ImageViewDirective, SortableDirective, SortableHandleDirective, SortableItemDirective } from "src/directives";
 import * as Pages from "src/pages";
-import { AccessoryService, CollectionService, ConnectionService, FigureService } from "src/service";
+import { AccessoryService, CollectionService, ConnectionService, FigureService, ImageService } from "src/service";
 
 const pages = [
 
@@ -68,6 +68,7 @@ const pages = [
     FigureService,
     AccessoryService,
     CollectionService,
+    ImageService,
 
     // Ionic Native
     Camera,

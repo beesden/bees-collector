@@ -10,13 +10,7 @@
   padding-right: $display-base;
 
   &.deleted {
-    opacity: 0.2;
-    transition: opacity 320ms;
-
-    &:after {
-      @include fill;
-      content: '';
-    }
+    display: none;
   }
 }
 

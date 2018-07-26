@@ -38,6 +38,11 @@ import { FigureRange, FigureService } from "src/service/figure.service";
           </ion-item>
 
           <ion-item>
+            <ion-label>Variant</ion-label>
+            <ion-input name="variant" [(ngModel)]="figure.variant"></ion-input>
+          </ion-item>
+
+          <ion-item>
             <ion-label>Notes</ion-label>
             <ion-textarea name="notes" [(ngModel)]="figure.notes"></ion-textarea>
           </ion-item>
@@ -55,6 +60,11 @@ import { FigureRange, FigureService } from "src/service/figure.service";
           <ion-item>
             <ion-label>Range</ion-label>
             <ion-input name="range" [(ngModel)]="figure.range"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Manufacturer</ion-label>
+            <ion-input name="manufacturer" [(ngModel)]="figure.manufacturer"></ion-input>
           </ion-item>
 
           <ion-item>

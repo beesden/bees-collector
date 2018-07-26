@@ -16,6 +16,9 @@ export abstract class Collectable {
   name: string;
 
   @Column({nullable: true})
+  variant: string;
+
+  @Column({nullable: true})
   notes: string;
 
   @ManyToMany(type => Image, {cascade: true, eager: true})

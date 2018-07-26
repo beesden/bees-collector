@@ -29,11 +29,11 @@ export class StatusButtonComponent {
   get statusText(): string {
     switch (this.status) {
       case CollectableState.COMPLETE:
-        return 'Collected';
+        return 'Have It';
       case CollectableState.INCOMPLETE:
         return 'Incomplete';
       case CollectableState.UNOWNED:
-        return 'Uncollected';
+        return 'Want It';
       default:
         return '???';
     }
