@@ -34,6 +34,7 @@ export class ImageService {
     };
 
     return this.camera.getPicture(cameraOptions)
+      // todo - move file to custom folder
       .then((path: string) => {
         const image = new Image();
         image.url = path;

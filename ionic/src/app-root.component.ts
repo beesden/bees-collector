@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-import { Page } from "ionic-angular/navigation/nav-util";
-import { CollectionManagePageComponent, FigureListPageComponent } from "src/pages";
+import { Component, OnInit } from '@angular/core';
+import { App, Header, ViewController } from "ionic-angular";
+import { FigureListPageComponent } from "src/pages";
+import { ThemeService } from "src/service";
 
 @Component({
   selector: 'bc-app-root',
@@ -8,10 +9,21 @@ import { CollectionManagePageComponent, FigureListPageComponent } from "src/page
     <ion-nav #nav [root]="rootPage"></ion-nav>
   `
 })
-export class AppRootComponent {
+export class AppRootComponent implements OnInit {
 
   // rootPage: Page = CollectionManagePageComponent;
   rootPage: object = FigureListPageComponent;
   //rootPage: object = StyleguidePageComponent;
+
+  constructor(private app: App,
+              private themeService: ThemeService) {}
+
+  ngOnInit(): void {
+
+    this.app.viewDidEnter.subscribe((view: ViewController) => {
+      this.themeService.applyTheme(view.getHeader() as Header);
+    });
+
+  }
 
 }

@@ -19,14 +19,15 @@ html {
   touch-action: manipulation;
   user-select: none;
 
+  // Material colours
+  --theme-primary: #08c;
+  --theme-secondary: #fff;
+  --theme-statusbar: 'light';
+
   // Typography
   --theme-bg: #f0f0f0;
   --theme-title: #212121;
   --theme-content: #6a6a6a;
-
-  // Material colours
-  --theme-primary: #08c;
-  --theme-secondary: #fff;
 
   // Inputs
   --theme-input: #ddd;

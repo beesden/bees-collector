@@ -67,6 +67,12 @@ runTask('Configuring environment', () => {
 		return element;
 	};
 
+	const addPreference = (name, value, target = root) => {
+		const preference = addElement(target, 'preference');
+		preference.set('name', name);
+		preference.set('value', value);
+	};
+
 	// Create a blank config file
 	const configFile = resolve(__dirname, 'config.xml');
 
@@ -81,6 +87,7 @@ runTask('Configuring environment', () => {
 
 	// Config / Preferences
 	addElement(root, 'access').set('origin', 'cdvfile://*');
+	addPreference('StatusBarOverlaysWebView', 'true');
 
 	// Save
 	writeFileSync(configFile, new ElementTree(root).write({indent: 4}), 'utf-8');

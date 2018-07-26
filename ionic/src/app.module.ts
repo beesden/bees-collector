@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { Camera } from "@ionic-native/camera";
+import { File } from "@ionic-native/file";
 import { SQLite } from "@ionic-native/sqlite";
+import { StatusBar } from "@ionic-native/status-bar";
 import { IonicApp, IonicModule } from "ionic-angular";
 import { AppRootComponent } from 'src/app-root.component';
 
@@ -10,7 +12,7 @@ import { AccessoryCardComponent } from "src/components/accessory-card.component"
 import { CollectionListComponent } from "src/components/collection-list.component";
 import { ImageViewDirective, SortableDirective, SortableHandleDirective, SortableItemDirective } from "src/directives";
 import * as Pages from "src/pages";
-import { AccessoryService, CollectionService, ConnectionService, FigureService, ImageService } from "src/service";
+import { AccessoryService, CollectionService, ConnectionService, FigureService, ImageService, ThemeService } from "src/service";
 
 const pages = [
 
@@ -69,10 +71,13 @@ const pages = [
     AccessoryService,
     CollectionService,
     ImageService,
+    ThemeService,
 
     // Ionic Native
     Camera,
-    SQLite
+    File,
+    SQLite,
+    StatusBar,
 
   ],
   bootstrap: [
