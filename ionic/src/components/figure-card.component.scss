@@ -13,9 +13,8 @@ figure {
 }
 
 header {
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid var(--theme-divider);
   flex: 1;
-  line-height: 1.3rem;
   padding: #{$display-base} $display-base;
 
   h2 {
@@ -31,7 +30,7 @@ header {
   }
 
   .range {
-    margin: 0;
+    margin: #{$display-base / 3} 0 0;
     font-weight: 300;
   }
 }

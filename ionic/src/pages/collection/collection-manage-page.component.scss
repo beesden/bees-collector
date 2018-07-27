@@ -8,7 +8,7 @@ h1 {
   margin: $display-base;
 
   > div {
-    background: #fff;
+    background: var(--swatch-white);
     border-bottom: 1px solid var(--theme-divider);
     align-items: center;
     display: flex;

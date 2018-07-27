@@ -22,7 +22,8 @@ ion-alert {
   .alert-head,
   .alert-message {
     font-size: 1.2rem;
-    color: var(--theme-content);
+    font-weight: 500;
+    color: var(--theme-title);
     margin: #{$display-base * 1.5};
 
     h2 {
@@ -31,9 +32,9 @@ ion-alert {
   }
 
   .alert-radio-group {
-    border-top: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
-    margin: #{$display-base * 1.5};
+    border-top: 1px solid var(--theme-divider);
+    border-bottom: 1px solid var(--theme-divider);
+    margin: #{$display-base * 1.5} 0 $display-base;
     overflow-y: auto;
     padding: $display-base 0;
   }
