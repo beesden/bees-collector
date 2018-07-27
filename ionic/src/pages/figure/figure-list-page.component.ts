@@ -38,7 +38,7 @@ import { FigureFilters, FigureRange, FigureService } from "src/service/figure.se
       <ng-container *ngIf="figures?.length > 0">
         <header class="bc-header" *ngIf="filters.range || filters.series">
           <h1 class="bc-type-title">{{filters.range || 'All figures'}}</h1>
-          <p class="bc-type-text">{{filters.series}}</p>
+          <p class="bc-type-subtitle">{{filters.series}}</p>
         </header>
 
         <bc-figure-list [figures]="figures"></bc-figure-list>

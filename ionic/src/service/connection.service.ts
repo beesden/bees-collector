@@ -70,12 +70,11 @@ export class ConnectionService {
       return Promise.resolve(connection);
     }
 
-
     const figures: Figure[] = sampleData.map(item => {
 
       const figure = new Figure();
       figure.name = item.name;
-      figure.series = item.series;
+      figure.series = 'Vintage Star Wars';
       figure.range = item.range;
       figure.variant = item.variant;
 
