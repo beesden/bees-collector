@@ -10,7 +10,7 @@ import { FigureService } from "src/service";
 
     <header>
       <h2>{{figure.name}} <span *ngIf="figure.variant">{{figure.variant}}</span></h2>
-      <p class="range">{{figure.range}}</p>      
+      <p class="range">{{figure.range}}</p>
     </header>
 
     <aside>
@@ -19,7 +19,13 @@ import { FigureService } from "src/service";
       </button>
     </aside>
 
-    <bc-status-button [status]="figure.status" (toggle)="toggleCollected()"></bc-status-button>
+    <section class="status">
+      <div class="accessories" *ngIf="figure.accessories?.length">
+        <ion-icon name="pricetags"></ion-icon>
+        {{figure.collectedAccessories}} / {{figure.accessories.length}}
+      </div>
+      <bc-status-button [status]="figure.status" (toggle)="toggleCollected()"></bc-status-button>
+    </section>
   `
 })
 export class FigureCardComponent {

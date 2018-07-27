@@ -77,7 +77,7 @@ export class ConnectionService {
       figure.name = item.name;
       figure.series = item.series;
       figure.range = item.range;
-      figure.collected = item.owned && item.condition;
+      figure.variant = item.variant;
 
       if (item.images) {
         figure.images = item.images.map(url => {
@@ -105,7 +105,8 @@ export class ConnectionService {
       if (item.accessories) {
         figure.accessories = item.accessories.map(entry => {
           const prop = new FigureAccessory();
-          prop.name = entry;
+          prop.name = entry.name;
+          prop.notes = entry.info;
           prop.figure = figure;
           return prop;
         });

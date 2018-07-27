@@ -33,7 +33,7 @@ import { FigureRange, FigureService } from "src/service/figure.service";
           <legend>Figure name</legend>
 
           <ion-item>
-            <ion-label>Name <span>*</span></ion-label>
+            <ion-label>Character <span>*</span></ion-label>
             <ion-input name="name" [(ngModel)]="figure.name" required></ion-input>
           </ion-item>
 

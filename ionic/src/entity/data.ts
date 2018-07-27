@@ -1,11 +1,9 @@
 export interface FigureData {
-  id?: string;
   name?: string;
+  variant?: string;
   series?: string;
   images?: string[];
-  owned?: boolean;
-  condition?: boolean;
-  accessories?: string[];
+  accessories?: Array<{ name: string, info?: string }>;
   release?: Date;
   properties?: {};
   range?: string;
@@ -13,7 +11,6 @@ export interface FigureData {
 
 export const sampleData: FigureData[] = [
   {
-    id: 'Luke Skywalker',
     series: 'Star Wars',
     name: 'Luke Skywalker',
     range: 'Star Wars',
@@ -24,1056 +21,1008 @@ export const sampleData: FigureData[] = [
     ],
     release: new Date(1977, 0, 0),
     properties: {Wave: 'A'},
-    owned: true,
-    condition: false,
-    accessories: ['Extending yellow Lightsaber']
+    accessories: [
+      {name: 'Telescoping Lightsaber', info: 'Yellow w/ tip'}
+    ]
   },
   {
-    id: 'Princess Leia',
     series: 'Star Wars',
-    name: 'Princess Leia',
+    name: 'Princess Leia Organa',
     range: 'Star Wars',
     images: [
       'https://gfdbhgkjfdakjg.com/image.jpg'
     ],
     properties: {Wave: 'A'},
-    owned: false,
-    condition: false,
     release: new Date(1977, 0, 0),
-    accessories: ['Laser Pistol']
+    accessories: [
+      {name: 'Vinyl Cloak'},
+      {name: 'Leia Blaster', info: 'Black'}
+    ]
   },
   {
-    id: 'Artoo-Detoo (R2-D2)',
     series: 'Star Wars',
-    name: 'Artoo-Detoo (R2-D2)',
+    name: 'R2-D2',
+    variant: 'Solid Dome',
     range: 'Star Wars',
     properties: {Wave: 'A'},
-    owned: false,
-    condition: false,
     release: new Date(1977, 0, 0),
     accessories: []
   },
   {
-    id: 'Chewbacca',
     series: 'Star Wars',
     name: 'Chewbacca',
     range: 'Star Wars',
     properties: {Wave: 'A'},
-    owned: true,
-    condition: true,
     release: new Date(1977, 0, 0),
-    accessories: ['Bowcaster']
+    accessories: [
+      {name: 'Bowcaster'}
+    ]
   },
   {
-    id: 'See-Threepio (C-3PO)',
     series: 'Star Wars',
-    name: 'See-Threepio (C-3PO)',
+    name: 'C-3PO',
+    variant: 'Fixed limbs',
     range: 'Star Wars',
     properties: {Wave: 'A'},
-    owned: false,
-    condition: false,
     release: new Date(1977, 0, 0),
     accessories: []
   },
   {
-    id: 'Darth Vader',
     series: 'Star Wars',
     name: 'Darth Vader',
     range: 'Star Wars',
     properties: {Wave: 'A'},
-    owned: true,
-    condition: false,
     release: new Date(1977, 0, 0),
-    accessories: ['Extending red lightsaber']
+    accessories: [
+      {name: 'Telescoping Lightsaber', info: 'Red w/ tip'}
+    ]
   },
   {
-    id: 'Stormtrooper',
     series: 'Star Wars',
     name: 'Stormtrooper',
     range: 'Star Wars',
     properties: {Wave: 'A'},
-    owned: true,
-    condition: false,
     release: new Date(1977, 0, 0),
-    accessories: ['Blaster Rifle']
+    accessories: [
+      {name: 'Imperial Blaster', info: 'Black'}
+    ]
   },
   {
-    id: 'Ben (Obi-Wan) Kenobi',
     series: 'Star Wars',
-    name: 'Ben (Obi-Wan) Kenobi',
+    name: 'Obi-Wan Kenobi',
     range: 'Star Wars',
     properties: {Wave: 'A'},
-    owned: true,
-    condition: true,
     release: new Date(1977, 0, 0),
-    accessories: []
+    accessories: [
+      {name: 'Telescoping Lightsaber', info: 'Blue w/ tip'}
+    ]
   },
   {
-    id: 'Han Solo',
     series: 'Star Wars',
     name: 'Han Solo',
     range: 'Star Wars',
     properties: {Wave: 'A'},
-    owned: true,
-    condition: true,
     release: new Date(1977, 0, 0),
-    accessories: []
+    accessories: [
+      {name: 'Rebel Blaster', info: 'Black'}
+    ]
   },
   {
-    id: 'Jawa',
     series: 'Star Wars',
     name: 'Jawa',
     range: 'Star Wars',
     properties: {Wave: 'A'},
-    owned: true,
     release: new Date(1977, 0, 0),
-    condition: true,
-    accessories: []
+    accessories: [
+      {name: 'Cloth cape'},
+      {name: 'Jawa Blaster'}
+    ]
   },
   {
-    id: 'Sand People',
     series: 'Star Wars',
-    name: 'Sand People',
+    name: 'Tusken Raider',
     range: 'Star Wars',
     properties: {Wave: 'A'},
-    owned: true,
-    condition: true,
     release: new Date(1977, 0, 0),
-    accessories: []
+    accessories: [
+      {name: 'Cape'},
+      {name: 'Gaderffii Stick'}
+    ]
   },
   {
-    id: 'Death Squad Commander',
     series: 'Star Wars',
     name: 'Death Squad Commander',
     range: 'Star Wars',
     properties: {Wave: 'A'},
-    owned: true,
-    condition: false,
     release: new Date(1977, 0, 0),
-    accessories: []
+    accessories: [
+      {name: 'Imperial Blaster', info: 'Black'}
+    ]
   },
   {
-    id: 'Greedo',
     series: 'Star Wars',
     name: 'Greedo',
     range: 'Star Wars',
     properties: {Wave: 'B'},
-    owned: false,
-    condition: false,
     release: new Date(1978, 0, 0),
-    accessories: []
+    accessories: [
+      {name: 'Rebel Blaster', info: 'Black'}
+    ]
   },
   {
-    id: 'Hammerhead',
     series: 'Star Wars',
     name: 'Hammerhead',
     range: 'Star Wars',
     properties: {Wave: 'B'},
-    owned: false,
-    condition: false,
     release: new Date(1978, 0, 0),
-    accessories: []
+    accessories: [
+      {name: 'Imperial Blaster', info: 'Black'}
+    ]
   },
   {
-    id: 'Snaggletooth',
     series: 'Star Wars',
     name: 'Snaggletooth',
     range: 'Star Wars',
     properties: {Wave: 'B'},
     release: new Date(1978, 0, 0),
-    owned: true,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Rebel Blaster', info: 'Black'}
+    ]
   },
   {
-    id: 'Walrus Man',
     series: 'Star Wars',
     name: 'Walrus Man',
     range: 'Star Wars',
     properties: {Wave: 'B'},
     release: new Date(1978, 0, 0),
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Imperial Blaster', info: 'Black'}
+    ]
   },
   {
-    id: 'Luke Skywalker: X-wing Pilot',
     series: 'Star Wars',
-    name: 'Luke Skywalker: X-wing Pilot',
+    name: 'Luke Skywalker',
+    variant: 'X-Wing Fighter Pilot',
     range: 'Star Wars',
     release: new Date(1978, 0, 0),
     properties: {Wave: 'B'},
-    owned: true,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Rebel Blaster', info: 'Black'}
+    ]
   },
   {
-    id: 'R5-D4',
     series: 'Star Wars',
     name: 'R5-D4',
     range: 'Star Wars',
     properties: {Wave: 'B'},
     release: new Date(1978, 0, 0),
-    owned: true,
-    condition: false,
     accessories: []
   },
   {
-    id: 'Death Star Droid',
     series: 'Star Wars',
     name: 'Death Star Droid',
     range: 'Star Wars',
     properties: {Wave: 'B'},
     release: new Date(1978, 0, 0),
-    owned: false,
-    condition: false,
     accessories: []
   },
   {
-    id: 'Power Droid',
     series: 'Star Wars',
     name: 'Power Droid',
     range: 'Star Wars',
     properties: {Wave: 'B'},
     release: new Date(1978, 0, 0),
-    owned: false,
-    condition: false,
     accessories: []
   },
   {
-    id: 'Boba Fett',
     series: 'Star Wars',
     name: 'Boba Fett',
     range: 'Star Wars',
     properties: {Wave: 'C'},
     release: new Date(1979, 0, 0),
-    owned: true,
-    condition: true,
-    accessories: []
+    accessories: [
+      {name: 'Imperial Blaster', info: 'Black'}
+    ]
   },
   {
-    id: 'Leia Organa (Bespin Gown)',
     series: 'Star Wars',
-    name: 'Leia Organa (Bespin Gown)',
+    name: 'Princess Leia Organa',
+    variant: 'Bespin Gown',
     range: 'The Empire Strikes Back',
     properties: {Wave: 'D'},
     release: new Date(1980, 0, 0),
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Vinyl Cloak', info: ''},
+      {name: 'Leia Blaster', info: 'Blue'}
+    ]
   },
   {
-    id: 'FX-7',
     series: 'Star Wars',
     name: 'FX-7',
     range: 'The Empire Strikes Back',
     properties: {Wave: 'D'},
-    owned: true,
     release: new Date(1980, 0, 0),
-    condition: true,
     accessories: []
   },
   {
-    id: 'Imperial Stormtrooper (Hoth Battle Gear)',
     series: 'Star Wars',
-    name: 'Imperial Stormtrooper (Hoth Battle Gear)',
+    name: 'Snowtrooper',
     range: 'The Empire Strikes Back',
     release: new Date(1980, 0, 0),
     properties: {Wave: 'D'},
-    owned: true,
-    condition: true,
-    accessories: []
+    accessories: [
+      {name: 'Waist Skirt'},
+      {name: 'Imperial Hoth Rifle', info: 'Blue'}
+    ]
   },
   {
-    id: 'Rebel Soldier (Hoth Battle Gear)',
     series: 'Star Wars',
-    name: 'Rebel Soldier (Hoth Battle Gear)',
+    name: 'Rebel Soldier',
+    variant: 'Hoth Battle Gear',
     release: new Date(1980, 0, 0),
     range: 'The Empire Strikes Back',
     properties: {Wave: 'D'},
-    owned: true,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Bespin Blaster', info: 'Blue'}
+    ]
   },
   {
-    id: 'Bossk (Bounty Hunter)',
     series: 'Star Wars',
-    name: 'Bossk (Bounty Hunter)',
+    name: 'Bossk',
     range: 'The Empire Strikes Back',
     release: new Date(1980, 0, 0),
     properties: {Wave: 'D'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Bossk Rifle', info: 'Blue'}
+    ]
   },
   {
-    id: 'IG-88',
     series: 'Star Wars',
     name: 'IG-88',
     range: 'The Empire Strikes Back',
     release: new Date(1980, 0, 0),
     properties: {Wave: 'D'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Imperial Blaster', info: 'Blue'},
+      {name: 'IG-88 Rifle'}
+    ]
   },
   {
-    id: 'Luke Skywalker (Bespin Fatigues)',
     series: 'Star Wars',
-    name: 'Luke Skywalker (Bespin Fatigues)',
+    name: 'Luke Skywalker',
+    variant: 'Bespin Fatigues',
     release: new Date(1980, 0, 0),
     range: 'The Empire Strikes Back',
     properties: {Wave: 'D'},
-    owned: true,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Rebel Blaster', info: 'Blue'},
+      {name: 'Lightsaber', info: 'Yellow'}
+    ]
   },
   {
-    id: 'Han Solo (Hoth Outfit)',
     series: 'Star Wars',
-    name: 'Han Solo (Hoth Outfit)',
+    name: 'Han Solo',
+    variant: 'Hoth Outfit',
     range: 'The Empire Strikes Back',
     release: new Date(1980, 0, 0),
     properties: {Wave: 'D'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Rebel Blaster', info: 'Blue'}
+    ]
   },
   {
-    id: 'Lando Calrissian',
     series: 'Star Wars',
     name: 'Lando Calrissian',
     range: 'The Empire Strikes Back',
     release: new Date(1980, 0, 0),
     properties: {Wave: 'D'},
-    owned: true,
-    condition: true,
-    accessories: []
+    accessories: [
+      {name: 'Cape'},
+      {name: 'Bespin Blaster', info: 'Blue'}
+    ]
   },
   {
-    id: 'Bespin Security Guard',
     series: 'Star Wars',
     name: 'Bespin Security Guard',
     range: 'The Empire Strikes Back',
     release: new Date(1980, 0, 0),
     properties: {Wave: 'D'},
-    owned: true,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Bespin Blaster', info: 'Blue'}
+    ]
   },
   {
-    id: 'Yoda',
     series: 'Star Wars',
     name: 'Yoda',
     range: 'The Empire Strikes Back',
     release: new Date(1980, 0, 0),
     properties: {Wave: 'E'},
-    owned: true,
-    condition: true,
-    accessories: []
+    accessories: [
+      {name: 'Snake'},
+      {name: 'Belt'},
+      {name: 'Jedi Robe'},
+      {name: 'Walking Stick'}
+    ]
   },
   {
-    id: 'Ugnaught',
     series: 'Star Wars',
     name: 'Ugnaught',
     range: 'The Empire Strikes Back',
     release: new Date(1981, 0, 0),
     properties: {Wave: 'F'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Apron'},
+      {name: 'Tool Kit'}
+    ]
   },
   {
-    id: 'Dengar',
     series: 'Star Wars',
     name: 'Dengar',
     range: 'The Empire Strikes Back',
     release: new Date(1981, 0, 0),
     properties: {Wave: 'F'},
-    owned: true,
-    condition: true,
-    accessories: []
+    accessories: [
+      {name: 'Imperial Rifle', info: 'Blue'}
+    ]
   },
   {
-    id: 'Han Solo (Bespin Outfit)',
     series: 'Star Wars',
-    name: 'Han Solo (Bespin Outfit)',
+    name: 'Han Solo',
+    variant: 'Bespin Outfit',
     range: 'The Empire Strikes Back',
     release: new Date(1981, 0, 0),
     properties: {Wave: 'F'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Bespin Blaster', info: 'Blue'}
+    ]
   },
   {
-    id: 'Lobot',
     series: 'Star Wars',
     name: 'Lobot',
     range: 'The Empire Strikes Back',
     release: new Date(1981, 0, 0),
     properties: {Wave: 'F'},
-    owned: true,
-    condition: true,
-    accessories: []
+    accessories: [
+      {name: 'Bespin Blaster', info: 'Blue'}
+    ]
   },
   {
-    id: 'Leia (Hoth Outfit)',
     series: 'Star Wars',
-    name: 'Leia (Hoth Outfit)',
+    name: 'Princess Leia Organa',
+    variant: 'Hoth Outfit',
     release: new Date(1981, 0, 0),
     range: 'The Empire Strikes Back',
     properties: {Wave: 'F'},
-    owned: true,
-    condition: true,
-    accessories: []
+    accessories: [
+      {name: 'Leia Blaster', info: 'Blue'}
+    ]
   },
   {
-    id: 'Rebel Commander',
     series: 'Star Wars',
     name: 'Rebel Commander',
     range: 'The Empire Strikes Back',
     release: new Date(1981, 0, 0),
     properties: {Wave: 'F'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Imperial Hoth Rifle', info: 'Black'}
+    ]
   },
   {
-    id: 'AT-AT Driver',
     series: 'Star Wars',
     name: 'AT-AT Driver',
     range: 'The Empire Strikes Back',
     release: new Date(1981, 0, 0),
     properties: {Wave: 'F'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'AT-AT Driver Rifle', info: 'Black'}
+    ]
   },
   {
-    id: 'Imperial Commander',
     series: 'Star Wars',
     name: 'Imperial Commander',
     range: 'The Empire Strikes Back',
     properties: {Wave: 'F'},
     release: new Date(1981, 0, 0),
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Imperial Blaster', info: 'Blue'}
+    ]
   },
   {
-    id: '2-1B',
     series: 'Star Wars',
     name: '2-1B',
     range: 'The Empire Strikes Back',
     release: new Date(1981, 0, 0),
     properties: {Wave: 'F'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Staff'}
+    ]
   },
   {
-    id: 'Artoo-Detoo (R2-D2) (with Sensorscope)',
     series: 'Star Wars',
-    name: 'Artoo-Detoo (R2-D2) (with Sensorscope)',
+    name: 'R2-D2',
+    variant: 'Sensorscope',
     release: new Date(1982, 0, 0),
     range: 'The Empire Strikes Back',
     properties: {Wave: 'G'},
-    owned: false,
-    condition: false,
     accessories: []
   },
   {
-    id: 'C-3PO (Removable Limbs)',
     series: 'Star Wars',
-    name: 'C-3PO (Removable Limbs)',
+    name: 'C-3PO',
+    variant: 'Removable Limbs',
     range: 'The Empire Strikes Back',
     release: new Date(1982, 0, 0),
     properties: {Wave: 'G'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Cargo Net'}
+    ]
   },
   {
-    id: 'Luke Skywalker (Hoth Battle Gear)',
     series: 'Star Wars',
-    name: 'Luke Skywalker (Hoth Battle Gear)',
+    name: 'Luke Skywalker',
+    variant: 'Hoth Battle Gear',
     release: new Date(1982, 0, 0),
     range: 'The Empire Strikes Back',
     properties: {Wave: 'G'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Hoth Rebel Rifle', info: 'Black'}
+    ]
   },
   {
-    id: 'AT-AT Commander',
     series: 'Star Wars',
     name: 'AT-AT Commander',
     range: 'The Empire Strikes Back',
     release: new Date(1982, 0, 0),
     properties: {Wave: 'G'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Bespin Blaster', info: 'Blue'}
+    ]
   },
   {
-    id: '(Twin-Pod) Cloud Car Pilot',
     series: 'Star Wars',
     name: '(Twin-Pod) Cloud Car Pilot',
     release: new Date(1982, 0, 0),
     range: 'The Empire Strikes Back',
     properties: {Wave: 'G'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Pilot Blaster', info: 'Grey'},
+      {name: 'Communicator', info: 'Grey'}
+    ]
   },
   {
-    id: 'Bespin Security Guard',
     series: 'Star Wars',
     name: 'Bespin Security Guard',
     range: 'The Empire Strikes Back',
     release: new Date(1982, 0, 0),
     properties: {Wave: 'G'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Bespin Blaster', info: 'Blue'}
+    ]
   },
   {
-    id: '4-LOM',
     series: 'Star Wars',
     name: '4-LOM',
     range: 'The Empire Strikes Back',
     release: new Date(1982, 0, 0),
     properties: {Wave: 'H'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: '4-LOM Rifle'}
+    ]
   },
   {
-    id: 'Zuckuss',
     series: 'Star Wars',
     name: 'Zuckuss',
     range: 'The Empire Strikes Back',
     release: new Date(1982, 0, 0),
     properties: {Wave: 'H'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Zuckuss Rifle'},
+      {name: 'Cloak'},
+      {name: 'Backpack with straps'}
+    ]
   },
   {
-    id: 'Imperial Tie Fighter Pilot',
     series: 'Star Wars',
     name: 'Imperial Tie Fighter Pilot',
     range: 'The Empire Strikes Back',
     release: new Date(1982, 0, 0),
     properties: {Wave: 'I'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Pilot Blaster', info: 'Grey'}
+    ]
   },
   {
-    id: 'Admiral Ackbar',
     series: 'Star Wars',
     name: 'Admiral Ackbar',
     range: 'Return of the Jedi',
     release: new Date(1982, 0, 0),
     properties: {Wave: 'J'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Baton'}
+    ]
   },
   {
-    id: 'Luke Skywalker (Jedi Knight Outfit)',
     series: 'Star Wars',
-    name: 'Luke Skywalker (Jedi Knight Outfit)',
+    name: 'Luke Skywalker',
+    variant: 'Jedi Knight Outfit',
     release: new Date(1983, 0, 0),
     range: 'Return of the Jedi',
     properties: {Wave: 'J'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Lightsaber', info: 'Green'},
+      {name: 'Palace Blaster', info: 'Grey'}
+    ]
   },
   {
-    id: 'Princess Leia Organa (Boushh Disguise)',
     series: 'Star Wars',
-    name: 'Princess Leia Organa (Boushh Disguise)',
+    name: 'Princess Leia Organa',
+    variant: 'Boushh Disguise',
     release: new Date(1983, 0, 0),
     range: 'Return of the Jedi',
     properties: {Wave: 'J'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Helmet'},
+      {name: 'Boushh Rifle'}
+    ]
   },
   {
-    id: 'Gamorrean Guard',
     series: 'Star Wars',
     name: 'Gamorrean Guard',
     range: 'Return of the Jedi',
     properties: {Wave: 'J'},
     release: new Date(1983, 0, 0),
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Gamorrean Guard Axe'}
+    ]
   },
   {
-    id: 'Emperor\'s Royal Guard',
     series: 'Star Wars',
     name: 'Emperor\'s Royal Guard',
     release: new Date(1983, 0, 0),
     range: 'Return of the Jedi',
     properties: {Wave: 'J'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Cloak'},
+      {name: 'Force Pike'}
+    ]
   },
   {
-    id: 'Chief Chirpa',
     series: 'Star Wars',
     name: 'Chief Chirpa',
     range: 'Return of the Jedi',
     release: new Date(1983, 0, 0),
     properties: {Wave: 'J'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Headdress'},
+      {name: 'Staff'}
+    ]
   },
   {
-    id: 'Logray (Ewok Medicine Man)',
     series: 'Star Wars',
     name: 'Logray (Ewok Medicine Man)',
     release: new Date(1983, 0, 0),
     range: 'Return of the Jedi',
     properties: {Wave: 'J'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Headdress'},
+      {name: 'Pouch'},
+      {name: 'Staff'}
+    ]
   },
   {
-    id: 'Klaatu',
     series: 'Star Wars',
     name: 'Klaatu',
     range: 'Return of the Jedi',
     release: new Date(1983, 0, 0),
     properties: {Wave: 'J'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Vibro Axe'},
+      {name: 'Skirt'}
+    ]
   },
   {
-    id: 'Rebel Commando',
     series: 'Star Wars',
     name: 'Rebel Commando',
     range: 'Return of the Jedi',
     release: new Date(1983, 0, 0),
     properties: {Wave: 'J'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Rebel Commando Rifle', info: 'Grey'}
+    ]
   },
   {
-    id: 'Weequay',
     series: 'Star Wars',
     name: 'Weequay',
     range: 'Return of the Jedi',
     release: new Date(1983, 0, 0),
     properties: {Wave: 'J'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Vibro Axe'}
+    ]
   },
   {
-    id: 'Squid Head',
     series: 'Star Wars',
     name: 'Squid Head',
     range: 'Return of the Jedi',
     properties: {Wave: 'J'},
     release: new Date(1983, 0, 0),
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Skirt'},
+      {name: 'Belt'},
+      {name: 'Robe'},
+      {name: 'Bespin Blaster', info: 'Grey'}
+    ]
   },
   {
-    id: 'General Madine',
     series: 'Star Wars',
     name: 'General Madine',
     release: new Date(1983, 0, 0),
     range: 'Return of the Jedi',
     properties: {Wave: 'J'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Baton'}
+    ]
   },
   {
-    id: 'Bib Fortuna',
     series: 'Star Wars',
     name: 'Bib Fortuna',
     range: 'Return of the Jedi',
     release: new Date(1983, 0, 0),
     properties: {Wave: 'J'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Staff'},
+      {name: 'Cloak'},
+      {name: 'Chest Armor'}
+    ]
   },
   {
-    id: 'Ree-Yees',
     series: 'Star Wars',
     name: 'Ree-Yees',
     range: 'Return of the Jedi',
     properties: {Wave: 'J'},
     release: new Date(1983, 0, 0),
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Ree-Yees Blaster Rifle'}
+    ]
   },
   {
-    id: 'Biker Scout',
     series: 'Star Wars',
     name: 'Biker Scout',
     range: 'Return of the Jedi',
     release: new Date(1983, 0, 0),
     properties: {Wave: 'J'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Scout Blaster', info: 'Grey'}
+    ]
   },
   {
-    id: 'Lando Calrissian (Skiff Guard Disguise)',
     series: 'Star Wars',
-    name: 'Lando Calrissian (Skiff Guard Disguise)',
+    name: 'Lando Calrissian',
+    variant: 'Skiff Guard Disguise',
     range: 'Return of the Jedi',
     release: new Date(1983, 0, 0),
     properties: {Wave: 'J'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Helmet'},
+      {name: 'Vibro Axe'}
+    ]
   },
   {
-    id: 'Nien Nunb',
     series: 'Star Wars',
     name: 'Nien Nunb',
     range: 'Return of the Jedi',
     release: new Date(1983, 0, 0),
     properties: {Wave: 'J'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Pilot Blaster', info: 'Black'},
+    ]
   },
   {
-    id: 'Nikto',
     series: 'Star Wars',
     name: 'Nikto',
     release: new Date(1984, 0, 0),
     range: 'Return of the Jedi',
     properties: {Wave: 'K'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Vibro Staff'}
+    ]
   },
   {
-    id: '8D8',
     series: 'Star Wars',
     name: '8D8',
     range: 'Return of the Jedi',
     properties: {Wave: 'K'},
     release: new Date(1984, 0, 0),
-    owned: false,
-    condition: false,
     accessories: []
   },
   {
-    id: 'Princess Leia Organa (in Combat Poncho)',
     series: 'Star Wars',
-    name: 'Princess Leia Organa (in Combat Poncho)',
+    name: 'Princess Leia Organa',
+    variant: 'Combat Poncho',
     release: new Date(1984, 0, 0),
     range: 'Return of the Jedi',
     properties: {Wave: 'K'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Endor Blaster', info: 'Grey'},
+      {name: 'Belt'},
+      {name: 'Poncho'},
+      {name: 'Helmet'}
+    ]
   },
   {
-    id: 'Wicket W. Warrick',
     series: 'Star Wars',
     name: 'Wicket W. Warrick',
     range: 'Return of the Jedi',
     release: new Date(1984, 0, 0),
     properties: {Wave: 'K'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Headdress'},
+      {name: 'Ewok Spear'}
+    ]
   },
   {
-    id: 'The Emperor',
     series: 'Star Wars',
     name: 'The Emperor',
     range: 'Return of the Jedi',
     release: new Date(1984, 0, 0),
     properties: {Wave: 'K'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Walking Stick'}
+    ]
   },
   {
-    id: 'B-Wing Pilot',
     series: 'Star Wars',
     name: 'B-Wing Pilot',
     range: 'Return of the Jedi',
     release: new Date(1984, 0, 0),
     properties: {Wave: 'K'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Endor Blaster', info: 'Grey'}
+    ]
   },
   {
-    id: 'Klaatu (in Skiff Guard Outfit)',
     series: 'Star Wars',
-    name: 'Klaatu (in Skiff Guard Outfit)',
+    name: 'Klaatu',
+    variant: 'in Skiff Guard Outfit',
     release: new Date(1984, 0, 0),
     range: 'Return of the Jedi',
     properties: {Wave: 'K'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Vibro Staff'}
+    ]
   },
   {
-    id: 'Han Solo (in Trench Coat)',
     series: 'Star Wars',
-    name: 'Han Solo (in Trench Coat)',
+    name: 'Han Solo',
+    variant: 'Trench Coat',
     release: new Date(1984, 0, 0),
     range: 'Return of the Jedi',
     properties: {Wave: 'K'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Rebel Blaster', info: 'Black'}
+    ]
   },
   {
-    id: 'Teebo',
     series: 'Star Wars',
     name: 'Teebo',
     range: 'Return of the Jedi',
     release: new Date(1984, 0, 0),
     properties: {Wave: 'K'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Headdress'},
+      {name: 'Ewok Axe'},
+      {name: 'Horn'}
+    ]
   },
   {
-    id: 'Prune Face',
     series: 'Star Wars',
     name: 'Prune Face',
     range: 'Return of the Jedi',
     release: new Date(1984, 0, 0),
     properties: {Wave: 'K'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Robe'},
+      {name: 'Rifle'}
+    ]
   },
   {
-    id: 'AT-ST Driver',
     series: 'Star Wars',
     name: 'AT-ST Driver',
     range: 'Return of the Jedi',
     release: new Date(1984, 0, 0),
     properties: {Wave: 'K'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Endor Blaster', info: 'Grey'}
+    ]
   },
   {
-    id: 'Rancor Keeper',
     series: 'Star Wars',
     name: 'Rancor Keeper',
     range: 'Return of the Jedi',
     release: new Date(1984, 0, 0),
     properties: {Wave: 'K'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Headdress'},
+      {name: 'Rancor Keeper Staff'}
+    ]
   },
   {
-    id: 'Lumat',
     series: 'Star Wars',
     name: 'Lumat',
     range: 'Return of the Jedi',
     properties: {Wave: 'L'},
     release: new Date(1984, 0, 0),
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Headdress'},
+      {name: 'Pouch'},
+      {name: 'Ewok Bow'}
+    ]
   },
   {
-    id: 'Paploo',
     series: 'Star Wars',
     name: 'Paploo',
     range: 'Return of the Jedi',
     release: new Date(1984, 0, 0),
     properties: {Wave: 'L'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Headdress'},
+      {name: 'Paploo Staff'}
+    ]
   },
   {
-    id: 'Luke Skywalker (in Battle Poncho)',
     series: 'Star Wars',
-    name: 'Luke Skywalker (in Battle Poncho)',
+    name: 'Luke Skywalker',
+    variant: 'Battle Poncho',
     release: new Date(1985, 0, 0),
     range: 'Power of the Force',
     properties: {Wave: 'M'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Palace Blaster', info: 'Black'},
+      {name: 'Belt'},
+      {name: 'Poncho'}
+    ]
   },
   {
-    id: 'Artoo-Detoo (R2-D2) with pop-up Lightsaber',
     series: 'Star Wars',
-    name: 'Artoo-Detoo (R2-D2) with pop-up Lightsaber',
+    name: 'R2-D2',
+    variant: 'Pop-up Lightsaber',
     release: new Date(1985, 0, 0),
     range: 'Power of the Force',
     properties: {Wave: 'M'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Pop-Up Lightsaber', info: 'Green'}
+    ]
   },
   {
-    id: 'Romba',
     series: 'Star Wars',
     name: 'Romba',
     range: 'Power of the Force',
     release: new Date(1985, 0, 0),
     properties: {Wave: 'M'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Headdress'},
+      {name: 'Ewok Spear'}
+    ]
   },
   {
-    id: 'Amanaman',
     series: 'Star Wars',
     name: 'Amanaman',
     range: 'Power of the Force',
     release: new Date(1985, 0, 0),
     properties: {Wave: 'M'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Amanaman Staff'}
+    ]
   },
   {
-    id: 'Barada',
     series: 'Star Wars',
     name: 'Barada',
     range: 'Power of the Force',
     release: new Date(1985, 0, 0),
     properties: {Wave: 'M'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Vibro Staff'}
+    ]
   },
   {
-    id: 'Imperial Gunner',
     series: 'Star Wars',
     name: 'Imperial Gunner',
     range: 'Power of the Force',
     release: new Date(1985, 0, 0),
     properties: {Wave: 'M'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Endor Blaster', info: 'Black'}
+    ]
   },
   {
-    id: 'Han Solo (in Carbonite Chamber)',
     series: 'Star Wars',
-    name: 'Han Solo (in Carbonite Chamber)',
+    name: 'Han Solo',
+    variant: 'Carbonite Chamber',
     release: new Date(1985, 0, 0),
     range: 'Power of the Force',
     properties: {Wave: 'M'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Carbonite Block'}
+    ]
   },
   {
-    id: 'Luke Skywalker (Imperial Stormtrooper Outfit)',
     series: 'Star Wars',
-    name: 'Luke Skywalker (Imperial Stormtrooper Outfit)',
+    name: 'Luke Skywalker',
+    variant: 'Imperial Stormtrooper Outfit',
     release: new Date(1985, 0, 0),
     range: 'Power of the Force',
     properties: {Wave: 'M'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Imperial Blaster', info: 'Black'},
+      {name: 'Stormtrooper Helmet'}
+    ]
   },
   {
-    id: 'Anakin Skywalker',
     series: 'Star Wars',
     name: 'Anakin Skywalker',
     range: 'Power of the Force',
     release: new Date(1985, 0, 0),
     properties: {Wave: 'M'},
-    owned: false,
-    condition: false,
     accessories: []
   },
   {
-    id: 'EV-9D9',
     series: 'Star Wars',
     name: 'EV-9D9',
     range: 'Power of the Force',
     release: new Date(1985, 0, 0),
     properties: {Wave: 'M'},
-    owned: false,
-    condition: false,
     accessories: []
   },
   {
-    id: 'Warok',
     series: 'Star Wars',
     name: 'Warok',
     range: 'Power of the Force',
     release: new Date(1985, 0, 0),
     properties: {Wave: 'M'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Headdress'},
+      {name: 'Pouch'},
+      {name: 'Ewok Bow'}
+    ]
   },
   {
-    id: 'Lando Calrissian (General Pilot)',
     series: 'Star Wars',
-    name: 'Lando Calrissian (General Pilot)',
+    name: 'Lando Calrissian',
+    variant: 'General Pilot',
     release: new Date(1985, 0, 0),
     range: 'Power of the Force',
     properties: {Wave: 'M'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Cape'},
+      {name: 'Endor Blaster', info: 'Black'}
+    ]
   },
   {
-    id: 'A-Wing Pilot',
     series: 'Star Wars',
     name: 'A-Wing Pilot',
     range: 'Power of the Force',
     release: new Date(1985, 0, 0),
     properties: {Wave: 'M'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Endor Blaster', info: 'Black'}
+    ]
   },
   {
-    id: 'Imperial Dignitary',
     series: 'Star Wars',
     name: 'Imperial Dignitary',
     range: 'Power of the Force',
     release: new Date(1985, 0, 0),
     properties: {Wave: 'M'},
-    owned: false,
-    condition: false,
     accessories: []
   },
   {
-    id: 'Yak Face',
     series: 'Star Wars',
     name: 'Yak Face',
     range: 'Power of the Force',
     release: new Date(1985, 0, 0),
     properties: {Wave: 'N'},
-    owned: false,
-    condition: false,
-    accessories: []
+    accessories: [
+      {name: 'Vibro Staff'}
+    ]
   }
 ];

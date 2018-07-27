@@ -36,17 +36,20 @@ export class Figure extends Collectable {
     return this.items ? this.items.map(item => item.collection) : [];
   }
 
+  get collectedAccessories(): number {
+    return this.accessories ? this.accessories.filter(accessory => accessory.collected).length : 0;
+  }
+
   /**
    * Return the current collection status of the figure.
    */
   get status(): CollectableState {
 
     const accessories = this.accessories ? this.accessories.length : 0;
-    const accessoriesCollected = this.accessories ? this.accessories.filter(accessory => accessory.collected).length : 0;
 
     if (!this.collected) {
       return CollectableState.UNOWNED;
-    } else if(accessoriesCollected !== accessories) {
+    } else if(this.collectedAccessories !== accessories) {
       return CollectableState.INCOMPLETE;
     } else {
       return CollectableState.COMPLETE;

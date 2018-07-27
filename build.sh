@@ -22,7 +22,7 @@ time {
 		adb uninstall org.beesden.collections
 	fi
 	echo "Deploying app to device..."
-	adb install -d -r dist/android/debug/app-debug.apk
+	adb install -d dist/android/debug/app-debug.apk
 	adb shell am start -n org.beesden.collections/.MainActivity
 
 	# Clear containers
