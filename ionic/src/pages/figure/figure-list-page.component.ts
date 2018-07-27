@@ -1,5 +1,5 @@
-import { Component, NgZone } from '@angular/core';
-import { MenuController, NavController } from "ionic-angular";
+import { Component, NgZone, ViewChild } from '@angular/core';
+import { Content, MenuController, NavController } from "ionic-angular";
 import { Page } from "ionic-angular/navigation/nav-util";
 import { Figure } from "src/entity/figure";
 import { IonViewDidEnter } from "src/ionic-lifecycle";
@@ -117,6 +117,8 @@ import { FigureFilters, FigureRange, FigureService } from "src/service/figure.se
 })
 export class FigureListPageComponent implements IonViewDidEnter {
 
+  @ViewChild(Content) content;
+
   filters: FigureFilters = {};
 
   groups: Array<{ name: string, figures: number, owned: number, ranges: FigureRange[] }>;
@@ -201,6 +203,7 @@ export class FigureListPageComponent implements IonViewDidEnter {
       this.filters.series = series;
       this.filters.range = range;
       this.ionViewDidEnter();
+      this.content.scrollToTop();
     });
 
   }

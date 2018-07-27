@@ -18,8 +18,8 @@ ion-picker-cmp {
     max-width: 500px;
     contain: strict;
     height: 260px;
-    border-top: 1px solid $swatch-grey-light;
-    background: $swatch-white;
+    border-top: 1px solid var(--theme-divider);
+    background: var(--swatch-white);
     display: flex;
     flex-direction: column;
   }
@@ -69,7 +69,7 @@ ion-picker-cmp {
   }
 
   .picker-opt {
-    @include button($swatch-charcoal);
+    @include button(var(--theme-content));
     font-size: 18px;
     line-height: 42px;
     position: absolute;

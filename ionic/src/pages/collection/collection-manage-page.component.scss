@@ -9,7 +9,7 @@ h1 {
 
   > div {
     background: #fff;
-    border-bottom: 1px solid $swatch-grey-light;
+    border-bottom: 1px solid var(--theme-divider);
     align-items: center;
     display: flex;
     min-height: #{$display-base * 5};

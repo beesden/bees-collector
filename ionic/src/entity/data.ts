@@ -14,11 +14,6 @@ export const sampleData: FigureData[] = [
     series: 'Star Wars',
     name: 'Luke Skywalker',
     range: 'Star Wars',
-    images: [
-      'https://i.ebayimg.com/images/g/04QAAOSwRWRbRLXD/s-l1600.jpg',
-      'https://i.ebayimg.com/images/g/6iAAAOSwh8NbRLXH/s-l1600.jpg',
-      'https://i.ebayimg.com/images/g/zqcAAOSw~jJbRLXN/s-l1600.jpg'
-    ],
     release: new Date(1977, 0, 0),
     properties: {Wave: 'A'},
     accessories: [
@@ -29,9 +24,6 @@ export const sampleData: FigureData[] = [
     series: 'Star Wars',
     name: 'Princess Leia Organa',
     range: 'Star Wars',
-    images: [
-      'https://gfdbhgkjfdakjg.com/image.jpg'
-    ],
     properties: {Wave: 'A'},
     release: new Date(1977, 0, 0),
     accessories: [

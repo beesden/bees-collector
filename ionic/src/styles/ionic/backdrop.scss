@@ -3,7 +3,7 @@
 ion-backdrop {
   @include fill;
 
-  background: #000;
+  background: var(--swatch-black);
   z-index: 2;
   display: block;
   opacity: .01;

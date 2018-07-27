@@ -10,7 +10,7 @@ export class ImageViewDirective implements OnChanges {
   @HostBinding('style.background-image') background: SafeStyle;
   @Input('bc-image-view') image: Image;
 
-  private defaultImage: string = 'linear-gradient(to right bottom, #161616, #555, #555, #333)';
+  private defaultImage: string = 'linear-gradient(to right bottom, #888, #aaa, #aaa, #888)';
 
   constructor(private element: ElementRef,
               private sanitizer: DomSanitizer) {

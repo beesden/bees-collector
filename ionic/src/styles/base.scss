@@ -19,10 +19,14 @@ html {
   touch-action: manipulation;
   user-select: none;
 
-  // Material colours
+  // Page colours
   --theme-primary: #08c;
   --theme-secondary: #fff;
   --theme-statusbar: 'light';
+
+  // Interaction styles
+  --theme-highlight: #fdd835;
+  --theme-error: #900;
 
   // Typography
   --theme-bg: #f0f0f0;
@@ -37,6 +41,10 @@ html {
   --status-complete: #292;
   --status-incomplete: #929;
   --status-unowned: #922;
+
+  // Static swatches
+  --swatch-white: #fff;
+  --swatch-black: #000;
 }
 
 :focus,
@@ -57,23 +65,18 @@ hr {
 }
 
 // Custom ionic sass
-@import 'ionic/page';
-@import 'ionic/click-block';
+@import './ionic/action-sheet';
+@import './ionic/alert';
 @import './ionic/backdrop';
+@import './ionic/click-block';
 @import './ionic/navbar';
 @import './ionic/menu';
-@import './ionic/alert';
+@import './ionic/page';
 @import './ionic/picker';
 @import './ionic/searchbar';
-
-// Unupdated
-@import './ionic/action-sheet';
 @import './ionic/scroll';
-@import './ionic/slides';
 @import './ionic/spinner';
-
-// Updated but unused
-// @import './ionic/tabs';
+@import './ionic/tabs';
 
 // Ionic fonts
 $font-path: '~ionic-angular/fonts';

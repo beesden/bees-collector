@@ -46,7 +46,7 @@ header {
     font-size: 1.6rem;
 
     &.highlighted {
-      color: $swatch-yellow;
+      color: var(--theme-highlight);
     }
   }
 }

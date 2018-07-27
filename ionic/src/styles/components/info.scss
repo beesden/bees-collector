@@ -3,7 +3,6 @@
 // todo - component
 .bc-image-view {
   background: no-repeat center center/contain;
-  box-shadow: $shadow-small;
   display: block;
   height: #{$display-base * 20};
   position: relative;
@@ -12,7 +11,7 @@
     @include button;
 
     &.has-image {
-      color: #bbb;
+      color: var(--theme-content);
       font-size: 1.6rem;
       padding: $display-base;
       position: absolute;
@@ -21,7 +20,7 @@
     }
 
     &.no-image {
-      color: $swatch-grey-light;
+      color: var(--theme-content);
       font-size: #{$display-base * 8};
       height: 100%;
       padding: #{$display-base * 2};

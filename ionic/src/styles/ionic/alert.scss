@@ -9,7 +9,7 @@ ion-alert {
   contain: strict;
 
   .alert-wrapper {
-    background: $swatch-white;
+    background: var(--swatch-white);
     border-radius: 4px;
     z-index: 10;
     max-width: #{$display-base * 25};
@@ -22,7 +22,7 @@ ion-alert {
   .alert-head,
   .alert-message {
     font-size: 1.2rem;
-    color: $swatch-grey-dark;
+    color: var(--theme-content);
     margin: #{$display-base * 1.5};
 
     h2 {

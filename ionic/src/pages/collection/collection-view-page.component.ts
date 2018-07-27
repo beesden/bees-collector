@@ -43,21 +43,19 @@ import { CollectionService } from "src/service/collection.service";
         </button>
       </aside>
 
-      <section class="bc-info">
-        <header class="info">
+      <header class="bc-section">
 
-          <h1>{{collection.name}}</h1>
-          <p *ngIf="collection.description">{{collection.description}}</p>
-          
-          <dl class="bc-type-definitions">
-            <dt>Figures in Collection</dt>
-            <dd>{{collection.length}}</dd>
-            <dt>Owned</dt>
-            <dd>{{collection.collected}}</dd>
-          </dl>
+        <h1>{{collection.name}}</h1>
+        <p *ngIf="collection.description">{{collection.description}}</p>
 
-        </header>
-      </section>
+        <dl class="bc-type-definitions">
+          <dt>Figures in Collection</dt>
+          <dd>{{collection.length}}</dd>
+          <dt>Owned</dt>
+          <dd>{{collection.collected}}</dd>
+        </dl>
+
+      </header>
 
       <bc-figure-list [figures]="collection.figures"></bc-figure-list>
 

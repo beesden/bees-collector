@@ -17,14 +17,14 @@ ion-tabs {
   }
 
   > .tabbar {
-    background: $swatch-smoke;
-    border-top: 1px solid $swatch-grey-light;
+    background: var(--theme-bg);
+    border-top: 1px solid var(--theme-divider);
     display: flex;
     order: 1;
     width: 100%;
 
     > .tab-button {
-      color: $swatch-grey-dark;
+      color: var(--theme-content);
       display: flex;
       flex-direction: column;
       flex: 1;

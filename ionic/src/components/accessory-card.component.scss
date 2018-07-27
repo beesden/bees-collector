@@ -1,8 +1,8 @@
 @import "../styles/variables";
 
 :host {
-  background: $swatch-white;
-  border-bottom: 1px solid $swatch-grey-light;
+  background: var(--swatch-white);
+  border-bottom: 1px solid var(--theme-divider);
   contain: content;
   display: flex;
   grid-gap: $display-base;
@@ -34,7 +34,7 @@ header {
   }
 
   p {
-    color: $swatch-grey-dark;
+    color: var(--theme-content);
     font-size: .9rem;
     font-weight: 400;
   }
