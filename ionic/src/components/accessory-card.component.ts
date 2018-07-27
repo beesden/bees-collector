@@ -13,7 +13,7 @@ import { AccessoryService } from "src/service/accessory.service";
 
     <header>
       <h2>{{accessory.name}}</h2>
-      <p *ngIf="accessory.notes">{{accessory.notes}}</p>
+      <p *ngIf="accessory.variant">{{accessory.variant}}</p>
     </header>
 
     <nav class="actions">

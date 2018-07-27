@@ -15,8 +15,13 @@
   transition: color 320ms ease-in-out;
   text-transform: uppercase;
 
+  > ion-icon:first-child {
+    margin-right: .4em;
+  }
+
   > ion-icon:only-child {
     font-size: 1.3rem;
+    margin: 0;
   }
 
   &[disabled] {

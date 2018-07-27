@@ -36,6 +36,11 @@ import { FigureService } from "src/service/figure.service";
           </ion-item>
 
           <ion-item>
+            <ion-label>Variation <span>*</span></ion-label>
+            <ion-input name="variant" [(ngModel)]="accessory.variant" required></ion-input>
+          </ion-item>
+
+          <ion-item>
             <ion-label>Notes</ion-label>
             <ion-textarea name="notes" [(ngModel)]="accessory.notes"></ion-textarea>
           </ion-item>

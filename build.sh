@@ -16,14 +16,14 @@ time {
 	echo "todo ios build"
 
 	#echo "Deploying debug to device..."
-	if adb shell pm list packages | grep org.beesden.collections
+	if adb shell pm list packages | grep com.beesden.collections
 	then
 		echo "Uninstall previous version..."
-		adb uninstall org.beesden.collections
+		adb uninstall com.beesden.collections
 	fi
 	echo "Deploying app to device..."
 	adb install -d dist/android/debug/app-debug.apk
-	adb shell am start -n org.beesden.collections/.MainActivity
+	adb shell am start -n com.beesden.collections/.MainActivity
 
 	# Clear containers
 	echo "Clearing containers..."

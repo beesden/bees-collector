@@ -6,6 +6,7 @@ import { IonViewDidEnter } from "src/ionic-lifecycle";
 import { CollectionListPageComponent } from "src/pages/collection/collection-list-page.component";
 import { FigureEditPageComponent } from "src/pages/figure/figure-edit-page.component";
 import { HighlightsPageComponent } from "src/pages/highlights-page.component";
+import { BackupRestorePageComponent } from "src/pages/backup-restore-page.component";
 import { SearchPageComponent } from "src/pages/search-page.component";
 import { FigureFilters, FigureRange, FigureService } from "src/service/figure.service";
 
@@ -105,6 +106,13 @@ import { FigureFilters, FigureRange, FigureService } from "src/service/figure.se
           </button>
 
         </ng-container>
+        
+        <hr />
+        
+        <button class="menu-item" [navPush]="importExportPage">
+          <ion-icon name="construct"></ion-icon>
+          <header>Manage data</header>
+        </button>
 
       </ion-content>
 
@@ -128,6 +136,7 @@ export class FigureListPageComponent implements IonViewDidEnter {
   collectionListPage: Page = CollectionListPageComponent;
   highlightsPage: Page = HighlightsPageComponent;
   figureEditPage: Page = FigureEditPageComponent;
+  importExportPage: Page = BackupRestorePageComponent;
 
   constructor(private figureService: FigureService,
               private menu: MenuController,

@@ -10,7 +10,7 @@ export class CollectionItem {
   @Column({nullable: true})
   idx: number;
 
-  @ManyToOne(type => Figure)
+  @ManyToOne(type => Figure, {eager: true})
   figure: Figure;
 
   @ManyToOne(type => Collection, collection => collection.items)

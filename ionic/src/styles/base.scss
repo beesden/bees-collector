@@ -45,6 +45,7 @@ html {
 
   // Static swatches
   --swatch-white: #fff;
+  --swatch-charcoal: #333;
   --swatch-black: #000;
 }
 
@@ -78,6 +79,7 @@ hr {
 @import './ionic/scroll';
 @import './ionic/spinner';
 @import './ionic/tabs';
+@import './ionic/toast';
 
 // Ionic fonts
 $font-path: '~ionic-angular/fonts';

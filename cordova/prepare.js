@@ -88,10 +88,23 @@ runTask('Configuring environment', () => {
 	// Config / Preferences
 	addElement(root, 'access').set('origin', 'cdvfile://*');
 	addPreference('StatusBarOverlaysWebView', 'true');
+	addPreference('AutoHideSplashScreen', 'false');
+	addPreference('ShowSplashScreenSpinner', 'false');
 
 	// Save
 	writeFileSync(configFile, new ElementTree(root).write({indent: 4}), 'utf-8');
 
+});
+
+/////////////////////////////////
+// PLATFORM MANAGEMENT
+/////////////////////////////////
+
+const platforms = nodePackage.cordova.platforms || [];
+platforms.forEach(platform => {
+	runTask(`Installing ${platform}`, () => {
+		execSync(`npm run cordova -- platform add ${platform}`, {stdio: 'inherit'});
+	});
 });
 
 /////////////////////////////////
@@ -109,22 +122,12 @@ runTask('Configuring plugins', () => {
 		const source = resolve(__dirname, 'node_modules', plugin);
 		if (existsSync(source)) {
 			copydirSync(source, `${Folders.PLUGINS}/${plugin}`);
+			execSync(`npm run cordova -- plugin add ${plugin}`, {stdio: 'inherit'});
 		} else {
 			console.error(`ERROR - plugin does not exist. Install with \`npm i -${plugin}\``);
 		}
 	});
 
-});
-
-/////////////////////////////////
-// PLATFORM MANAGEMENT
-/////////////////////////////////
-
-const platforms = nodePackage.cordova.platforms || [];
-platforms.forEach(platform => {
-	runTask(`Installing ${platform}`, () => {
-execSync(`npm run cordova -- platform add ${platform}`, {stdio: 'inherit'});
-	});
 });
 
 /////////////////////////////////

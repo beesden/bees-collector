@@ -9,7 +9,7 @@ export enum CollectableState {
 
 export abstract class Collectable {
 
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @Column()
