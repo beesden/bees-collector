@@ -33,7 +33,7 @@ import { FigureService } from "src/service/figure.service";
       <div class="options">
         <button [navPush]="figureEditPage" [navParams]="{figureId: figure?.id}">Edit</button>
         <button [navPush]="accessoryEditPage" [navParams]="{figureId: figure?.id}">Add accessory</button>
-        <button (click)="changeImage()">Change image</button>
+        <button (click)="changeImage()">Manage images</button>
         <button (click)="addToCollection()">Add to collection</button>
         <button (click)="deleteFigure()">Delete</button>
       </div>
@@ -41,63 +41,58 @@ import { FigureService } from "src/service/figure.service";
 
     <ion-content>
 
-      <section class="bc-info">
+      <aside class="bc-image-view" [bc-image-view]="figure.images ? figure.images[0] : ''">
+        <button [class]="figure.images && figure.images.length ? 'has-image' : 'no-image'" (click)="changeImage()">
+          <ion-icon name="camera"></ion-icon>
+        </button>
+      </aside>
 
-        <aside class="bc-image-view" [bc-image-view]="figure.images ? figure.images[0] : ''">
-          <button [class]="figure.images && figure.images.length ? 'has-image' : 'no-image'" (click)="changeImage()">
-            <ion-icon name="camera"></ion-icon>
-          </button>
-        </aside>
+      <header class="bc-section">
 
-        <header class="info">
+        <!-- Main title -->
+        <h1 class="bc-type-title">{{figure.name}}</h1>
+        <p class="bc-type-subtitle" *ngIf="figure.variant">{{figure.variant}}</p>        
+        <p class="bc-type-text" *ngIf="figure.notes">{{figure.notes}}</p>
 
-          <!-- Main title -->
-          <h1>{{figure.name}}</h1>
-          <p *ngIf="figure.variant">{{figure.variant}}</p>
+        <!-- Metadata -->
+        <dl class="bc-type-definitions">
 
-          <!-- Metadata -->
-          <dl>
+          <!-- Figure manufacturer -->
+          <ng-container *ngIf="figure.manufacturer">
+            <dt>Manufacturer</dt>
+            <dd>{{figure.manufacturer}}</dd>
+          </ng-container>
 
-            <!-- Figure manufacturer -->
-            <ng-container *ngIf="figure.manufacturer">
-              <dt>Manufacturer</dt>
-              <dd>{{figure.manufacturer}}</dd>
-            </ng-container>
+          <!-- Series -->
+          <ng-container *ngIf="figure.series">
+            <dt>Series</dt>
+            <dd>{{figure.series}}</dd>
+          </ng-container>
 
-            <!-- Series -->
-            <ng-container *ngIf="figure.series">
-              <dt>Series</dt>
-              <dd>{{figure.series}}</dd>
-            </ng-container>
+          <!-- Figure range -->
+          <ng-container *ngIf="figure.range">
+            <dt>Range</dt>
+            <dd>{{figure.range}}</dd>
+          </ng-container>
 
-            <!-- Figure range -->
-            <ng-container *ngIf="figure.range">
-              <dt>Range</dt>
-              <dd>{{figure.range}}</dd>
-            </ng-container>
+          <!-- Release date -->
+          <ng-container *ngIf="figure.release">
+            <dt>Release date</dt>
+            <dd>{{figure.release | date: 'yyyy'}}</dd>
+          </ng-container>
 
-            <!-- Release date -->
-            <ng-container *ngIf="figure.release">
-              <dt>Release date</dt>
-              <dd>{{figure.release | date: 'yyyy'}}</dd>
-            </ng-container>
+          <!-- Extra info -->
+          <ng-container *ngFor="let property of figure.properties">
+            <dt>{{property.name}}</dt>
+            <dd>{{property.value}}</dd>
+          </ng-container>
+        </dl>
 
-            <!-- Extra info -->
-            <ng-container *ngFor="let property of figure.properties">
-              <dt>{{property.name}}</dt>
-              <dd>{{property.value}}</dd>
-            </ng-container>
-          </dl>
+        <nav>
+          <bc-status-button [withText]="true" [status]="figure.status" (toggle)="toggleCollected()"></bc-status-button>
+        </nav>
 
-          <nav>
-            <bc-status-button [status]="figure.status" (toggle)="toggleCollected()"></bc-status-button>
-          </nav>
-
-        </header>
-
-      </section>
-
-      <p class="bc-type-text" *ngIf="figure.notes">{{figure.notes}}</p>
+      </header>
 
       <ng-container *ngIf="figure.accessories?.length">
         <h2 class="bc-type-subtitle">Accessories</h2>

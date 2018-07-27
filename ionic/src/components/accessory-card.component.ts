@@ -16,14 +16,11 @@ import { AccessoryService } from "src/service/accessory.service";
       <p *ngIf="accessory.notes">{{accessory.notes}}</p>
     </header>
 
-    <nav class="more">
+    <nav class="actions">
       <button (click)="showMenu()">
         <ion-icon name="more"></ion-icon>
       </button>
 
-    </nav>
-
-    <nav class="status">
       <bc-status-button [status]="accessory.status" (toggle)="toggleCollected()"></bc-status-button>
     </nav>
   `

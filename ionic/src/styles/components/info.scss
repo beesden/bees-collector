@@ -1,10 +1,11 @@
 @import '../variables';
 
+// todo - component
 .bc-image-view {
-  background: no-repeat center center/cover;
+  background: no-repeat center center/contain;
   box-shadow: $shadow-small;
   display: block;
-  height: 200px;
+  height: #{$display-base * 20};
   position: relative;
 
   > button {
@@ -27,75 +28,4 @@
       width: 100%;
     }
   }
-}
-
-.bc-info {
-  background: $swatch-white;
-  box-shadow: $shadow-small;
-  contain: content;
-  display: grid;
-  grid-template-columns: minmax(#{$display-base * 10}, #{$display-base * 18}) minmax(60%, 1fr);
-  max-height: #{$display-base * 20};
-  margin: 0 0 #{$display-base * 2};
-
-  .bc-image-view {
-    height: auto;
-  }
-
-  .info {
-    display: flex;
-    flex-direction: column;
-    max-height: #{$display-base * 20};
-    padding: 0 $display-base;
-
-    &:only-child {
-      grid-column: 1/3;
-    }
-
-    h1 {
-      color: var(--theme-title);
-      font-size: 1.5rem;
-      margin: $display-base 0;
-    }
-
-    p {
-      margin: $display-base 0;
-    }
-
-    dl {
-      border-top: 1px solid $swatch-grey-light;
-      font-size: .9rem;
-      overflow-y: scroll;
-      padding: $display-base 0;
-      flex: 1;
-
-      display: grid;
-      grid-template-columns: auto 1fr;
-      grid-gap: #{$display-base / 2}  #{$display-base * 2};
-      align-content: start;
-
-      dt {
-        grid-column: 1;
-        color: var(--theme-title);
-        font-weight: 500;
-
-        &:after {
-          content: ':';
-        }
-      }
-
-      dd {
-        font-weight: 300;
-        grid-column: 2;
-      }
-    }
-
-    nav {
-      border-top: 1px solid $swatch-grey-light;
-      padding: $display-base 0;
-      text-align: right;
-    }
-
-  }
-
 }

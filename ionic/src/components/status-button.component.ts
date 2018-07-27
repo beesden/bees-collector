@@ -6,7 +6,7 @@ import { CollectableState } from "src/entity/collectable";
   styleUrls: ['./status-button.component.scss'],
   template: `
     <button [ngClass]="'status-' + status" (click)="onClick($event)" type="button">
-      <span>{{statusText}}</span>
+      <span *ngIf="withText">{{statusText}}</span>
       <ion-icon [name]="checked ? 'checkbox-outline' : 'square-outline'"></ion-icon>
     </button>
   `
@@ -14,7 +14,8 @@ import { CollectableState } from "src/entity/collectable";
 export class StatusButtonComponent {
 
   @Input() status: CollectableState;
-  @Output() toggle: EventEmitter<void> = new EventEmitter();
+  @Input() withText: boolean;
+  @Output() toggle: EventEmitter<Event> = new EventEmitter();
 
   /**
    * Return true if the checkbox should appear checked.
@@ -29,11 +30,11 @@ export class StatusButtonComponent {
   get statusText(): string {
     switch (this.status) {
       case CollectableState.COMPLETE:
-        return 'Have It';
+        return 'Owned';
       case CollectableState.INCOMPLETE:
-        return 'Incomplete';
+        return 'Partially Owned';
       case CollectableState.UNOWNED:
-        return 'Want It';
+        return 'Not Owned';
       default:
         return '???';
     }
@@ -46,7 +47,7 @@ export class StatusButtonComponent {
    */
   onClick($event): void {
     $event.stopPropagation();
-    this.toggle.emit();
+    this.toggle.emit($event);
   }
 
 }

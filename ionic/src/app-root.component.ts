@@ -13,15 +13,19 @@ export class AppRootComponent implements OnInit {
 
   // rootPage: Page = CollectionManagePageComponent;
   rootPage: object = FigureListPageComponent;
+
   //rootPage: object = StyleguidePageComponent;
 
   constructor(private app: App,
-              private themeService: ThemeService) {}
+              private themeService: ThemeService) {
+  }
 
   ngOnInit(): void {
 
     this.app.viewDidEnter.subscribe((view: ViewController) => {
-      this.themeService.applyTheme(view.getHeader() as Header);
+      if (view.getHeader()) {
+        this.themeService.applyTheme(view.getHeader() as Header);
+      }
     });
 
   }

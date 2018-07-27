@@ -146,6 +146,7 @@ export class FigureService {
 
     return this.query.then(query => query
       .andWhere(`figure.name LIKE '%${queryString}%'`)
+      .orWhere(`figure.variant LIKE '%${queryString}%'`)
       .orWhere(`figure.notes LIKE '%${queryString}%'`)
       .getMany());
 

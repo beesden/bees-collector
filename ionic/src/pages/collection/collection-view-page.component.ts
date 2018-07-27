@@ -49,7 +49,7 @@ import { CollectionService } from "src/service/collection.service";
           <h1>{{collection.name}}</h1>
           <p *ngIf="collection.description">{{collection.description}}</p>
           
-          <dl>
+          <dl class="bc-type-definitions">
             <dt>Figures in Collection</dt>
             <dd>{{collection.length}}</dd>
             <dt>Owned</dt>

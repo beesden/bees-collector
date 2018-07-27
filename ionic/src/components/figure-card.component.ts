@@ -9,22 +9,13 @@ import { FigureService } from "src/service";
     <figure [bc-image-view]="figure.images[0]"></figure>
 
     <header>
-      <h2>{{figure.name}} <span *ngIf="figure.variant">{{figure.variant}}</span></h2>
-      <p class="range">{{figure.range}}</p>
+      <h2>{{figure.name}}</h2>
+      <p class="range">{{figure.variant || figure.range}}</p>
     </header>
 
-    <aside>
-      <button class="highlight" (click)="toggleHighlight($event)" [ngClass]="{active: figure.highlight}">
-        <ion-icon [name]="figure.highlight ? 'star' : 'star-outline'"></ion-icon>
-      </button>
-    </aside>
-
     <section class="status">
-      <div class="accessories" *ngIf="figure.accessories?.length">
-        <ion-icon name="pricetags"></ion-icon>
-        {{figure.collectedAccessories}} / {{figure.accessories.length}}
-      </div>
-      <bc-status-button [status]="figure.status" (toggle)="toggleCollected()"></bc-status-button>
+      <ion-icon class="highlight" (click)="toggleHighlight($event)" [ngClass]="{highlighted: figure.highlight}" [name]="figure.highlight ? 'star' : 'star-outline'"></ion-icon>      
+      <bc-status-button (toggle)="toggleCollected($event)" [status]="figure.status"></bc-status-button>
     </section>
   `
 })
@@ -35,7 +26,8 @@ export class FigureCardComponent {
   constructor(private figureService: FigureService) {
   }
 
-  toggleCollected(): void {
+  toggleCollected($event): void {
+    $event.stopPropagation();
     this.figure.collected = !this.figure.collected;
     this.figureService.save(this.figure);
   }

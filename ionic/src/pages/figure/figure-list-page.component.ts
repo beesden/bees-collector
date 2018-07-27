@@ -36,7 +36,7 @@ import { FigureFilters, FigureRange, FigureService } from "src/service/figure.se
       <ion-spinner *ngIf="!figures"></ion-spinner>
 
       <ng-container *ngIf="figures?.length > 0">
-        <header class="bc-type-header" *ngIf="filters.range || filters.series">
+        <header class="bc-header" *ngIf="filters.range || filters.series">
           <h1 class="bc-type-title">{{filters.range || 'All figures'}}</h1>
           <p class="bc-type-text">{{filters.series}}</p>
         </header>

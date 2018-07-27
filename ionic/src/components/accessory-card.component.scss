@@ -1,12 +1,11 @@
 @import "../styles/variables";
 
 :host {
-  @include card;
+  background: $swatch-white;
+  border-bottom: 1px solid $swatch-grey-light;
   contain: content;
-  display: grid;
-  grid-template-columns: #{$display-base * 6.5} 1fr 0fr;
+  display: flex;
   grid-gap: $display-base;
-  margin: $display-base;
   padding-right: $display-base;
 
   &.deleted {
@@ -16,29 +15,33 @@
 
 figure {
   background: center top/cover no-repeat;
-  grid-row: 1 / 3;
+  margin: $display-base;
+  height: #{$display-base * 4};
+  flex: #{$display-base * 4} 0 0;
 }
 
 header {
-  padding-top: $display-base;
-  min-height: 4rem;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  flex: 1;
 
   h2 {
     color: var(--theme-title);
-    font-size: 1.15rem;
+    font-size: 1rem;
     font-weight: 500;
-    margin: 0 0 #{$display-base / 2};
+    margin: 0;
   }
 
   p {
     color: $swatch-grey-dark;
     font-size: .9rem;
-    font-weight: 300;
+    font-weight: 400;
   }
 
 }
 
-.more {
+.actions {
   button {
     @include button;
     color: var(--theme-title);
@@ -49,7 +52,6 @@ header {
 }
 
 .status {
-  border-top: 1px solid $swatch-grey-light;
   grid-column: 2 / 4;
   text-align: right;
 }
