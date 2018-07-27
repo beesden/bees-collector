@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { Content } from "ionic-angular";
 import { Figure } from "src/entity/figure";
 import { FigureService } from "src/service/figure.service";
 
@@ -15,6 +16,7 @@ import { FigureService } from "src/service/figure.service";
 
     <ion-content>
 
+      <ion-spinner *ngIf="queryInput && !figures"></ion-spinner>
       <p class="bc-type-text" *ngIf="queryInput && figures && !figures?.length">No results found. Please try again.</p>
       <bc-figure-list *ngIf="figures?.length" [figures]="figures"></bc-figure-list>
 
@@ -22,6 +24,8 @@ import { FigureService } from "src/service/figure.service";
   `
 })
 export class SearchPageComponent {
+
+  @ViewChild(Content) content;
 
   queryInput: string;
   figures: Figure[];
@@ -36,13 +40,15 @@ export class SearchPageComponent {
    */
   search(query: string = '') {
 
+    delete this.figures;
+
     if (!query) {
-      delete this.figures;
       return;
     }
 
     this.figureService.search(query).then(figures => {
       this.figures = figures;
+      this.content.scrollToTop();
     });
 
   }
