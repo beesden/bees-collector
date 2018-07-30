@@ -1,12 +1,12 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { Collection } from "src/entity";
+import { Collection } from "src/entity/collection";
 
 @Component({
   selector: 'bc-collection-card',
   styleUrls: ['./collection-card.component.scss'],
   encapsulation: ViewEncapsulation.Native,
   template: `
-    <figure [bc-image-view]="collection.images[0]"></figure>
+    <figure [bc-image-view]="collection.images"></figure>
 
     <header>
       <h2>{{collection.name}}</h2>

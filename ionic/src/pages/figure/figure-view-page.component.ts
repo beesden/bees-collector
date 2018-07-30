@@ -1,8 +1,6 @@
 import { Component, NgZone } from '@angular/core';
-import { Camera, CameraOptions, DestinationType, MediaType, PictureSourceType } from "@ionic-native/camera";
-import { ActionSheetController, AlertController, NavParams, ViewController } from "ionic-angular";
+import { ActionSheetController, AlertController, ModalController, NavParams, ViewController } from "ionic-angular";
 import { Page } from "ionic-angular/navigation/nav-util";
-import { Image } from "src/entity";
 import { Figure } from "src/entity/figure";
 import { IonViewDidEnter } from "src/ionic-lifecycle";
 import { AccessoryEditPageComponent } from "src/pages";
@@ -32,8 +30,8 @@ import { FigureService } from "src/service/figure.service";
       <ion-backdrop></ion-backdrop>
       <div class="options">
         <button [navPush]="figureEditPage" [navParams]="{figureId: figure?.id}">Edit</button>
-        <button [navPush]="accessoryEditPage" [navParams]="{figureId: figure?.id}">Add accessory</button>
-        <button (click)="changeImage()">Manage images</button>
+        <button (click)="changeImage()">Replace image</button>
+        <button (click)="addAccessory()">Add accessory</button>
         <button (click)="addToCollection()">Add to collection</button>
         <button (click)="deleteFigure()">Delete</button>
       </div>
@@ -41,8 +39,8 @@ import { FigureService } from "src/service/figure.service";
 
     <ion-content>
 
-      <aside class="bc-image-view" [bc-image-view]="figure.images ? figure.images[0] : ''">
-        <button [class]="figure.images && figure.images.length ? 'has-image' : 'no-image'" (click)="changeImage()">
+      <aside class="bc-figure-image" [bc-image-view]="figure.images" [ngClass]="{'has-image': figure.images?.length}">
+        <button (click)="changeImage()">
           <ion-icon name="camera"></ion-icon>
         </button>
       </aside>
@@ -51,8 +49,10 @@ import { FigureService } from "src/service/figure.service";
 
         <!-- Main title -->
         <h1 class="bc-type-title">{{figure.name}}</h1>
-        <p class="bc-type-subtitle" *ngIf="figure.variant">{{figure.variant}}</p>        
+        <p class="bc-type-subtitle" *ngIf="figure.variant">{{figure.variant}}</p>
         <p class="bc-type-text" *ngIf="figure.notes">{{figure.notes}}</p>
+
+        <hr/>
 
         <!-- Metadata -->
         <dl class="bc-type-definitions">
@@ -61,18 +61,6 @@ import { FigureService } from "src/service/figure.service";
           <ng-container *ngIf="figure.manufacturer">
             <dt>Manufacturer</dt>
             <dd>{{figure.manufacturer}}</dd>
-          </ng-container>
-
-          <!-- Series -->
-          <ng-container *ngIf="figure.series">
-            <dt>Series</dt>
-            <dd>{{figure.series}}</dd>
-          </ng-container>
-
-          <!-- Figure range -->
-          <ng-container *ngIf="figure.range">
-            <dt>Range</dt>
-            <dd>{{figure.range}}</dd>
           </ng-container>
 
           <!-- Release date -->
@@ -95,14 +83,13 @@ import { FigureService } from "src/service/figure.service";
       </header>
 
       <ng-container *ngIf="figure.accessories?.length">
-        <h2 class="bc-type-subtitle">Accessories</h2>
+        <h2>Accessories</h2>
 
         <section>
           <bc-accessory-card class="scroll-item" [accessory]="accessory" *ngFor="let accessory of figure.accessories"></bc-accessory-card>
         </section>
       </ng-container>
-
-
+      
       <ng-container *ngIf="figure.collections?.length">
         <h2 class="bc-type-subtitle">In {{figure.collections?.length}} collections:</h2>
 
@@ -117,12 +104,12 @@ import { FigureService } from "src/service/figure.service";
 export class FigureViewPageComponent implements IonViewDidEnter {
 
   moreOptions: boolean;
-  accessoryEditPage: Page = AccessoryEditPageComponent;
   figureEditPage: Page = FigureEditPageComponent;
   figure: Figure = new Figure();
 
   constructor(private actionSheetCtrl: ActionSheetController,
               private alertCtrl: AlertController,
+              private modalCtrl: ModalController,
               private imageService: ImageService,
               private figureService: FigureService,
               private collectionService: CollectionService,
@@ -162,12 +149,16 @@ export class FigureViewPageComponent implements IonViewDidEnter {
     this.figureService.save(this.figure);
   }
 
+  addAccessory(): void {
+    this.modalCtrl.create(AccessoryEditPageComponent, {figureId: this.figure.id}).present();
+  }
+
   /**
    * Add the figure to a collection.
    */
   addToCollection(): void {
 
-    this.collectionService.getList().then(collections => {
+    this.collectionService.getList().then(([collections]) => {
       const options = this.alertCtrl.create()
         .setTitle('Add to collection')
         .addButton({text: 'Cancel', role: 'cancel'})

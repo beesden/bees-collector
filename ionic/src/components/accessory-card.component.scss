@@ -5,7 +5,7 @@
   border-bottom: 1px solid var(--theme-divider);
   contain: content;
   display: flex;
-  grid-gap: $display-base;
+  align-items: center;
   padding-right: $display-base;
 
   &.deleted {
@@ -21,9 +21,6 @@ figure {
 }
 
 header {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
   flex: 1;
 
   h2 {

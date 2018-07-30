@@ -3,8 +3,7 @@ import { NgForm } from "@angular/forms";
 import { NavParams, ViewController } from "ionic-angular";
 import { Figure } from "src/entity/figure";
 import { FigureProperty } from "src/entity/figure-property";
-import { FigureViewPageComponent } from "src/pages/figure/figure-view-page.component";
-import { FigureRange, FigureService } from "src/service/figure.service";
+import { FigureService } from "src/service/figure.service";
 
 @Component({
   selector: 'bp-figure-edit',
@@ -12,6 +11,11 @@ import { FigureRange, FigureService } from "src/service/figure.service";
   template: `
     <ion-header>
       <ion-navbar>
+
+        <button class="close-button" (click)="viewCtrl.dismiss()">
+          <ion-icon name="close"></ion-icon>
+        </button>
+
         <ion-title>{{figure?.id ? 'Edit Figure' : 'Add Figure'}}</ion-title>
 
         <ion-buttons end>
@@ -26,7 +30,7 @@ import { FigureRange, FigureService } from "src/service/figure.service";
     <ion-content>
 
       <form #form="ngForm" id="form" *ngIf="figure" (ngSubmit)="saveChanges(form)">
-        
+
         <p class="info">* indicates required fields</p>
 
         <fieldset>
@@ -53,23 +57,13 @@ import { FigureRange, FigureService } from "src/service/figure.service";
           <legend>Series / Range</legend>
 
           <ion-item>
-            <ion-label>Series <span>*</span></ion-label>
-            <ion-input name="series" [(ngModel)]="figure.series" required></ion-input>
-          </ion-item>
-
-          <ion-item>
-            <ion-label>Range</ion-label>
-            <ion-input name="range" [(ngModel)]="figure.range"></ion-input>
+            <ion-label>Release date</ion-label>
+            <ion-datetime name="release" displayFormat="YYYY" [(ngModel)]="figure.release"></ion-datetime>
           </ion-item>
 
           <ion-item>
             <ion-label>Manufacturer</ion-label>
             <ion-input name="manufacturer" [(ngModel)]="figure.manufacturer"></ion-input>
-          </ion-item>
-
-          <ion-item>
-            <ion-label>Release date</ion-label>
-            <ion-datetime name="release" displayFormat="YYYY" [(ngModel)]="figure.release"></ion-datetime>
           </ion-item>
 
         </fieldset>
@@ -110,9 +104,9 @@ export class FigureEditPageComponent {
 
   figure: Figure;
 
-  constructor(private viewCtrl: ViewController,
-              private figureService: FigureService,
-              private navParams: NavParams) {
+  constructor(private figureService: FigureService,
+              private navParams: NavParams,
+              public viewCtrl: ViewController) {
 
     const figureId = navParams.get('figureId');
     if (figureId) {
@@ -128,13 +122,6 @@ export class FigureEditPageComponent {
       // Create a new figure
       this.figure = new Figure();
       this.figure.properties = [];
-
-      // Pre-populate
-      const range = navParams.get('range') as FigureRange;
-      if (range) {
-        this.figure.range = range.name;
-        this.figure.series = range.series;
-      }
 
     }
 
@@ -164,17 +151,7 @@ export class FigureEditPageComponent {
       return;
     }
 
-    this.figureService.save(this.figure).then(figure => {
-
-      const figureId = this.navParams.get('figureId');
-      const nav = this.viewCtrl.getNav();
-
-      this.viewCtrl.dismiss().then(() => {
-        if (!figureId) {
-          nav.push(FigureViewPageComponent, {figureId: figure.id});
-        }
-      });
-    });
+    this.figureService.save(this.figure).then(figure => this.viewCtrl.dismiss(figure));
 
   }
 

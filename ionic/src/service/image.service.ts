@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Camera, CameraOptions, DestinationType, MediaType, PictureSourceType } from "@ionic-native/camera";
-import { File, FileEntry, IFile } from "@ionic-native/file";
+import { File } from "@ionic-native/file";
 import { ActionSheetController } from "ionic-angular";
-import { Image } from "src/entity";
+import { Image } from "src/entity/image";
 import { ConnectionService } from "src/service/connection.service";
 import { Repository } from "typeorm/browser";
 

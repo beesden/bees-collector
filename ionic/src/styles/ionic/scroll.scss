@@ -14,8 +14,12 @@ ion-infinite-scroll {
       margin: 0 0 32px;
     }
 
-    &[state=loading] .infinite-loading {
+    &[state="loading"] .infinite-loading {
       display: block;
+    }
+
+    &[state="disabled"] {
+      display: none;
     }
 
   }

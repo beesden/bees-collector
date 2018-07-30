@@ -1,6 +1,6 @@
 import { Directive, ElementRef, HostBinding, Input, OnChanges } from '@angular/core';
 import { DomSanitizer, SafeStyle } from "@angular/platform-browser";
-import { Image } from "src/entity";
+import { Image } from "src/entity/image";
 
 @Directive({
   selector: '[bc-image-view]'
@@ -8,9 +8,9 @@ import { Image } from "src/entity";
 export class ImageViewDirective implements OnChanges {
 
   @HostBinding('style.background-image') background: SafeStyle;
-  @Input('bc-image-view') image: Image;
+  @Input('bc-image-view') images: Image[];
 
-  private defaultImage: string = 'linear-gradient(to right bottom, #888, #aaa, #aaa, #888)';
+  private defaultImage: string = 'linear-gradient(to right bottom, #888, #bbb, #bbb, #888)';
 
   constructor(private element: ElementRef,
               private sanitizer: DomSanitizer) {
@@ -18,7 +18,8 @@ export class ImageViewDirective implements OnChanges {
 
   ngOnChanges(): void {
 
-    this.background = this.sanitizer.bypassSecurityTrustStyle(`url(${this.image ? this.image.url : ''}), ${this.defaultImage}`);
+    const imageUrl = this.images && this.images.length ? this.images[0].url : '';
+    this.background = this.sanitizer.bypassSecurityTrustStyle(`url(${imageUrl}), ${this.defaultImage}`);
 
   }
 

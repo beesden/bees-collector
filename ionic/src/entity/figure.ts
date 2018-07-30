@@ -1,18 +1,12 @@
-import { Collectable, CollectableState } from "src/entity";
+import { Collectable, CollectableState } from "src/entity/collectable";
 import { Collection } from "src/entity/collection";
 import { CollectionItem } from "src/entity/collection-item";
 import { FigureAccessory } from "src/entity/figure-accessory";
 import { FigureProperty } from "src/entity/figure-property";
-import { Column, Entity, ManyToMany, OneToMany } from "typeorm/browser";
+import { Column, Entity, OneToMany } from "typeorm/browser";
 
 @Entity()
 export class Figure extends Collectable {
-
-  @Column({nullable: true})
-  series: string;
-
-  @Column({nullable: true})
-  range: string;
 
   @Column({nullable: true})
   release: string;

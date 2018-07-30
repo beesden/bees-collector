@@ -9,6 +9,11 @@ import { FigureService } from "src/service/figure.service";
     <ion-header>
 
       <ion-navbar>
+
+        <button menuToggle="menu">
+          <ion-icon name="menu"></ion-icon>
+        </button>
+        
         <ion-title>Highlights</ion-title>
       </ion-navbar>
 

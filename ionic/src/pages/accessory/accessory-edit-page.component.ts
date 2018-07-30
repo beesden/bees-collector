@@ -10,6 +10,11 @@ import { FigureService } from "src/service/figure.service";
   template: `
     <ion-header>
       <ion-navbar>
+
+        <button class="close-button" (click)="viewCtrl.dismiss()">
+          <ion-icon name="close"></ion-icon>
+        </button>
+        
         <ion-title>{{accessory?.id ? 'Edit Accessory' : 'Add Accessory'}}</ion-title>
 
         <ion-buttons end>
@@ -36,8 +41,8 @@ import { FigureService } from "src/service/figure.service";
           </ion-item>
 
           <ion-item>
-            <ion-label>Variation <span>*</span></ion-label>
-            <ion-input name="variant" [(ngModel)]="accessory.variant" required></ion-input>
+            <ion-label>Variation</ion-label>
+            <ion-input name="variant" [(ngModel)]="accessory.variant"></ion-input>
           </ion-item>
 
           <ion-item>
@@ -56,10 +61,10 @@ export class AccessoryEditPageComponent {
 
   accessory: FigureAccessory;
 
-  constructor(private viewCtrl: ViewController,
-              private accessoryService: AccessoryService,
+  constructor(private accessoryService: AccessoryService,
               private figureService: FigureService,
-              private navParams: NavParams) {
+              private navParams: NavParams,
+              public viewCtrl: ViewController) {
 
     const accessoryId = navParams.get('accessoryId');
 

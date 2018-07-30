@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-import { File } from "@ionic-native/file";
-import { Collection, Figure, Image } from "src/entity";
+import { Collection } from "src/entity/collection";
 import { CollectionItem } from "src/entity/collection-item";
-import { FigureAccessory } from "src/entity/figure-accessory";
-import { FigureProperty } from "src/entity/figure-property";
-import { ConnectionService } from "src/service/connection.service";
+import { Figure } from "src/entity/figure";
+import { Image } from "src/entity/image";
 
 @Injectable()
 export class BackupCollectionUtil {
@@ -13,6 +11,7 @@ export class BackupCollectionUtil {
     return {
       id: collection.id,
       name: collection.name,
+      series: collection.series,
       description: collection.description,
       images: (collection.images || []).map(image => image.url),
       figures: (collection.items || [])
@@ -26,6 +25,7 @@ export class BackupCollectionUtil {
     const collection = new Collection();
     collection.id = data.id;
     collection.name = data.name;
+    collection.series = data.series;
     collection.description = data.description;
 
     collection.images = data.images.map(url => {
@@ -36,9 +36,11 @@ export class BackupCollectionUtil {
 
     collection.items = [];
 
-    data.figures.forEach(figureId => {
+    data.figures.forEach((figureId, idx) => {
       const item = new CollectionItem();
       item.figure = figures.find(figure => figure.id === figureId);
+      item.idx = idx;
+
       if (item.figure) {
         collection.items.push(item);
       }

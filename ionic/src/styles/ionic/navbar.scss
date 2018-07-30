@@ -17,6 +17,7 @@ ion-toolbar {
 
     // Title text
     > .toolbar-content {
+      display: flex;
       flex-grow: 1;
       order: 2;
 
@@ -42,13 +43,14 @@ ion-toolbar {
 
     // Navigation icons
     > .back-button,
+    > .toolbar-content > .close-button,
     > [menuToggle] {
       @include button;
       font-size: 1.8rem;
       padding: #{$display-base / 2};
       margin-right: #{$display-base * 2};
       flex-grow: 0;
-      order: 1;
+      order: -1;
     }
 
     // Back button visibility

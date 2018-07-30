@@ -9,7 +9,7 @@ import { AccessoryService } from "src/service/accessory.service";
   selector: 'bc-accessory-card',
   styleUrls: ['./accessory-card.component.scss'],
   template: `
-    <figure [bc-image-view]="accessory.images[0]"></figure>
+    <figure [bc-image-view]="accessory.images"></figure>
 
     <header>
       <h2>{{accessory.name}}</h2>
@@ -43,8 +43,8 @@ export class AccessoryCardComponent {
   showMenu(): void {
 
     this.actionSheetCtrl.create()
-      .addButton({icon: 'create', text: 'Edit info', handler: () => this.editAccessory()})
-      .addButton({icon: 'camera', text: 'Change image', handler: () => this.changeImage()})
+      .addButton({icon: 'create', text: 'Edit accessory', handler: () => this.editAccessory()})
+      .addButton({icon: 'camera', text: 'Replace image', handler: () => this.changeImage()})
       .addButton({icon: 'trash', text: 'Remove accessory', handler: () => this.deleteAccessory()})
       .present();
 

@@ -6,12 +6,10 @@ interface DataBackup {
 }
 
 interface FigureData {
-  id: number;
+  id: string;
   name: string;
   variant: string;
   notes: string;
-  series: string;
-  range: string;
   manufacturer: string;
   collected: boolean;
   release: string;
@@ -23,9 +21,10 @@ interface FigureData {
 }
 
 interface CollectionData {
-  id: number,
+  id: number;
   name: string;
+  series: string;
   description: string;
   images: string[];
-  figures: number[];
+  figures: string[];
 }

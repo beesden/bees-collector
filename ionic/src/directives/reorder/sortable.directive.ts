@@ -1,9 +1,5 @@
 import { AfterContentInit, ContentChildren, Directive, EventEmitter, Output, QueryList } from '@angular/core';
-import { Platform } from "ionic-angular";
-import { PointerEvents } from "ionic-angular/gestures/pointer-events";
-import { UIEventManager } from "ionic-angular/gestures/ui-event-manager";
 import { take } from "rxjs/operators";
-import { Subscription } from "rxjs/Subscription";
 import { SortableItemDirective } from "src/directives/reorder/sortable-item.directive";
 
 export interface SortableEvent {

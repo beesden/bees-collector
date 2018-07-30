@@ -1,12 +1,10 @@
 import { Component, NgZone } from '@angular/core';
-import { Camera, CameraOptions, DestinationType, MediaType, PictureSourceType } from "@ionic-native/camera";
-import { ActionSheetController, AlertController, NavParams, ViewController } from "ionic-angular";
+import { ActionSheetController, AlertController, ModalController, NavParams, ViewController } from "ionic-angular";
 import { Page } from "ionic-angular/navigation/nav-util";
 import { Collection } from "src/entity/collection";
-import { Image } from "src/entity";
 import { IonViewDidEnter } from "src/ionic-lifecycle";
+import { FigureEditPageComponent, FigureViewPageComponent } from "src/pages";
 import { CollectionEditPageComponent } from "src/pages/collection/collection-edit-page.component";
-import { CollectionManagePageComponent } from "src/pages/collection/collection-manage-page.component";
 import { ImageService } from "src/service";
 import { CollectionService } from "src/service/collection.service";
 
@@ -29,35 +27,47 @@ import { CollectionService } from "src/service/collection.service";
       <ion-backdrop></ion-backdrop>
       <div class="options">
         <button [navPush]="collectionEditPage" [navParams]="{collectionId: collection?.id}">Edit</button>
-        <button [navPush]="collectionManagePage" [navParams]="{collectionId: collection?.id}">Manage</button>
-        <button (click)="changeImage()">Change image</button>
+        <button (click)="changeImage()">Replace image</button>
         <button (click)="deleteCollection()">Delete</button>
       </div>
     </nav>
 
     <ion-content>
 
-      <aside class="bc-image-view" [bc-image-view]="collection.images ? collection.images[0] : ''">
-        <button [class]="collection.images && collection.images.length ? 'has-image' : 'no-image'" (click)="changeImage()">
-          <ion-icon name="camera"></ion-icon>
-        </button>
-      </aside>
+      <ion-spinner *ngIf="!collection; else collectionContent"></ion-spinner>
 
-      <header class="bc-section">
+      <ng-template #collectionContent>
+        
+        <header class="bc-header">
+          <h1 class="bc-type-title">{{collection.name}}</h1>
+          <h2 class="bc-type-subtitle">{{collection.series}}</h2>
+          <p *ngIf="collection.description">{{collection.description}}</p>
+        </header>
 
-        <h1>{{collection.name}}</h1>
-        <p *ngIf="collection.description">{{collection.description}}</p>
+        <ng-container *ngIf="collection.figures?.length">
 
-        <dl class="bc-type-definitions">
-          <dt>Figures in Collection</dt>
-          <dd>{{collection.length}}</dd>
-          <dt>Owned</dt>
-          <dd>{{collection.collected}}</dd>
-        </dl>
+          <h2 class="bc-type-side">{{collection.collected}} / {{collection.length}} collected</h2>
 
-      </header>
+          <section class="bc-figure-grid">
+            <bc-figure-card *ngFor="let figure of collection.figures"
+                            [figure]="figure"
+                            [navPush]="figureViewPage"
+                            [navParams]="{figureId: figure.id}"></bc-figure-card>
+          </section>
+        </ng-container>
 
-      <bc-figure-list [figures]="collection.figures"></bc-figure-list>
+        <article class="bc-empty" *ngIf="collection.figures?.length === 0">
+          <ion-icon name="body"></ion-icon>
+
+          <h1 class="bc-type-title">You have not added any figures to this collection.</h1>
+          <p class="bc-type-text">Track collected figures by adding them to a collection.</p>
+        </article>
+
+      </ng-template>
+
+      <button class="bc-button bc-button--fab" *ngIf="collection" (click)="addFigure()">
+        <ion-icon name="add"></ion-icon>
+      </button>
 
     </ion-content>
   `
@@ -66,11 +76,13 @@ export class CollectionViewPageComponent implements IonViewDidEnter {
 
   moreOptions: boolean;
   collectionEditPage: Page = CollectionEditPageComponent;
-  collectionManagePage: Page = CollectionManagePageComponent;
-  collection: Collection = new Collection();
+  figureViewPage: Page = FigureViewPageComponent;
+
+  collection: Collection;
 
   constructor(private actionSheetCtrl: ActionSheetController,
               private alertCtrl: AlertController,
+              private modalCtrl: ModalController,
               private imageService: ImageService,
               private collectionService: CollectionService,
               private zone: NgZone,
@@ -89,6 +101,18 @@ export class CollectionViewPageComponent implements IonViewDidEnter {
     this.collectionService.getOne(collectionId).then(collection => {
       this.zone.run(() => this.collection = collection);
     });
+
+  }
+
+  addFigure(): void {
+
+    const modal = this.modalCtrl.create(FigureEditPageComponent);
+    modal.onDidDismiss(figure => {
+      if (figure) {
+        this.collectionService.addFigureToCollection(this.collection.id, figure).then(() => this.ionViewDidEnter());
+      }
+    });
+    modal.present();
 
   }
 

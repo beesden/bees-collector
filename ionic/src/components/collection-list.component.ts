@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Page } from "ionic-angular/navigation/nav-util";
-import { Collection } from "src/entity";
+import { Collection } from "src/entity/collection";
 import { CollectionViewPageComponent } from "src/pages";
 
 @Component({

@@ -1,16 +1,16 @@
 import { Component, Input } from '@angular/core';
-import { Figure } from "src/entity";
+import { Figure } from "src/entity/figure";
 import { FigureService } from "src/service";
 
 @Component({
   selector: 'bc-figure-card',
   styleUrls: ['./figure-card.component.scss'],
   template: `
-    <figure [bc-image-view]="figure.images[0]"></figure>
+    <figure [bc-image-view]="figure.images"></figure>
 
     <header>
       <h2>{{figure.name}}</h2>
-      <p class="range">{{figure.variant || figure.range}}</p>
+      <p class="variant" *ngIf="figure.variant">{{figure.variant}}</p>
     </header>
 
     <section class="status">

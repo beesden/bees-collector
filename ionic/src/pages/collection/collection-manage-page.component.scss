@@ -8,7 +8,7 @@ h1 {
   margin: $display-base;
 
   > div {
-    background: var(--swatch-white);
+    background: var(--theme-bg);
     border-bottom: 1px solid var(--theme-divider);
     align-items: center;
     display: flex;
@@ -19,7 +19,7 @@ h1 {
       @include button;
       display: flex;
       padding: 0 $display-base;
-      font-size: 25px;
+      font-size: 20px;
       height: 100%;
     }
 
@@ -31,11 +31,12 @@ h1 {
       h2 {
         color: var(--theme-title);
         font-weight: 500;
-        font-size: 1.15rem;
+        font-size: 1rem;
       }
 
       p {
         font-weight: 300;
+        font-size: .9rem;
       }
     }
   }

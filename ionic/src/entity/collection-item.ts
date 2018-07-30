@@ -1,5 +1,6 @@
-import { Collection, Figure } from "src/entity";
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm/browser";
+import { Collection } from "src/entity/collection";
+import { Figure } from "src/entity/figure";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm/browser";
 
 @Entity()
 export class CollectionItem {

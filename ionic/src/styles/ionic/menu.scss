@@ -4,7 +4,7 @@ ion-menu {
   @include fill;
   display: none;
   contain: strict;
-  z-index: 80;
+  z-index: 9999;
 
   &.show-menu {
     display: block;

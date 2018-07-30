@@ -1,28 +1,16 @@
 import { Injectable } from "@angular/core";
-import { Collection, Figure, FigureAccessory } from "src/entity";
+import { CollectionItem } from "src/entity/collection-item";
+import { Figure } from "src/entity/figure";
+import { FigureAccessory } from "src/entity/figure-accessory";
 import { ConnectionService } from "src/service/connection.service";
 import { Repository, SelectQueryBuilder } from "typeorm/browser";
-
-export interface FigureRange {
-  name: string;
-  series: string;
-  startYear: string;
-  endYear: string;
-  figures: number;
-  owned: number;
-}
-
-export interface FigureFilters {
-  range?: string;
-  series?: string;
-}
 
 @Injectable()
 export class FigureService {
 
   private repository: Promise<Repository<Figure>>;
 
-  constructor(connectionService: ConnectionService) {
+  constructor(private connectionService: ConnectionService) {
     this.repository = connectionService.connection.then(connection => connection.getRepository(Figure));
   }
 
@@ -38,12 +26,21 @@ export class FigureService {
   }
 
   /**
-   * Delete a figure from the database.
+   * Delete a figure from the database and remove from any collections.
    *
    * @param figureId
    */
-  deleteOne(figureId: number) {
-    return this.repository.then(repo => repo.delete(figureId));
+  deleteOne(figureId: string) {
+
+    return this.connectionService.connection.then(connection => connection.getRepository(CollectionItem)
+      .createQueryBuilder('item')
+      .leftJoinAndSelect('item.figure', 'figure')
+      .where('figure.id = :id', {id: figureId})
+      .getMany()
+      .then(items => connection.getRepository(CollectionItem).remove(items))
+      .then(() => this.repository.then(repo => repo.delete(figureId)))
+    );
+
   }
 
   /**
@@ -54,10 +51,10 @@ export class FigureService {
   getOne(figureId: number): Promise<Figure> {
 
     return this.query.then(query => query
-     .leftJoinAndSelect('figure.items', 'item')
-     .leftJoinAndSelect('item.collection', 'collection')
-     .leftJoinAndSelect('collection.images', 'collection_image')
-     .loadRelationCountAndMap("collection.length", "collection.items")
+      .leftJoinAndSelect('figure.items', 'item')
+      .leftJoinAndSelect('item.collection', 'collection')
+      .leftJoinAndSelect('collection.images', 'collection_image')
+      .loadRelationCountAndMap("collection.length", "collection.items")
       .whereInIds(figureId)
       .getOne()
     );
@@ -79,51 +76,20 @@ export class FigureService {
 
   /**
    * List all figures in the database.
-   *
-   * @param filters
    */
-  getList(filters: FigureFilters = {}): Promise<Figure[]> {
+  getList(count: number, page: number): Promise<[Figure[], number]> {
 
     return this.query.then(query => {
 
-        if (filters.series) {
-          query.andWhere(`series = "${filters.series}"`);
-        }
-
-        if (filters.range) {
-          query.andWhere(`range = "${filters.range}"`);
-        }
-
-        return query.getMany();
+      if (count) {
+        query = query.limit(count);
       }
-    );
 
-  }
+      if (page) {
+        query = query.offset(page * count);
+      }
 
-  /**
-   * Get a list of all the distinct figure ranges.
-   */
-  getRanges(): Promise<FigureRange[]> {
-
-    return this.repository.then(repo => {
-      return repo.createQueryBuilder('f')
-        .select('count(*)', 'figures')
-        .addSelect('f.range', 'name')
-        .addSelect(' MIN(f.release)', 'startYear')
-        .addSelect(' MAX(f.release)', 'endYear')
-        .addSelect('f.series', 'series')
-        .addSelect('sum(f.collected = 1)', 'owned')
-        .addGroupBy('f.range')
-        .addGroupBy('f.series')
-        .addOrderBy('series')
-        .addOrderBy('startYear')
-        .addOrderBy('range')
-        .andWhere('range is not null')
-        .andWhere('range != ""')
-        .andWhere('series is not null')
-        .andWhere('series != ""')
-        .getRawMany()
-        .then((data: FigureRange[]) => data);
+      return query.getManyAndCount();
     });
 
   }
@@ -142,13 +108,14 @@ export class FigureService {
    *
    * Search results are returned based on both name and notes fields.
    */
-  search(queryString: string): Promise<Figure[]> {
+  search(queryString: string, count: number, page: number): Promise<[Figure[], number]> {
 
     return this.query.then(query => query
       .andWhere(`figure.name LIKE '%${queryString}%'`)
       .orWhere(`figure.variant LIKE '%${queryString}%'`)
       .orWhere(`figure.notes LIKE '%${queryString}%'`)
-      .getMany());
+      .offset(count * page)
+      .getManyAndCount());
 
   }
 

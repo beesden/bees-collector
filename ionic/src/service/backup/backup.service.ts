@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
 import { File as FilePlugin } from "@ionic-native/file";
 import { Platform } from "ionic-angular";
-import { Collection, Figure, FigureAccessory, FigureProperty } from "src/entity";
+import { Collection } from "src/entity/collection";
+import { CollectionItem } from "src/entity/collection-item";
+import { Figure } from "src/entity/figure";
+import { FigureAccessory } from "src/entity/figure-accessory";
+import { FigureProperty } from "src/entity/figure-property";
 import { BackupCollectionUtil } from "src/service/backup/backup.collection.util";
 import { BackupFigureUtil } from "src/service/backup/backup.figure.util";
 import { ConnectionService } from "src/service/connection.service";
@@ -107,6 +111,7 @@ export class BackupService {
             .then(() => connection.manager.clear(FigureAccessory))
             .then(() => connection.manager.clear(FigureProperty))
             .then(() => connection.manager.clear(Collection))
+            .then(() => connection.manager.clear(CollectionItem))
             .then(() => {
               const figures: Figure[] = backup.figures.map(figure => this.figureUtil.toFigure(figure));
               return connection.manager.save(figures);

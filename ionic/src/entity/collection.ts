@@ -1,6 +1,7 @@
-import { Figure, Image } from "src/entity";
 import { CollectionItem } from "src/entity/collection-item";
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm/browser";
+import { Figure } from "src/entity/figure";
+import { Image } from "src/entity/image";
+import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm/browser";
 
 @Entity()
 export class Collection {
@@ -10,6 +11,9 @@ export class Collection {
 
   @Column()
   name: string;
+
+  @Column({nullable: true})
+  series: string;
 
   @Column({nullable: true})
   description: string;

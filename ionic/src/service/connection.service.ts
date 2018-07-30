@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
 import { Platform } from "ionic-angular";
-import { Collection, Figure, Image } from "src/entity";
+import { Collection } from "src/entity/collection";
 import { CollectionItem } from "src/entity/collection-item";
-import { sampleData } from "src/entity/data";
+import { Figure } from "src/entity/figure";
 import { FigureAccessory } from "src/entity/figure-accessory";
 import { FigureProperty } from "src/entity/figure-property";
-import { BackupService } from "src/service/backup/backup.service";
+import { Image } from "src/entity/image";
 import { Connection, createConnection } from "typeorm/browser";
 import { CordovaConnectionOptions } from "typeorm/browser/driver/cordova/CordovaConnectionOptions";
 import { SqljsConnectionOptions } from "typeorm/browser/driver/sqljs/SqljsConnectionOptions";

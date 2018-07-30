@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
-import { Collection, Figure } from "src/entity";
+import { Collection } from "src/entity/collection";
 import { CollectionItem } from "src/entity/collection-item";
+import { Figure } from "src/entity/figure";
 import { ConnectionService } from "src/service/connection.service";
 import { Repository, SelectQueryBuilder } from "typeorm/browser";
 
@@ -9,7 +10,7 @@ export class CollectionService {
 
   private repository: Promise<Repository<Collection>>;
 
-  constructor(connectionService: ConnectionService) {
+  constructor(private connectionService: ConnectionService) {
     this.repository = connectionService.connection.then(connection => connection.getRepository(Collection));
   }
 
@@ -39,8 +40,8 @@ export class CollectionService {
   getOne(collectionId: number): Promise<Collection> {
 
     return this.query.then(query => query
-      .leftJoinAndSelect('collection.items', 'items')
-      .leftJoinAndSelect('items.figure', 'figure')
+      .leftJoinAndSelect('collection.items', 'item')
+      .leftJoinAndSelect('item.figure', 'figure')
       .leftJoinAndSelect('figure.images', 'figure_images')
       .leftJoinAndSelect('figure.accessories', 'figure_accessories')
       .whereInIds(collectionId)
@@ -52,8 +53,22 @@ export class CollectionService {
   /**
    * List all collections in the database.
    */
-  getList(): Promise<Collection[]> {
-    return this.query.then(query => query.getMany());
+  getList(count?: number, page?: number): Promise<[Collection[], number]> {
+
+    return this.query.then(query => {
+
+        if (count) {
+          query = query.limit(count);
+        }
+
+        if (page) {
+          query = query.offset(page * count);
+        }
+
+        return query.getManyAndCount();
+
+      }
+    );
   }
 
   /**
@@ -73,7 +88,6 @@ export class CollectionService {
    * @param figure
    */
   addFigureToCollection(collectionId: number, figure: Figure): Promise<Collection> {
-
 
     return this.getOne(collectionId).then(collection => {
 

@@ -8,6 +8,9 @@ import { BackupService } from "src/service/backup/backup.service";
     <ion-header>
 
       <ion-navbar>
+        <button menuToggle="menu">
+          <ion-icon name="menu"></ion-icon>
+        </button>        
         <ion-title>Import / Export</ion-title>
       </ion-navbar>
 
@@ -27,18 +30,18 @@ import { BackupService } from "src/service/backup/backup.service";
         <p class="bc-type-text">Restore collection from a previous backup.</p>
         <p class="bc-type-text"><strong>Please note</strong> importing an incorrect file may result in loss of data.</p>
 
-        <button class="bc-button bc-button--block" (click)="restore(false)">
-          <ion-icon name="cloud-download"></ion-icon>
-          <span>Restore specific</span>
-        </button>
-        
-        <br />
-        
         <button class="bc-button bc-button--block" (click)="restore(true)">
           <ion-icon name="cloud-download"></ion-icon>
           <span>Restore latest</span>
         </button>
+        
+        <br />
 
+        <button class="bc-button bc-button--text" (click)="restore(false)">
+          <ion-icon name="cloud-download"></ion-icon>
+          <span>Restore specific</span>
+        </button>
+        
       </section>
 
       <h2>Backup</h2>
@@ -46,6 +49,7 @@ import { BackupService } from "src/service/backup/backup.service";
       <section class="bc-section">
 
         <p class="bc-type-text">Download a backup of your collection.</p>
+        <p class="bc-type-text">This will be backed up into </p>
 
         <button class="bc-button bc-button--block" (click)="backup()">
           <ion-icon name="cloud-upload"></ion-icon>

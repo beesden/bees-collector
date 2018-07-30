@@ -3,14 +3,22 @@
 .bc-header {
   background: var(--swatch-white);
   box-shadow: $shadow-small;
-  margin: 0 0 #{$display-base * 2};
+  margin: 0 0 #{$display-base * 1.5};
   padding: #{$display-base * 2} #{$display-base * 2} #{$display-base * 1.5};
+
+  > :first-child {
+    margin-top: 0;
+  }
+
+  > :last-child {
+    margin-bottom: 0;
+  }
 }
 
 .bc-section{
   background: var(--swatch-white);
   box-shadow: $shadow-small;
-  margin: 0 0 #{$display-base * 2};
+  margin: 0 0 #{$display-base * 1.5};
   padding: $display-base;
 
   > :first-child {
@@ -51,6 +59,11 @@
 
   &-text {
     margin: $display-base 0;
+  }
+
+  &-aside {
+    text-align: right;
+    font-weight: 500;
   }
 
   &-definitions {

@@ -5,7 +5,7 @@ import { FigureViewPageComponent } from "src/pages";
 
 @Component({
   selector: 'bc-figure-list',
-  styleUrls: ['./figure-list.component.scss'],
+  styleUrls: ['./item-list.component.scss'],
   template: `
     <div class="filters">
 
@@ -27,7 +27,7 @@ import { FigureViewPageComponent } from "src/pages";
     </ion-infinite-scroll>
   `
 })
-export class FigureListComponent {
+export class ItemListComponent {
 
   @Input() figures: Figure[];
   @Input() perPage = 12;

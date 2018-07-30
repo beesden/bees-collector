@@ -8,7 +8,7 @@ import { StatusBar } from "@ionic-native/status-bar";
 import { IonicApp, IonicModule } from "ionic-angular";
 import { AppRootComponent } from 'src/app-root.component';
 
-import { CollectionCardComponent, FigureCardComponent, FigureListComponent, StatusButtonComponent } from "src/components";
+import { CollectionCardComponent, FigureCardComponent, ItemListComponent, StatusButtonComponent } from "src/components";
 import { AccessoryCardComponent } from "src/components/accessory-card.component";
 import { CollectionListComponent } from "src/components/collection-list.component";
 import { ImageViewDirective, SortableDirective, SortableHandleDirective, SortableItemDirective } from "src/directives";
@@ -27,7 +27,6 @@ const pages = [
   Pages.CollectionEditPageComponent,
   Pages.CollectionListPageComponent,
   Pages.CollectionViewPageComponent,
-  Pages.CollectionManagePageComponent,
 
   Pages.FigureListPageComponent,
   Pages.FigureEditPageComponent,
@@ -43,7 +42,7 @@ const pages = [
 
     CollectionCardComponent,
     CollectionListComponent,
-    FigureListComponent,
+    ItemListComponent,
     FigureCardComponent,
     AccessoryCardComponent,
     StatusButtonComponent,

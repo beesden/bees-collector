@@ -25,7 +25,7 @@ export class AccessoryService {
    *
    * @param accessoryId
    */
-  deleteOne(accessoryId: number) {
+  deleteOne(accessoryId: string) {
     return this.repository.then(repo => repo.delete(accessoryId));
   }
 

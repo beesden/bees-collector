@@ -1,6 +1,11 @@
 import { Component, NgZone } from "@angular/core";
-import { Collection } from "src/entity";
+import { ModalController } from "ionic-angular";
+import { Page } from "ionic-angular/navigation/nav-util";
+import { Collection } from "src/entity/collection";
 import { IonViewWillEnter } from "src/ionic-lifecycle";
+import { CollectionEditPageComponent } from "src/pages/collection/collection-edit-page.component";
+import { FigureEditPageComponent } from "src/pages/figure/figure-edit-page.component";
+import { SearchPageComponent } from "src/pages/search-page.component";
 import { CollectionService } from "src/service";
 
 
@@ -10,7 +15,19 @@ import { CollectionService } from "src/service";
     <ion-header>
 
       <ion-navbar>
+
+        <button menuToggle="menu">
+          <ion-icon name="menu"></ion-icon>
+        </button>
+
         <ion-title>My Collections</ion-title>
+
+        <ion-buttons end>
+          <button [navPush]="searchPage">
+            <ion-icon name="search"></ion-icon>
+          </button>
+        </ion-buttons>
+
       </ion-navbar>
 
     </ion-header>
@@ -19,7 +36,17 @@ import { CollectionService } from "src/service";
 
       <ion-spinner *ngIf="!collections"></ion-spinner>
 
-      <bc-collection-list *ngIf="collections?.length > 0" [collections]="collections"></bc-collection-list>
+      <ng-container *ngIf="collections?.length > 0">
+        <bc-collection-list [collections]="collections"></bc-collection-list>
+        
+        <ion-infinite-scroll (ionInfinite)="doInfinite($event)" [enabled]="total > collections.length">
+          <ion-infinite-scroll-content></ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+      </ng-container>
+
+      <button class="bc-button bc-button--fab" *ngIf="collections" (click)="addCollection()">
+        <ion-icon name="add"></ion-icon>
+      </button>
 
       <article class="bc-empty" *ngIf="collections?.length === 0">
         <ion-icon name="albums"></ion-icon>
@@ -33,18 +60,44 @@ import { CollectionService } from "src/service";
 })
 export class CollectionListPageComponent implements IonViewWillEnter {
 
+  private readonly perPage: number = 12;
+  private page: number = 1;
+
+  total: number;
   collections: Collection[];
+  collectionEditPage: Page = CollectionEditPageComponent;
+  searchPage: Page = SearchPageComponent;
 
   constructor(private collectionService: CollectionService,
+              private modalCtrl: ModalController,
               private zone: NgZone) {
   }
 
   ionViewWillEnter(): void {
 
-    this.collectionService.getList().then(collections => {
+    // Fetch all up to the current page.
+    const refreshCount = this.perPage * this.page;
+
+    this.collectionService.getList(refreshCount, 0).then(([collections, total]) => {
+      this.total = total;
       this.zone.run(() => this.collections = collections);
     });
 
+  }
+
+  /**
+   * Increment number of visible results shown on scroll.
+   */
+  doInfinite(event: { complete: Function }): void {
+    this.collectionService.getList(this.perPage, this.page++).then(([collections]) => {
+      this.zone.run(() => this.collections = this.collections.concat(collections));
+      event.complete();
+    });
+
+  }
+
+  addCollection(): void {
+    this.modalCtrl.create(CollectionEditPageComponent).present();
   }
 
 }

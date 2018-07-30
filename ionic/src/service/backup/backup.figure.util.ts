@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { File } from "@ionic-native/file";
-import { Collection, Figure, Image } from "src/entity";
+import { Figure } from "src/entity/figure";
 import { FigureAccessory } from "src/entity/figure-accessory";
 import { FigureProperty } from "src/entity/figure-property";
-import { ConnectionService } from "src/service/connection.service";
+import { Image } from "src/entity/image";
 
 @Injectable()
 export class BackupFigureUtil {
@@ -14,8 +13,6 @@ export class BackupFigureUtil {
       name: figure.name,
       variant: figure.variant,
       notes: figure.notes,
-      series: figure.series,
-      range: figure.range,
       collected: figure.collected,
       manufacturer: figure.manufacturer,
       images: (figure.images || []).map(image => image.url),
@@ -32,8 +29,6 @@ export class BackupFigureUtil {
     const figure = new Figure();
     figure.id = data.id;
     figure.name = data.name;
-    figure.series = data.series;
-    figure.range = data.range;
     figure.variant = data.variant;
     figure.release = data.release;
     figure.manufacturer = data.manufacturer;
