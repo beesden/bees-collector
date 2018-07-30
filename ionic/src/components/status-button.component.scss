@@ -8,8 +8,11 @@ button {
   @include button;
   display: flex;
   align-items: center;
-  padding: 0 #{$display-base / 2};
   transition: color 320ms ease-in-out;
+}
+
+.layout-button {
+  padding: 0 #{$display-base / 2};
 
   &.status-0 {
     color: var(--status-complete);
@@ -34,3 +37,32 @@ button {
   }
 }
 
+.layout-chip {
+  border-radius: 12px;
+  color: var(--swatch-white);
+  font-size: .8rem;
+  line-height: 24px;
+  padding: 0 #{$display-base * .75};
+
+  &.status-0 {
+    background: var(--status-complete);
+  }
+
+  &.status-1 {
+    background: var(--status-incomplete);
+  }
+
+  &.status-2 {
+    background: var(--status-unowned);
+
+    ion-icon {
+      display: none;
+    }
+  }
+
+  ion-icon {
+    order: -1;
+    margin-right: .4rem;
+  }
+
+}

@@ -89,7 +89,7 @@ import { FigureService } from "src/service/figure.service";
         </dl>
 
         <nav>
-          <bc-status-button [withText]="true" [status]="figure.status" (toggle)="toggleCollected()"></bc-status-button>
+          <bc-status-button [statusText]="figure.statusText" [status]="figure.status" (toggle)="toggleCollected()"></bc-status-button>
         </nav>
 
       </header>

@@ -5,16 +5,17 @@ import { CollectableState } from "src/entity/collectable";
   selector: 'bc-status-button',
   styleUrls: ['./status-button.component.scss'],
   template: `
-    <button [ngClass]="'status-' + status" (click)="onClick($event)" type="button">
-      <span *ngIf="withText">{{statusText}}</span>
-      <ion-icon [name]="checked ? 'checkbox-outline' : 'square-outline'"></ion-icon>
+    <button [ngClass]="'status-' + status + ' layout-' + layout" (click)="onClick($event)" type="button">
+      <span *ngIf="statusText">{{statusText}}</span>
+      <ion-icon [name]="checked ? 'checkmark' : 'square-outline'"></ion-icon>
     </button>
   `
 })
 export class StatusButtonComponent {
 
   @Input() status: CollectableState;
-  @Input() withText: boolean;
+  @Input() statusText: string;
+  @Input() layout: 'button' | 'chip' = 'button';
   @Output() toggle: EventEmitter<Event> = new EventEmitter();
 
   /**
@@ -22,22 +23,6 @@ export class StatusButtonComponent {
    */
   get checked(): boolean {
     return this.status !== CollectableState.UNOWNED;
-  }
-
-  /**
-   * Return appropriate text for the current status.
-   */
-  get statusText(): string {
-    switch (this.status) {
-      case CollectableState.COMPLETE:
-        return 'Owned';
-      case CollectableState.INCOMPLETE:
-        return 'Partially Owned';
-      case CollectableState.UNOWNED:
-        return 'Not Owned';
-      default:
-        return '???';
-    }
   }
 
   /**

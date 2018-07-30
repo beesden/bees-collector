@@ -5,6 +5,7 @@
   background: no-repeat center center/contain;
   display: block;
   height: #{$display-base * 20};
+  padding: $display-base * 3;
   position: relative;
 
   > button {
@@ -13,9 +14,9 @@
     &.has-image {
       color: var(--theme-content);
       font-size: 1.6rem;
-      padding: $display-base;
       position: absolute;
-      right: 0;
+      padding: #{$display-base / 2};
+      right:$display-base;
       bottom: 0;
     }
 
@@ -23,7 +24,6 @@
       color: var(--theme-content);
       font-size: #{$display-base * 8};
       height: 100%;
-      padding: #{$display-base * 2};
       width: 100%;
     }
   }

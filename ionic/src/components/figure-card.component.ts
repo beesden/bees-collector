@@ -15,7 +15,7 @@ import { FigureService } from "src/service";
 
     <section class="status">
       <ion-icon class="highlight" (click)="toggleHighlight($event)" [ngClass]="{highlighted: figure.highlight}" [name]="figure.highlight ? 'star' : 'star-outline'"></ion-icon>      
-      <bc-status-button (toggle)="toggleCollected($event)" [status]="figure.status"></bc-status-button>
+      <bc-status-button (toggle)="toggleCollected($event)" [status]="figure.status" [statusText]="figure.statusText" layout="chip"></bc-status-button>
     </section>
   `
 })
