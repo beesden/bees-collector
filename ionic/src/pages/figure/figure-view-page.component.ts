@@ -29,7 +29,7 @@ import { FigureService } from "src/service/figure.service";
     <nav class="bc-overflow" [ngClass]="{reveal: moreOptions}" (click)="moreOptions = false">
       <ion-backdrop></ion-backdrop>
       <div class="options">
-        <button [navPush]="figureEditPage" [navParams]="{figureId: figure?.id}">Edit</button>
+        <button (click)="editFigure()">Edit</button>
         <button (click)="changeImage()">Replace image</button>
         <button (click)="addAccessory()">Add accessory</button>
         <button (click)="addToCollection()">Add to collection</button>
@@ -104,7 +104,6 @@ import { FigureService } from "src/service/figure.service";
 export class FigureViewPageComponent implements IonViewDidEnter {
 
   moreOptions: boolean;
-  figureEditPage: Page = FigureEditPageComponent;
   figure: Figure = new Figure();
 
   constructor(private actionSheetCtrl: ActionSheetController,
@@ -151,6 +150,10 @@ export class FigureViewPageComponent implements IonViewDidEnter {
 
   addAccessory(): void {
     this.modalCtrl.create(AccessoryEditPageComponent, {figureId: this.figure.id}).present();
+  }
+
+  editFigure(): void {
+    this.modalCtrl.create(FigureEditPageComponent, {figureId: this.figure.id}).present();
   }
 
   /**

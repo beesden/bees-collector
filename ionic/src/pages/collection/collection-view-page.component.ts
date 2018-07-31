@@ -26,7 +26,7 @@ import { CollectionService } from "src/service/collection.service";
     <nav class="bc-overflow" [ngClass]="{reveal: moreOptions}" (click)="moreOptions = false">
       <ion-backdrop></ion-backdrop>
       <div class="options">
-        <button [navPush]="collectionEditPage" [navParams]="{collectionId: collection?.id}">Edit</button>
+        <button (click)="editCollection()">Edit</button>
         <button (click)="changeImage()">Replace image</button>
         <button (click)="deleteCollection()">Delete</button>
       </div>
@@ -75,7 +75,6 @@ import { CollectionService } from "src/service/collection.service";
 export class CollectionViewPageComponent implements IonViewDidEnter {
 
   moreOptions: boolean;
-  collectionEditPage: Page = CollectionEditPageComponent;
   figureViewPage: Page = FigureViewPageComponent;
 
   collection: Collection;
@@ -114,6 +113,10 @@ export class CollectionViewPageComponent implements IonViewDidEnter {
     });
     modal.present();
 
+  }
+
+  editCollection(): void {
+    this.modalCtrl.create(CollectionEditPageComponent, {collectionId: this.collection.id}).present();
   }
 
   /**
