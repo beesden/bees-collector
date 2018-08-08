@@ -4,7 +4,6 @@ import { Collection } from "src/entity/collection";
 import { CollectionItem } from "src/entity/collection-item";
 import { Figure } from "src/entity/figure";
 import { FigureAccessory } from "src/entity/figure-accessory";
-import { FigureIssue } from "src/entity/figure-issue";
 import { FigureProperty } from "src/entity/figure-property";
 import { ItemImage } from "src/entity/item-image";
 import { Tag } from "src/entity/tag";
@@ -21,7 +20,6 @@ export class ConnectionService {
 
     const entities = [
       Figure,
-      FigureIssue,
       FigureAccessory,
       FigureProperty,
       Tag,

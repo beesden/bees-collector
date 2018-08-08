@@ -2,10 +2,13 @@ import { Injectable } from '@angular/core';
 import { Collection } from "src/entity/collection";
 import { CollectionItem } from "src/entity/collection-item";
 import { Figure } from "src/entity/figure";
-import { ItemImage } from "src/entity/item-image";
+import { ImageService } from "src/service/image.service";
 
 @Injectable()
 export class BackupCollectionUtil {
+
+  constructor(private imageService: ImageService) {
+  }
 
   fromCollection(collection: Collection): CollectionData {
     return {
@@ -20,19 +23,13 @@ export class BackupCollectionUtil {
     };
   }
 
-  toCollection(data: CollectionData, figures: Figure[]): Collection {
+  toCollection(data: CollectionData, figures: Figure[]): Promise<Collection> {
 
     const collection = new Collection();
     collection.id = data.id;
     collection.name = data.name;
     collection.series = data.series;
     collection.description = data.description;
-
-    collection.images = data.images.map(url => {
-      const image = new ItemImage();
-      image.url = url;
-      return image;
-    });
 
     collection.items = [];
 
@@ -46,7 +43,9 @@ export class BackupCollectionUtil {
       }
     });
 
-    return collection;
+    return Promise.all((data.images || []).map(url => this.imageService.createFromUrl(url)))
+      .then(images => collection.images = images)
+      .then(() => collection);
 
   }
 

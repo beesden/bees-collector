@@ -40,7 +40,7 @@ import { FigureService } from "src/service/figure.service";
 
       <ng-container *ngIf="figures?.length > 0">
 
-        <section class="bc-figure-grid">
+        <section>
           <bc-figure-card *ngFor="let figure of figures"
                           [figure]="figure"></bc-figure-card>
         </section>
@@ -92,8 +92,10 @@ export class FigureListPageComponent implements IonViewWillEnter {
   }
 
   doInfinite(event: { complete: Function }): void {
-    this.figureService.getList(this.perPage, this.page++).then(([collections]) => {
-      this.zone.run(() => this.figures = this.figures.concat(collections));
+    console.log(this.perPage, this.page);
+    this.figureService.getList(this.perPage, this.page++).then(([figures]) => {
+      console.log(figures);
+      this.zone.run(() => this.figures = this.figures.concat(figures));
       event.complete();
     });
 

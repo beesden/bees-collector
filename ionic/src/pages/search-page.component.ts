@@ -25,7 +25,7 @@ import { FigureService } from "src/service/figure.service";
 
       <ng-container *ngIf="figures?.length">
 
-        <section class="bc-figure-grid">
+        <section>
           <bc-figure-card *ngFor="let figure of figures"
                           [figure]="figure"></bc-figure-card>
         </section>

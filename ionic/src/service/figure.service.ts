@@ -18,11 +18,6 @@ export class FigureService {
 
     return this.repository.then(repo => repo.createQueryBuilder('figure')
       .leftJoinAndSelect('figure.images', 'images')
-      .leftJoinAndSelect('figure.properties', 'property')
-      .leftJoinAndSelect('figure.issues', 'issue')
-      .leftJoinAndSelect('figure.tags', 'tag')
-      .leftJoinAndSelect('figure.accessories', 'accessory')
-      .leftJoinAndSelect('accessory.images', 'accessory_images')
     );
 
   }
@@ -53,6 +48,10 @@ export class FigureService {
   getOne(figureId: number): Promise<Figure> {
 
     return this.query.then(query => query
+      .leftJoinAndSelect('figure.properties', 'property')
+      .leftJoinAndSelect('figure.tags', 'tag')
+      .leftJoinAndSelect('figure.accessories', 'accessory')
+      .leftJoinAndSelect('accessory.images', 'accessory_images')
       .leftJoinAndSelect('figure.items', 'item')
       .leftJoinAndSelect('item.collection', 'collection')
       .leftJoinAndSelect('collection.images', 'collection_image')
@@ -83,12 +82,14 @@ export class FigureService {
 
     return this.query.then(query => {
 
+      query = query.orderBy('figure.name');
+
       if (count) {
-        query = query.limit(count);
+        query = query.take(count);
       }
 
       if (page) {
-        query = query.offset(page * count);
+        query = query.skip(page * count);
       }
 
       return query.getManyAndCount();
@@ -116,7 +117,8 @@ export class FigureService {
       .andWhere(`figure.name LIKE '%${queryString}%'`)
       .orWhere(`figure.variant LIKE '%${queryString}%'`)
       .orWhere(`figure.notes LIKE '%${queryString}%'`)
-      .offset(count * page)
+      .skip(count * page)
+      .take(count)
       .getManyAndCount());
 
   }

@@ -58,11 +58,11 @@ export class CollectionService {
     return this.query.then(query => {
 
         if (count) {
-          query = query.limit(count);
+          query = query.take(count);
         }
 
         if (page) {
-          query = query.offset(page * count);
+          query = query.skip(page * count);
         }
 
         return query.getManyAndCount();

@@ -12,14 +12,17 @@ import { FigureService } from "src/service";
     <figure [bc-image-view]="coverImage"></figure>
 
     <header>
-      <h2>{{figure.name}}</h2>
-      <p class="variant" *ngIf="figure.variant">{{figure.variant}}</p>
+      <h2>
+        <span class="name">{{figure.name}}</span>
+        <span class="variant" *ngIf="figure.variant">{{figure.variant}}</span>
+      </h2>
     </header>
 
     <section class="status">
       <ion-icon class="highlight" (click)="toggleHighlight($event)" [ngClass]="{highlighted: figure.highlight}" [name]="figure.highlight ? 'star' : 'star-outline'"></ion-icon>
-      <bc-status-button (toggle)="toggleCollected($event)" [status]="figure.status" [statusText]="figure.statusText" layout="chip"></bc-status-button>
     </section>
+
+    <p class="bc-type-status" [ngClass]="figure.status">{{figure.statusText}}</p>
   `
 })
 export class FigureCardComponent {

@@ -49,7 +49,12 @@ export class ImageService {
     const parts = imageUrl.split('/');
     const fileName = parts.pop();
     const directory = parts.join('/') + '/';
-    console.log(directory, fileName);
+
+    if (!this.platform.is('cordova')) {
+      response.height = 1;
+      response.width = 1;
+      return Promise.resolve(response);
+    }
 
     return this.file.readAsDataURL(directory, fileName).then(dataUrl => new Promise<ItemImage>((resolve, reject) => {
 

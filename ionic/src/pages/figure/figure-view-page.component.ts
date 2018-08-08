@@ -14,8 +14,8 @@ import { FigureService } from "src/service/figure.service";
       <ion-navbar>
 
         <ion-buttons end>
-          <button class="highlight" (click)="toggleHighlight()" [ngClass]="{active: figure.highlight}">
-            <ion-icon [name]="figure.highlight ? 'star' : 'star-outline'"></ion-icon>
+          <button class="highlight" (click)="toggleHighlight()" [ngClass]="{active: figure?.highlight}">
+            <ion-icon [name]="figure?.highlight ? 'star' : 'star-outline'"></ion-icon>
           </button>
           <button (click)="moreOptions = !moreOptions">
             <ion-icon name="more"></ion-icon>
@@ -29,12 +29,12 @@ import { FigureService } from "src/service/figure.service";
       <ion-backdrop></ion-backdrop>
       <div class="options">
         <button (click)="editFigure()">Edit</button>
-        <button (click)="changeImage()">Replace image</button>
+        <button (click)="changeImage()">{{figure?.images?.length ? 'Change' : 'Add'}} image</button>
         <button (click)="deleteFigure()">Delete</button>
       </div>
     </nav>
 
-    <ion-content>
+    <ion-content *ngIf="figure">
 
       <bc-image-slider class="bc-figure-image" [images]="figure.images"></bc-image-slider>
 
@@ -44,6 +44,10 @@ import { FigureService } from "src/service/figure.service";
         <h1 class="bc-type-title">{{figure.name}}</h1>
         <p class="bc-type-subtitle" *ngIf="figure.variant">{{figure.variant}}</p>
         <p class="bc-type-text" *ngIf="figure.notes">{{figure.notes}}</p>
+
+        <hr/>
+
+        <p class="bc-type-status" [ngClass]="figure.status">{{figure.statusText}}</p>
 
         <hr/>
 
@@ -70,7 +74,9 @@ import { FigureService } from "src/service/figure.service";
         </dl>
 
         <nav>
-          <bc-status-button [statusText]="figure.statusText" [status]="figure.status" (toggle)="toggleCollected()"></bc-status-button>
+          <bc-status-button [checked]="figure.collected" (click)="toggleCollected()">Collected</bc-status-button>
+          <bc-status-button *ngIf="figure.collected" [checked]="!figure.incomplete" (click)="toggleIncomplete()">Complete</bc-status-button>
+          <bc-status-button *ngIf="figure.collected" [checked]="!figure.damaged" (click)="toggleDamaged()">Undamaged</bc-status-button>
         </nav>
 
       </header>
@@ -84,11 +90,13 @@ import { FigureService } from "src/service/figure.service";
         <bc-accessory-card class="scroll-item" [accessory]="accessory" *ngFor="let accessory of figure.accessories"></bc-accessory-card>
       </section>
 
-      <h2>Tags:</h2>
+      <ng-container *ngIf="figure.tags?.length">
+        <h2>Tags:</h2>
 
-      <section class="page-section">
-        <bc-tag-manager [(ngModel)]="figure.tags" [readonly]="true"></bc-tag-manager>
-      </section>
+        <section class="page-section">
+          <bc-tag-manager [(ngModel)]="figure.tags" [readonly]="true"></bc-tag-manager>
+        </section>
+      </ng-container>
 
     </ion-content>
   `
@@ -96,7 +104,7 @@ import { FigureService } from "src/service/figure.service";
 export class FigureViewPageComponent implements IonViewDidEnter {
 
   moreOptions: boolean;
-  figure: Figure = new Figure();
+  figure: Figure;
 
   constructor(private alertCtrl: AlertController,
               private modalCtrl: ModalController,
@@ -127,7 +135,28 @@ export class FigureViewPageComponent implements IonViewDidEnter {
    */
   toggleCollected(): void {
     this.figure.collected = !this.figure.collected;
+    this.figure.damaged = this.figure.incomplete = !this.figure.collected;
     this.figureService.save(this.figure);
+  }
+
+  /**
+   * Toggle the figure collected state.
+   */
+  toggleDamaged(): void {
+    if (this.figure.collected) {
+      this.figure.damaged = !this.figure.damaged;
+      this.figureService.save(this.figure);
+    }
+  }
+
+  /**
+   * Toggle the figure collected state.
+   */
+  toggleIncomplete(): void {
+    if (this.figure.collected) {
+      this.figure.incomplete = !this.figure.incomplete;
+      this.figureService.save(this.figure);
+    }
   }
 
   /**

@@ -3,21 +3,21 @@
 :host {
   background: no-repeat center center/contain;
   display: block;
-  max-height: 100%;
   position: relative;
-
-  &.has-image {
-    height: #{100vw * (4 / 3)};
-
-    button {
-      display: none;
-    }
-  }
 }
 
 .slides {
   display: block;
   height: 150px;
+
+  &.has-image {
+    height: #{100vw * (4 / 3)};
+    max-height: 100%;
+
+    button {
+      display: none;
+    }
+  }
 }
 
 .swiper-slide {

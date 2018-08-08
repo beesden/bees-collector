@@ -1,9 +1,8 @@
 import { Component, HostBinding, Input } from '@angular/core';
-import { ActionSheetController, AlertController, NavController } from "ionic-angular";
+import { ActionSheetController, AlertController, ModalController } from "ionic-angular";
 import { FigureAccessory } from "src/entity/figure-accessory";
 import { ItemImage } from "src/entity/item-image";
 import { AccessoryEditPageComponent } from "src/pages";
-import { ImageService } from "src/service";
 import { AccessoryService } from "src/service/accessory.service";
 
 @Component({
@@ -32,8 +31,7 @@ export class AccessoryCardComponent {
   constructor(private accessoryService: AccessoryService,
               private alertCtrl: AlertController,
               private actionSheetCtrl: ActionSheetController,
-              private imageService: ImageService,
-              private navCtrl: NavController) {
+              private modalCtrl: ModalController) {
   }
 
   get coverImage(): ItemImage {
@@ -47,20 +45,8 @@ export class AccessoryCardComponent {
 
     this.actionSheetCtrl.create()
       .addButton({icon: 'create', text: 'Edit', handler: () => this.editAccessory()})
-      .addButton({icon: 'camera', text: 'Change image', handler: () => this.changeImage()})
       .addButton({icon: 'trash', text: 'Remove', handler: () => this.deleteAccessory()})
       .present();
-
-  }
-
-  /**
-   * Change the accessory image.
-   */
-  changeImage(): void {
-
-    this.imageService.create()
-      .then(image => this.accessory.images = [image])
-      .then(() => this.accessoryService.save(this.accessory));
 
   }
 
@@ -86,7 +72,7 @@ export class AccessoryCardComponent {
    * Open the edit accessory page.
    */
   editAccessory(): void {
-    this.navCtrl.push(AccessoryEditPageComponent, {accessoryId: this.accessory.id});
+    this.modalCtrl.create(AccessoryEditPageComponent, {accessoryId: this.accessory.id}).present();
   }
 
 }

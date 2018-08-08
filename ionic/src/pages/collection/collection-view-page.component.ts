@@ -47,7 +47,7 @@ import { CollectionService } from "src/service/collection.service";
 
           <h2 class="bc-type-side">{{collection.collected}} / {{collection.length}} collected</h2>
 
-          <section class="bc-figure-grid">
+          <section>
             <bc-figure-card *ngFor="let figure of collection.figures"
                             [figure]="figure"></bc-figure-card>
           </section>

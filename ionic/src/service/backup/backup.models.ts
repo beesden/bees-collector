@@ -12,11 +12,12 @@ interface FigureData {
   notes: string;
   manufacturer: string;
   collected: boolean;
+  damaged: boolean;
+  incomplete: boolean;
   release: string;
   images: string[];
   accessories: Array<{ name: string, variant: string }>;
   properties: Array<{ name: string, value: string }>;
-  issues: string[];
   tags: string[];
   date_update: string;
   date_created: string;

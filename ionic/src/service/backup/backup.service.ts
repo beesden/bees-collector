@@ -109,22 +109,19 @@ export class BackupService {
 
         const backup = JSON.parse(file) as DataBackup;
 
-        return this.connectionService.connection
-          .then(connection => connection.manager.clear(Figure)
-            .then(() => connection.manager.clear(FigureAccessory))
-            .then(() => connection.manager.clear(FigureProperty))
-            .then(() => connection.manager.clear(Collection))
-            .then(() => connection.manager.clear(CollectionItem))
-            .then(() => {
-              const figures: Figure[] = backup.figures.map(figure => this.figureUtil.toFigure(figure));
-              return connection.manager.save(figures);
-            })
-            .then(figures => {
-              const collections: Collection[] = backup.collections.map(collection => this.collectionUtil.toCollection(collection, figures));
-              return connection.manager.save(collections);
-            })
-            .then(() => true)
-          );
+        return this.connectionService.connection.then(connection => {
+            return connection.manager.clear(Figure)
+              .then(() => connection.manager.clear(FigureAccessory))
+              .then(() => connection.manager.clear(FigureProperty))
+              .then(() => connection.manager.clear(Collection))
+              .then(() => connection.manager.clear(CollectionItem))
+              .then(() => Promise.all(backup.figures.map(figure => this.figureUtil.toFigure(figure))))
+              .then(figures => connection.manager.save(figures))
+              .then(figures => Promise.all(backup.collections.map(collection => this.collectionUtil.toCollection(collection, figures))))
+              .then(collections => connection.manager.save(collections))
+              .then(() => true);
+          }
+        );
 
       }
     );

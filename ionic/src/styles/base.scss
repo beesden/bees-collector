@@ -20,19 +20,23 @@ html {
   user-select: none;
 
   // Page colours
-  --theme-primary: #08c;
+  --theme-primary: #fbaa27;
   --theme-secondary: #fff;
-  --theme-statusbar: 'light';
+
+  // Statusbar
+  --theme-statusbar-bg: #e29a25;
+  --theme-statusbar-style: 'light';
 
   // Interaction styles
   --theme-highlight: #fdd835;
   --theme-error: #900;
 
   // Typography
-  --theme-bg: #f0f0f0;
+  --theme-bg: #fff;
+  --theme-bg-alt: #f0f0f0;
   --theme-title: #212121;
   --theme-content: #6a6a6a;
-  --theme-divider: #bbb;
+  --theme-divider: #ddd;
 
   // Inputs
   --theme-input: #ddd;
@@ -58,7 +62,6 @@ hr {
   border: none;
   border-top: 1px solid var(--theme-divider);
   margin: $display-base 0;
-  opacity: 0.3;
 }
 
 // Remove ionic global button effects

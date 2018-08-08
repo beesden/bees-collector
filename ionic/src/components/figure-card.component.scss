@@ -1,44 +1,47 @@
 @import "../styles/variables";
 
 :host {
-  @include card;
-  display: flex;
-  flex-direction: column;
+  background: var(--swatch-white);
+  border-bottom: 1px solid var(--theme-divider);
+  display: grid;
+  grid-template-columns: #{$display-base * 6} 1fr auto;
+  height: #{$display-base * 8};
 }
 
 figure {
   background: center top/cover no-repeat;
-  padding-bottom: 100%;
-  width: 100%;
+  grid-row: 1 / 3;
 }
 
 header {
-  border-bottom: 1px solid var(--theme-divider);
-  flex: 1;
-  padding: #{$display-base} $display-base;
+  padding: $display-base $display-base;
 
-  h2 {
+  .name {
     color: var(--theme-title);
+    display: block;
     font-size: 1.1rem;
     font-weight: 500;
-
-    span {
-      color: var(--theme-content);
-      font-size: 1rem;
-      font-weight: 400;
-    }
   }
 
   .variant {
-    margin: #{$display-base / 3} 0 0;
-    font-weight: 300;
+    color: var(--theme-content);
+    display: block;
+    font-size: 1rem;
+    font-weight: 400;
   }
 }
 
+.bc-type-status {
+  grid-column: 2 / 4;
+  padding: $display-base $display-base;
+  text-align: right;
+}
+
 .status {
-  padding: #{$display-base / 2};
+  padding: $display-base;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
+  flex-direction: column;
   justify-content: space-between;
 
   .highlight {

@@ -8,8 +8,9 @@ export class ThemeService {
   constructor(private platform: Platform,
               private statusBar: StatusBar) {
 
-    this.platform.ready()
-      .then(() => this.statusBar.overlaysWebView(false));
+    this.platform.ready().then(() => {
+      this.statusBar.overlaysWebView(false);
+    });
 
   }
 
@@ -33,8 +34,8 @@ export class ThemeService {
   applyTheme(header: Header): void {
 
     const nativeElement = header.getNativeElement();
-    const statusBarBackground = getComputedStyle(nativeElement).getPropertyValue('--theme-primary') || '#000';
-    const lightContent = getComputedStyle(nativeElement).getPropertyValue('--theme-statusbar') === 'light' || true;
+    const statusBarBackground = getComputedStyle(nativeElement).getPropertyValue('--theme-statusbar-bg') || '#000';
+    const lightContent = getComputedStyle(nativeElement).getPropertyValue('--theme-statusbar-style') === 'light' || true;
 
     if (!this.platform.is('cordova')) {
       console.log('Apply statusbar theme', {statusBarBackground, lightContent});

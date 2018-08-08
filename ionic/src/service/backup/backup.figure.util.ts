@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Figure } from "src/entity/figure";
 import { FigureAccessory } from "src/entity/figure-accessory";
-import { FigureIssue } from "src/entity/figure-issue";
 import { FigureProperty } from "src/entity/figure-property";
-import { ItemImage } from "src/entity/item-image";
 import { Tag } from "src/entity/tag";
+import { ImageService } from "src/service/image.service";
 
 @Injectable()
 export class BackupFigureUtil {
+
+  constructor(private imageService: ImageService) {
+  }
 
   fromFigure(figure: Figure): FigureData {
     return {
@@ -16,44 +18,36 @@ export class BackupFigureUtil {
       variant: figure.variant,
       notes: figure.notes,
       collected: figure.collected,
+      damaged: figure.damaged,
+      incomplete: figure.incomplete,
       manufacturer: figure.manufacturer,
       images: (figure.images || []).map(image => image.url),
       accessories: (figure.accessories || []).map(acc => ({name: acc.name, variant: acc.variant})),
       properties: (figure.properties || []).map(prop => ({name: prop.name, value: prop.value})),
       release: figure.release,
-      issues: (figure.issues || []).map(i => i.value),
       tags: (figure.tags || []).map(tag => tag.name),
       date_update: figure.dateUpdated.toISOString(),
       date_created: figure.dateCreated.toISOString()
     };
   }
 
-  toFigure(data: FigureData): Figure {
+  toFigure(data: FigureData): Promise<Figure> {
 
     const figure = new Figure();
     figure.id = data.id;
     figure.name = data.name;
     figure.variant = data.variant;
+    figure.collected = data.images.length > 0;
+    figure.incomplete = data.images.length > 0 && !data.collected;
+    figure.damaged = data.images.length > 0 && !data.collected;
     figure.release = data.release;
     figure.manufacturer = data.manufacturer;
-
-    figure.images = (data.images || []).map(url => {
-      const image = new ItemImage();
-      image.url = url;
-      return image;
-    });
 
     figure.properties = (data.properties || []).map(data => {
       const prop = new FigureProperty();
       prop.name = data.name;
       prop.value = data.value;
       return prop;
-    });
-
-    figure.issues = (data.issues || []).map(value => {
-      const issue = new FigureIssue();
-      issue.value = value;
-      return issue;
     });
 
     figure.tags = (data.tags || []).map(value => {
@@ -70,7 +64,9 @@ export class BackupFigureUtil {
       return prop;
     });
 
-    return figure;
+    return Promise.all((data.images || []).map(url => this.imageService.createFromUrl(url)))
+      .then(images => figure.images = images)
+      .then(() => figure);
 
   }
 

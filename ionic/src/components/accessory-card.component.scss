@@ -13,15 +13,9 @@
   }
 }
 
-figure {
-  background: center top/cover no-repeat;
-  margin: $display-base;
-  height: #{$display-base * 4};
-  flex: #{$display-base * 4} 0 0;
-}
-
 header {
   flex: 1;
+  margin: $display-base;
 
   h2 {
     color: var(--theme-title);

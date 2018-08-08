@@ -24,7 +24,7 @@ import { FigureService } from "src/service/figure.service";
       <ion-spinner *ngIf="!figures"></ion-spinner>
 
       <ng-container *ngIf="figures?.length > 0">
-        <section class="bc-figure-grid">
+        <section>
           <bc-figure-card *ngFor="let figure of figures"
                           [figure]="figure"></bc-figure-card>
         </section>
