@@ -3,7 +3,6 @@ import { NgForm } from "@angular/forms";
 import { NavParams, ViewController } from "ionic-angular";
 import { SortableEvent } from "src/directives";
 import { Collection } from "src/entity/collection";
-import { CollectionViewPageComponent } from "src/pages/collection/collection-view-page.component";
 import { CollectionService } from "src/service/collection.service";
 
 @Component({

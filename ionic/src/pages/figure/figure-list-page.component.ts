@@ -4,7 +4,6 @@ import { Page } from "ionic-angular/navigation/nav-util";
 import { Figure } from "src/entity/figure";
 import { IonViewWillEnter } from "src/ionic-lifecycle";
 import { FigureEditPageComponent } from "src/pages/figure/figure-edit-page.component";
-import { FigureViewPageComponent } from "src/pages/figure/figure-view-page.component";
 import { SearchPageComponent } from "src/pages/search-page.component";
 import { FigureService } from "src/service/figure.service";
 

@@ -1,6 +1,5 @@
 import { Component, NgZone } from '@angular/core';
 import { ActionSheetController, AlertController, ModalController, NavParams, ViewController } from "ionic-angular";
-import { Page } from "ionic-angular/navigation/nav-util";
 import { Figure } from "src/entity/figure";
 import { IonViewDidEnter } from "src/ionic-lifecycle";
 import { AccessoryEditPageComponent } from "src/pages";

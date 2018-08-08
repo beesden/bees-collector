@@ -1,8 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { Content } from "ionic-angular";
-import { Page } from "ionic-angular/navigation/nav-util";
 import { Figure } from "src/entity/figure";
-import { FigureViewPageComponent } from "src/pages/figure/figure-view-page.component";
 import { FigureService } from "src/service/figure.service";
 
 @Component({

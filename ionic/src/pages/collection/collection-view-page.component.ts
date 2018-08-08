@@ -1,9 +1,8 @@
 import { Component, NgZone } from '@angular/core';
 import { ActionSheetController, AlertController, ModalController, NavParams, ViewController } from "ionic-angular";
-import { Page } from "ionic-angular/navigation/nav-util";
 import { Collection } from "src/entity/collection";
 import { IonViewDidEnter } from "src/ionic-lifecycle";
-import { FigureEditPageComponent, FigureViewPageComponent } from "src/pages";
+import { FigureEditPageComponent } from "src/pages";
 import { CollectionEditPageComponent } from "src/pages/collection/collection-edit-page.component";
 import { ImageService } from "src/service";
 import { CollectionService } from "src/service/collection.service";

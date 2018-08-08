@@ -4,7 +4,6 @@ import { Page } from "ionic-angular/navigation/nav-util";
 import { Collection } from "src/entity/collection";
 import { IonViewWillEnter } from "src/ionic-lifecycle";
 import { CollectionEditPageComponent } from "src/pages/collection/collection-edit-page.component";
-import { FigureEditPageComponent } from "src/pages/figure/figure-edit-page.component";
 import { SearchPageComponent } from "src/pages/search-page.component";
 import { CollectionService } from "src/service";
 
