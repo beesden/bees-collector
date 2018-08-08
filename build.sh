@@ -7,7 +7,7 @@ time {
 	# Clear workspace
 	echo "Clearing workspace..."
 	rm -rf dist cordova/config.xml cordova/platforms cordova/plugins
-	docker-compose down -v
+	docker-compose down
 
 	# Build cordova app
 	docker-compose up ionic
@@ -27,6 +27,6 @@ time {
 
 	# Clear containers
 	echo "Clearing containers..."
-	docker-compose down -v
+	docker-compose down
 
 }

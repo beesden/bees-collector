@@ -99,7 +99,7 @@ import { FigureService } from "src/service/figure.service";
           <legend>Tags:</legend>
           <bc-tag-manager name="tags" [(ngModel)]="figure.tags"></bc-tag-manager>
         </fieldset>
-        
+
       </form>
 
     </ion-content>
@@ -110,8 +110,8 @@ export class FigureEditPageComponent {
   figure: Figure;
 
   constructor(private figureService: FigureService,
-              private navParams: NavParams,
-              public viewCtrl: ViewController) {
+              public viewCtrl: ViewController,
+              navParams: NavParams) {
 
     const figureId = navParams.get('figureId');
     if (figureId) {

@@ -1,10 +1,10 @@
 import { Component, NgZone } from '@angular/core';
-import { ActionSheetController, AlertController, ModalController, NavParams, ViewController } from "ionic-angular";
+import { AlertController, ModalController, NavParams, ViewController } from "ionic-angular";
 import { Figure } from "src/entity/figure";
 import { IonViewDidEnter } from "src/ionic-lifecycle";
 import { AccessoryEditPageComponent } from "src/pages";
 import { FigureEditPageComponent } from "src/pages/figure/figure-edit-page.component";
-import { CollectionService, ImageService } from "src/service";
+import { ImageService } from "src/service";
 import { FigureService } from "src/service/figure.service";
 
 @Component({
@@ -37,14 +37,6 @@ import { FigureService } from "src/service/figure.service";
     <ion-content>
 
       <bc-image-slider class="bc-figure-image" [images]="figure.images"></bc-image-slider>
-
-      <!-- 
-      <aside class="bc-figure-image" [bc-image-view]="figure.images" [ngClass]="{'has-image': figure.images?.length}">
-        <button (click)="changeImage()">
-          <ion-icon name="camera"></ion-icon>
-        </button>
-      </aside>
-      -->
 
       <header class="bc-section">
 
@@ -106,12 +98,10 @@ export class FigureViewPageComponent implements IonViewDidEnter {
   moreOptions: boolean;
   figure: Figure = new Figure();
 
-  constructor(private actionSheetCtrl: ActionSheetController,
-              private alertCtrl: AlertController,
+  constructor(private alertCtrl: AlertController,
               private modalCtrl: ModalController,
               private imageService: ImageService,
               private figureService: FigureService,
-              private collectionService: CollectionService,
               private zone: NgZone,
               private viewCtrl: ViewController,
               private navParams: NavParams) {

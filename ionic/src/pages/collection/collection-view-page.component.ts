@@ -1,5 +1,5 @@
 import { Component, NgZone } from '@angular/core';
-import { ActionSheetController, AlertController, ModalController, NavParams, ViewController } from "ionic-angular";
+import { AlertController, ModalController, NavParams, ViewController } from "ionic-angular";
 import { Collection } from "src/entity/collection";
 import { IonViewDidEnter } from "src/ionic-lifecycle";
 import { FigureEditPageComponent } from "src/pages";
@@ -74,8 +74,7 @@ export class CollectionViewPageComponent implements IonViewDidEnter {
   moreOptions: boolean;
   collection: Collection;
 
-  constructor(private actionSheetCtrl: ActionSheetController,
-              private alertCtrl: AlertController,
+  constructor(private alertCtrl: AlertController,
               private modalCtrl: ModalController,
               private imageService: ImageService,
               private collectionService: CollectionService,

@@ -11,7 +11,6 @@ console.log('Running cordova setup commands');
 const startTime = Date.now();
 const timerLog = [];
 
-
 const nodePackage = require('./package');
 const Folders = {
 	PLATFORMS: resolve(__dirname, 'platforms'),
@@ -116,6 +115,9 @@ runTask('Configuring plugins', () => {
 	if (!existsSync(Folders.PLUGINS)) {
 		mkdirSync(Folders.PLUGINS);
 	}
+
+	// Ensure latest plugin versions installed
+	execSync(`npm update --save`, {stdio: 'inherit'});
 
 	Object.keys(nodePackage.cordova.plugins).forEach(plugin => {
 		console.log('Installing plugin from node_modules: ', plugin);

@@ -19,6 +19,7 @@ services:
     working_dir: /build
     volumes:
       - /build/node_modules
+      - /build/plugins
       - ./cordova:/build
       - ./dist/platforms:/build/platforms
       - ./dist/www:/build/www

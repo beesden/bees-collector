@@ -3,22 +3,14 @@ import { Camera, CameraOptions, DestinationType, MediaType, PictureSourceType } 
 import { Entry, File } from "@ionic-native/file";
 import { ActionSheetController, Platform } from "ionic-angular";
 import { ItemImage } from "src/entity/item-image";
-import { ConnectionService } from "src/service/connection.service";
-import { Repository } from "typeorm/browser";
 
 @Injectable()
 export class ImageService {
 
-  private repository: Promise<Repository<ItemImage>>;
-
   constructor(private actionSheetCtrl: ActionSheetController,
               private camera: Camera,
               private file: File,
-              private platform: Platform,
-              connectionService: ConnectionService) {
-
-    this.repository = connectionService.connection.then(connection => connection.getRepository(ItemImage));
-
+              private platform: Platform) {
   }
 
   /**
@@ -34,7 +26,10 @@ export class ImageService {
     const directoryName = 'Collections';
 
     return this.file.checkDir(directoryRoot, directoryName)
-      .then(exists => exists ? this.file.resolveDirectoryUrl(directoryRoot + directoryName) : this.file.createDir(directoryRoot, directoryName, false))
+      .then(
+        () => this.file.resolveDirectoryUrl(directoryRoot + directoryName),
+        () => this.file.createDir(directoryRoot, directoryName, false)
+      )
       .then(directory => this.file.moveFile(currentDirectory, entry.name, directory.nativeURL, entry.name));
 
   }
@@ -54,6 +49,7 @@ export class ImageService {
     const parts = imageUrl.split('/');
     const fileName = parts.pop();
     const directory = parts.join('/') + '/';
+    console.log(directory, fileName);
 
     return this.file.readAsDataURL(directory, fileName).then(dataUrl => new Promise<ItemImage>((resolve, reject) => {
 
@@ -77,7 +73,7 @@ export class ImageService {
   private imageFromDevice(sourceType: PictureSourceType): Promise<ItemImage> {
 
     const cameraOptions: CameraOptions = {
-      destinationType: DestinationType.FILE_URL,
+      destinationType: DestinationType.NATIVE_URI,
       mediaType: MediaType.PICTURE,
       sourceType,
       correctOrientation: true

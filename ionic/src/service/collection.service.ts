@@ -10,7 +10,7 @@ export class CollectionService {
 
   private repository: Promise<Repository<Collection>>;
 
-  constructor(private connectionService: ConnectionService) {
+  constructor(connectionService: ConnectionService) {
     this.repository = connectionService.connection.then(connection => connection.getRepository(Collection));
   }
 
