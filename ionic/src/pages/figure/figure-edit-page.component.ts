@@ -100,8 +100,6 @@ import { FigureService } from "src/service/figure.service";
           <bc-tag-manager name="tags" [(ngModel)]="figure.tags"></bc-tag-manager>
         </fieldset>
         
-        {{figure.tags}}
-        
       </form>
 
     </ion-content>

@@ -1,5 +1,10 @@
 @import "../styles/variables";
 
+:host {
+  display: block;
+  margin-bottom: $display-base;
+}
+
 .tag {
   @include ellipsis;
   background: var(--theme-primary);
@@ -20,7 +25,6 @@
 
 .tag-input {
   display: flex;
-  margin: $display-base;
 
   ion-item {
     flex: 1;

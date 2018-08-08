@@ -46,6 +46,10 @@
           padding: 0;
         }
       }
+
+      > .page-section {
+        margin: $display-base;
+      }
     }
 
   }

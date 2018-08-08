@@ -93,7 +93,10 @@ import { FigureService } from "src/service/figure.service";
       </section>
 
       <h2>Tags:</h2>
-      <bc-tag-manager [(ngModel)]="figure.tags" [readonly]="true"></bc-tag-manager>
+
+      <section class="page-section">
+        <bc-tag-manager [(ngModel)]="figure.tags" [readonly]="true"></bc-tag-manager>
+      </section>
 
     </ion-content>
   `
