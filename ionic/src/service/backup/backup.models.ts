@@ -14,8 +14,10 @@ interface FigureData {
   collected: boolean;
   release: string;
   images: string[];
-  accessories: Array<{ name: string, variant: string, collected: boolean }>;
+  accessories: Array<{ name: string, variant: string }>;
   properties: Array<{ name: string, value: string }>;
+  issues: string[];
+  tags: string[];
   date_update: string;
   date_created: string;
 }

@@ -1,12 +1,14 @@
-import { Collectable, CollectableState } from "src/entity/collectable";
+import { Collectible, CollectibleState } from "src/entity/collectible";
 import { Collection } from "src/entity/collection";
 import { CollectionItem } from "src/entity/collection-item";
 import { FigureAccessory } from "src/entity/figure-accessory";
+import { FigureIssue } from "src/entity/figure-issue";
 import { FigureProperty } from "src/entity/figure-property";
+import { Tag } from "src/entity/tag";
 import { Column, Entity, OneToMany } from "typeorm/browser";
 
 @Entity()
-export class Figure extends Collectable {
+export class Figure extends Collectible {
 
   @Column({nullable: true})
   release: string;
@@ -26,27 +28,30 @@ export class Figure extends Collectable {
   @OneToMany(type => CollectionItem, item => item.figure)
   items: CollectionItem[];
 
+  @OneToMany(type => FigureIssue, issue => issue.figure)
+  issues: FigureIssue[];
+
+  @OneToMany(type => Tag, tag => tag.figure, {cascade: true, eager: true})
+  tags: Tag[];
+
+  @Column({nullable: true})
+  collected: boolean;
+
   get collections(): Collection[] {
     return this.items ? this.items.map(item => item.collection) : [];
-  }
-
-  get collectedAccessories(): number {
-    return this.accessories ? this.accessories.filter(accessory => accessory.collected).length : 0;
   }
 
   /**
    * Return the current collection status of the figure.
    */
-  get status(): CollectableState {
-
-    const accessories = this.accessories ? this.accessories.length : 0;
+  get status(): CollectibleState {
 
     if (!this.collected) {
-      return CollectableState.UNOWNED;
-    } else if(this.collectedAccessories !== accessories) {
-      return CollectableState.INCOMPLETE;
+      return CollectibleState.UNOWNED;
+    } else if (this.issues && this.issues.length) {
+      return CollectibleState.INCOMPLETE;
     } else {
-      return CollectableState.COMPLETE;
+      return CollectibleState.COMPLETE;
     }
 
   }
@@ -56,11 +61,11 @@ export class Figure extends Collectable {
    */
   get statusText(): string {
     switch (this.status) {
-      case CollectableState.COMPLETE:
+      case CollectibleState.COMPLETE:
         return 'Owned';
-      case CollectableState.INCOMPLETE:
+      case CollectibleState.INCOMPLETE:
         return 'Partially Owned';
-      case CollectableState.UNOWNED:
+      case CollectibleState.UNOWNED:
         return 'Not Owned';
       default:
         return '???';

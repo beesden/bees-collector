@@ -1,6 +1,6 @@
 import { CollectionItem } from "src/entity/collection-item";
 import { Figure } from "src/entity/figure";
-import { Image } from "src/entity/image";
+import { ItemImage } from "src/entity/item-image";
 import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm/browser";
 
 @Entity()
@@ -18,9 +18,9 @@ export class Collection {
   @Column({nullable: true})
   description: string;
 
-  @ManyToMany(type => Image, {cascade: true, eager: true})
+  @ManyToMany(type => ItemImage, {cascade: true, eager: true})
   @JoinTable()
-  images: Image[];
+  images: ItemImage[];
 
   @OneToMany(type => CollectionItem, item => item.collection, {cascade: true, eager: true})
   items: CollectionItem[];

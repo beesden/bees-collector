@@ -43,9 +43,7 @@ import { FigureService } from "src/service/figure.service";
 
         <section class="bc-figure-grid">
           <bc-figure-card *ngFor="let figure of figures"
-                          [figure]="figure"
-                          [navPush]="figureViewPage"
-                          [navParams]="{figureId: figure.id}"></bc-figure-card>
+                          [figure]="figure"></bc-figure-card>
         </section>
 
         <ion-infinite-scroll (ionInfinite)="doInfinite($event)" [enabled]="total > figures.length">
@@ -74,7 +72,6 @@ export class FigureListPageComponent implements IonViewWillEnter {
 
   total: number;
 
-  figureViewPage: Page = FigureViewPageComponent;
   searchPage: Page = SearchPageComponent;
   figures: Figure[];
 

@@ -4,8 +4,10 @@ import { Collection } from "src/entity/collection";
 import { CollectionItem } from "src/entity/collection-item";
 import { Figure } from "src/entity/figure";
 import { FigureAccessory } from "src/entity/figure-accessory";
+import { FigureIssue } from "src/entity/figure-issue";
 import { FigureProperty } from "src/entity/figure-property";
-import { Image } from "src/entity/image";
+import { ItemImage } from "src/entity/item-image";
+import { Tag } from "src/entity/tag";
 import { Connection, createConnection } from "typeorm/browser";
 import { CordovaConnectionOptions } from "typeorm/browser/driver/cordova/CordovaConnectionOptions";
 import { SqljsConnectionOptions } from "typeorm/browser/driver/sqljs/SqljsConnectionOptions";
@@ -19,11 +21,13 @@ export class ConnectionService {
 
     const entities = [
       Figure,
+      FigureIssue,
       FigureAccessory,
       FigureProperty,
+      Tag,
       Collection,
       CollectionItem,
-      Image
+      ItemImage
     ];
 
     let connection: CordovaConnectionOptions | SqljsConnectionOptions;

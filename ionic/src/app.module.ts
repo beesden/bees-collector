@@ -8,14 +8,12 @@ import { StatusBar } from "@ionic-native/status-bar";
 import { IonicApp, IonicModule } from "ionic-angular";
 import { AppRootComponent } from 'src/app-root.component';
 
-import { CollectionCardComponent, FigureCardComponent, ItemListComponent, StatusButtonComponent } from "src/components";
-import { AccessoryCardComponent } from "src/components/accessory-card.component";
+import { AccessoryCardComponent, CollectionCardComponent, FigureCardComponent, StatusButtonComponent, TagManagerComponent } from "src/components";
 import { CollectionListComponent } from "src/components/collection-list.component";
+import { ImageSliderComponent } from "src/components/image-slider.component";
 import { ImageViewDirective, SortableDirective, SortableHandleDirective, SortableItemDirective } from "src/directives";
 import * as Pages from "src/pages";
-import { AccessoryService, BackupService, CollectionService, ConnectionService, FigureService, ImageService, ThemeService } from "src/service";
-import { BackupCollectionUtil } from "src/service/backup/backup.collection.util";
-import { BackupFigureUtil } from "src/service/backup/backup.figure.util";
+import { AccessoryService, BackupCollectionUtil, BackupFigureUtil, BackupService, CollectionService, ConnectionService, FigureService, ImageService, ThemeService } from "src/service";
 
 const pages = [
 
@@ -42,10 +40,11 @@ const pages = [
 
     CollectionCardComponent,
     CollectionListComponent,
-    ItemListComponent,
     FigureCardComponent,
     AccessoryCardComponent,
+    ImageSliderComponent,
     StatusButtonComponent,
+    TagManagerComponent,
 
     ImageViewDirective,
     SortableDirective,

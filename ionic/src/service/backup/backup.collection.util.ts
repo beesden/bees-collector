@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Collection } from "src/entity/collection";
 import { CollectionItem } from "src/entity/collection-item";
 import { Figure } from "src/entity/figure";
-import { Image } from "src/entity/image";
+import { ItemImage } from "src/entity/item-image";
 
 @Injectable()
 export class BackupCollectionUtil {
@@ -29,7 +29,7 @@ export class BackupCollectionUtil {
     collection.description = data.description;
 
     collection.images = data.images.map(url => {
-      const image = new Image();
+      const image = new ItemImage();
       image.url = url;
       return image;
     });

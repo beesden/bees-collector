@@ -31,19 +31,21 @@ import { FigureService } from "src/service/figure.service";
       <div class="options">
         <button (click)="editFigure()">Edit</button>
         <button (click)="changeImage()">Replace image</button>
-        <button (click)="addAccessory()">Add accessory</button>
-        <button (click)="addToCollection()">Add to collection</button>
         <button (click)="deleteFigure()">Delete</button>
       </div>
     </nav>
 
     <ion-content>
 
+      <bc-image-slider class="bc-figure-image" [images]="figure.images"></bc-image-slider>
+
+      <!-- 
       <aside class="bc-figure-image" [bc-image-view]="figure.images" [ngClass]="{'has-image': figure.images?.length}">
         <button (click)="changeImage()">
           <ion-icon name="camera"></ion-icon>
         </button>
       </aside>
+      -->
 
       <header class="bc-section">
 
@@ -82,21 +84,17 @@ import { FigureService } from "src/service/figure.service";
 
       </header>
 
-      <ng-container *ngIf="figure.accessories?.length">
-        <h2>Accessories</h2>
+      <h2>
+        Accessories
+        <button class="bc-button bc-button--text" (click)="addAccessory()">Add</button>
+      </h2>
 
-        <section>
-          <bc-accessory-card class="scroll-item" [accessory]="accessory" *ngFor="let accessory of figure.accessories"></bc-accessory-card>
-        </section>
-      </ng-container>
-      
-      <ng-container *ngIf="figure.collections?.length">
-        <h2 class="bc-type-subtitle">In {{figure.collections?.length}} collections:</h2>
+      <section>
+        <bc-accessory-card class="scroll-item" [accessory]="accessory" *ngFor="let accessory of figure.accessories"></bc-accessory-card>
+      </section>
 
-        <section class="bc-scroller">
-          <bc-collection-card class="scroll-item" *ngFor="let collection of figure.collections" [collection]="collection"></bc-collection-card>
-        </section>
-      </ng-container>
+      <h2>Tags:</h2>
+      <bc-tag-manager [(ngModel)]="figure.tags" [readonly]="true"></bc-tag-manager>
 
     </ion-content>
   `
@@ -149,42 +147,15 @@ export class FigureViewPageComponent implements IonViewDidEnter {
   }
 
   addAccessory(): void {
-    this.modalCtrl.create(AccessoryEditPageComponent, {figureId: this.figure.id}).present();
+    const modal = this.modalCtrl.create(AccessoryEditPageComponent, {figureId: this.figure.id});
+    modal.onWillDismiss(() => this.ionViewDidEnter());
+    modal.present();
   }
 
   editFigure(): void {
-    this.modalCtrl.create(FigureEditPageComponent, {figureId: this.figure.id}).present();
-  }
-
-  /**
-   * Add the figure to a collection.
-   */
-  addToCollection(): void {
-
-    this.collectionService.getList().then(([collections]) => {
-      const options = this.alertCtrl.create()
-        .setTitle('Add to collection')
-        .addButton({text: 'Cancel', role: 'cancel'})
-        .addButton({
-          text: 'OK',
-          handler: (collectionId: string) => {
-            if (collectionId) {
-              this.collectionService.addFigureToCollection(Number.parseInt(collectionId), this.figure)
-                .then(() => this.ionViewDidEnter());
-            }
-          }
-        });
-
-      collections.forEach(collection => {
-        options.addInput({
-          type: 'radio',
-          label: collection.name,
-          value: collection.id.toString()
-        });
-      });
-
-      return options.present();
-    });
+    const modal = this.modalCtrl.create(FigureEditPageComponent, {figureId: this.figure.id});
+    modal.onWillDismiss(() => this.ionViewDidEnter());
+    modal.present();
   }
 
   /**

@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Figure } from "src/entity/figure";
 import { FigureAccessory } from "src/entity/figure-accessory";
+import { FigureIssue } from "src/entity/figure-issue";
 import { FigureProperty } from "src/entity/figure-property";
-import { Image } from "src/entity/image";
+import { ItemImage } from "src/entity/item-image";
+import { Tag } from "src/entity/tag";
 
 @Injectable()
 export class BackupFigureUtil {
@@ -16,9 +18,11 @@ export class BackupFigureUtil {
       collected: figure.collected,
       manufacturer: figure.manufacturer,
       images: (figure.images || []).map(image => image.url),
-      accessories: (figure.accessories || []).map(acc => ({name: acc.name, variant: acc.variant, collected: acc.collected})),
+      accessories: (figure.accessories || []).map(acc => ({name: acc.name, variant: acc.variant})),
       properties: (figure.properties || []).map(prop => ({name: prop.name, value: prop.value})),
       release: figure.release,
+      issues: (figure.issues || []).map(i => i.value),
+      tags: (figure.tags || []).map(tag => tag.name),
       date_update: figure.dateUpdated.toISOString(),
       date_created: figure.dateCreated.toISOString()
     };
@@ -33,20 +37,32 @@ export class BackupFigureUtil {
     figure.release = data.release;
     figure.manufacturer = data.manufacturer;
 
-    figure.images = data.images.map(url => {
-      const image = new Image();
+    figure.images = (data.images || []).map(url => {
+      const image = new ItemImage();
       image.url = url;
       return image;
     });
 
-    figure.properties = data.properties.map(data => {
+    figure.properties = (data.properties || []).map(data => {
       const prop = new FigureProperty();
       prop.name = data.name;
       prop.value = data.value;
       return prop;
     });
 
-    figure.accessories = data.accessories.map(entry => {
+    figure.issues = (data.issues || []).map(value => {
+      const issue = new FigureIssue();
+      issue.value = value;
+      return issue;
+    });
+
+    figure.tags = (data.tags || []).map(value => {
+      const tag = new Tag();
+      tag.name = value;
+      return tag;
+    });
+
+    figure.accessories = (data.accessories || []).map(entry => {
       const prop = new FigureAccessory();
       prop.name = entry.name;
       prop.variant = entry.variant;

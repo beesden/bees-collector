@@ -1,18 +1,11 @@
-import { Collectable, CollectableState } from "src/entity/collectable";
+import { Collectible, CollectibleState } from "src/entity/collectible";
 import { Figure } from "src/entity/figure";
 import { Entity, ManyToOne } from "typeorm/browser";
 
 @Entity()
-export class FigureAccessory extends Collectable {
+export class FigureAccessory extends Collectible {
 
   @ManyToOne(type => Figure, figure => figure.accessories, {onDelete: 'CASCADE'})
   figure: Figure;
-
-  /**
-   * Return the current collection status of the accessory.
-   */
-  get status(): CollectableState {
-    return this.collected ? CollectableState.COMPLETE : CollectableState.UNOWNED;
-  }
 
 }

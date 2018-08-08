@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CollectableState } from "src/entity/collectable";
+import { CollectibleState } from "src/entity/collectible";
 
 @Component({
   selector: 'bc-status-button',
@@ -13,7 +13,7 @@ import { CollectableState } from "src/entity/collectable";
 })
 export class StatusButtonComponent {
 
-  @Input() status: CollectableState;
+  @Input() status: CollectibleState;
   @Input() statusText: string;
   @Input() layout: 'button' | 'chip' = 'button';
   @Output() toggle: EventEmitter<Event> = new EventEmitter();
@@ -22,7 +22,7 @@ export class StatusButtonComponent {
    * Return true if the checkbox should appear checked.
    */
   get checked(): boolean {
-    return this.status !== CollectableState.UNOWNED;
+    return this.status !== CollectibleState.UNOWNED;
   }
 
   /**

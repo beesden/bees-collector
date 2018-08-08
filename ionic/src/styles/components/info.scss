@@ -1,34 +1,5 @@
 @import '../variables';
 
-// todo - component
-.bc-figure-image {
-  background: no-repeat center center/contain;
-  display: block;
-  min-height: 150px;
-  max-height: 100%;
-  position: relative;
-
-  button {
-    @include button;
-    @include fill;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--theme-content);
-    font-size: 4rem;
-    margin: auto;
-    width: 80%;
-  }
-
-  &.has-image {
-    height: #{100vw * (4 / 3)};
-
-    button {
-      display: none;
-    }
-  }
-}
-
 // todo - generic?
 .bc-figure-grid {
   display: grid;

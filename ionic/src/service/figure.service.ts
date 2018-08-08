@@ -19,6 +19,8 @@ export class FigureService {
     return this.repository.then(repo => repo.createQueryBuilder('figure')
       .leftJoinAndSelect('figure.images', 'images')
       .leftJoinAndSelect('figure.properties', 'property')
+      .leftJoinAndSelect('figure.issues', 'issue')
+      .leftJoinAndSelect('figure.tags', 'tag')
       .leftJoinAndSelect('figure.accessories', 'accessory')
       .leftJoinAndSelect('accessory.images', 'accessory_images')
     );

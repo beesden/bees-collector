@@ -1,6 +1,7 @@
 import { Component, HostBinding, Input } from '@angular/core';
 import { ActionSheetController, AlertController, NavController } from "ionic-angular";
 import { FigureAccessory } from "src/entity/figure-accessory";
+import { ItemImage } from "src/entity/item-image";
 import { AccessoryEditPageComponent } from "src/pages";
 import { ImageService } from "src/service";
 import { AccessoryService } from "src/service/accessory.service";
@@ -9,7 +10,7 @@ import { AccessoryService } from "src/service/accessory.service";
   selector: 'bc-accessory-card',
   styleUrls: ['./accessory-card.component.scss'],
   template: `
-    <figure [bc-image-view]="accessory.images"></figure>
+    <figure [bc-image-view]="coverImage"></figure>
 
     <header>
       <h2>{{accessory.name}}</h2>
@@ -20,8 +21,6 @@ import { AccessoryService } from "src/service/accessory.service";
       <button (click)="showMenu()">
         <ion-icon name="more"></ion-icon>
       </button>
-
-      <bc-status-button [status]="accessory.status" (toggle)="toggleCollected()"></bc-status-button>
     </nav>
   `
 })
@@ -37,15 +36,19 @@ export class AccessoryCardComponent {
               private navCtrl: NavController) {
   }
 
+  get coverImage(): ItemImage {
+    return this.accessory.images && this.accessory.images.length ? this.accessory.images[0] : null;
+  }
+
   /**
    * Show additional options.
    */
   showMenu(): void {
 
     this.actionSheetCtrl.create()
-      .addButton({icon: 'create', text: 'Edit accessory', handler: () => this.editAccessory()})
-      .addButton({icon: 'camera', text: 'Replace image', handler: () => this.changeImage()})
-      .addButton({icon: 'trash', text: 'Remove accessory', handler: () => this.deleteAccessory()})
+      .addButton({icon: 'create', text: 'Edit', handler: () => this.editAccessory()})
+      .addButton({icon: 'camera', text: 'Change image', handler: () => this.changeImage()})
+      .addButton({icon: 'trash', text: 'Remove', handler: () => this.deleteAccessory()})
       .present();
 
   }
@@ -84,14 +87,6 @@ export class AccessoryCardComponent {
    */
   editAccessory(): void {
     this.navCtrl.push(AccessoryEditPageComponent, {accessoryId: this.accessory.id});
-  }
-
-  /**
-   * Toggle if the accessory is collected.
-   */
-  toggleCollected(): void {
-    this.accessory.collected = !this.accessory.collected;
-    this.accessoryService.save(this.accessory);
   }
 
 }

@@ -37,7 +37,7 @@ import { CollectionService } from "src/service/collection.service";
       <ion-spinner *ngIf="!collection; else collectionContent"></ion-spinner>
 
       <ng-template #collectionContent>
-        
+
         <header class="bc-header">
           <h1 class="bc-type-title">{{collection.name}}</h1>
           <h2 class="bc-type-subtitle">{{collection.series}}</h2>
@@ -50,9 +50,7 @@ import { CollectionService } from "src/service/collection.service";
 
           <section class="bc-figure-grid">
             <bc-figure-card *ngFor="let figure of collection.figures"
-                            [figure]="figure"
-                            [navPush]="figureViewPage"
-                            [navParams]="{figureId: figure.id}"></bc-figure-card>
+                            [figure]="figure"></bc-figure-card>
           </section>
         </ng-container>
 
@@ -75,8 +73,6 @@ import { CollectionService } from "src/service/collection.service";
 export class CollectionViewPageComponent implements IonViewDidEnter {
 
   moreOptions: boolean;
-  figureViewPage: Page = FigureViewPageComponent;
-
   collection: Collection;
 
   constructor(private actionSheetCtrl: ActionSheetController,
@@ -116,7 +112,9 @@ export class CollectionViewPageComponent implements IonViewDidEnter {
   }
 
   editCollection(): void {
-    this.modalCtrl.create(CollectionEditPageComponent, {collectionId: this.collection.id}).present();
+    const modal = this.modalCtrl.create(CollectionEditPageComponent, {collectionId: this.collection.id});
+    modal.onWillDismiss(() => this.ionViewDidEnter());
+    modal.present();
   }
 
   /**

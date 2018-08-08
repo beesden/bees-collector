@@ -1,13 +1,13 @@
-import { Image } from "src/entity/image";
+import { ItemImage } from "src/entity/item-image";
 import { Column, CreateDateColumn, JoinTable, ManyToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm/browser";
 
-export enum CollectableState {
+export enum CollectibleState {
   COMPLETE,
   INCOMPLETE,
   UNOWNED
 }
 
-export abstract class Collectable {
+export abstract class Collectible {
 
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -21,12 +21,9 @@ export abstract class Collectable {
   @Column({nullable: true})
   notes: string;
 
-  @ManyToMany(type => Image, {cascade: true, eager: true})
+  @ManyToMany(type => ItemImage, {cascade: true, eager: true})
   @JoinTable()
-  images: Image[];
-
-  @Column({nullable: true})
-  collected: boolean;
+  images: ItemImage[];
 
   @CreateDateColumn()
   dateCreated: Date;

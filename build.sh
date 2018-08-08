@@ -6,7 +6,7 @@ time {
 
 	# Clear workspace
 	echo "Clearing workspace..."
-	rm -rf dist
+	rm -rf dist cordova/config.xml cordova/platforms cordova/plugins
 	docker-compose down -v
 
 	# Build cordova app

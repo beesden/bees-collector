@@ -40,6 +40,10 @@ ion-menu {
     padding: $display-base;
   }
 
+  hr {
+    margin: #{$display-base * 2} 0;
+  }
+
   .menu-item {
     @include button(var(--theme-content));
 
@@ -52,7 +56,7 @@ ion-menu {
     width: 100%;
 
     &:first-of-type {
-      margin-top: 1rem;
+      margin-top: #{$display-base * 2};
     }
 
     &.selected {

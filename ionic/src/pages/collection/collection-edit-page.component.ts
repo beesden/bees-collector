@@ -137,17 +137,7 @@ export class CollectionEditPageComponent {
       return;
     }
 
-    this.collectionService.saveCollection(this.collection).then(collection => {
+    this.collectionService.saveCollection(this.collection).then(() => this.viewCtrl.dismiss());
 
-      const collectionId = this.navParams.get('collectionId');
-      const nav = this.viewCtrl.getNav();
-
-      this.viewCtrl.dismiss().then(() => {
-        if (!collectionId) {
-          nav.push(CollectionViewPageComponent, {collectionId: collection.id});
-        }
-      });
-
-    });
   }
 }

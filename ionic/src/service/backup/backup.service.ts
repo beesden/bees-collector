@@ -10,6 +10,9 @@ import { BackupCollectionUtil } from "src/service/backup/backup.collection.util"
 import { BackupFigureUtil } from "src/service/backup/backup.figure.util";
 import { ConnectionService } from "src/service/connection.service";
 
+export * from './backup.collection.util';
+export * from './backup.figure.util';
+
 @Injectable()
 export class BackupService {
 

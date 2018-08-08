@@ -35,8 +35,6 @@ import { BackupService } from "src/service/backup/backup.service";
           <span>Restore latest</span>
         </button>
         
-        <br />
-
         <button class="bc-button bc-button--text" (click)="restore(false)">
           <ion-icon name="cloud-download"></ion-icon>
           <span>Restore specific</span>
