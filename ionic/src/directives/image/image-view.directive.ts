@@ -24,7 +24,10 @@ export class ImageViewDirective implements OnChanges {
 
       this.background = null;
       this.imageService.loadImage(this.image.url, this.element.nativeElement.clientWidth, this.element.nativeElement.clientHeight)
-        .then(dataUrl => this.background = this.sanitizer.bypassSecurityTrustStyle(`url(${dataUrl}), ${this.defaultImage}`));
+        .then(
+          dataUrl => this.background = this.sanitizer.bypassSecurityTrustStyle(`url(${dataUrl}), ${this.defaultImage}`),
+          () => this.background = this.sanitizer.bypassSecurityTrustStyle(`${this.defaultImage}`)
+        );
 
     } else {
       this.background = this.sanitizer.bypassSecurityTrustStyle(`${this.defaultImage}`);

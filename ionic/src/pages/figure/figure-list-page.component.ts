@@ -34,8 +34,9 @@ import { FigureService } from "src/service/figure.service";
       <ion-spinner *ngIf="!figures"></ion-spinner>
 
       <header class="bc-header" *ngIf="figures">
-        <h1 class="bc-type-title">{{'All figures'}}</h1>
-        <p class="bc-type-subtitle">{{total}} figures</p>
+        <h1 class="bc-type-title">All figures</h1>
+        <hr />
+        <p>{{total}} figures</p>
       </header>
 
       <ng-container *ngIf="figures?.length > 0">
@@ -92,9 +93,7 @@ export class FigureListPageComponent implements IonViewWillEnter {
   }
 
   doInfinite(event: { complete: Function }): void {
-    console.log(this.perPage, this.page);
     this.figureService.getList(this.perPage, this.page++).then(([figures]) => {
-      console.log(figures);
       this.zone.run(() => this.figures = this.figures.concat(figures));
       event.complete();
     });

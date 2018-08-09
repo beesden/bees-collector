@@ -1,8 +1,9 @@
 import { Injectable } from "@angular/core";
 import { Camera, CameraOptions, DestinationType, MediaType, PictureSourceType } from "@ionic-native/camera";
-import { Entry, File } from "@ionic-native/file";
-import { ActionSheetController, Platform } from "ionic-angular";
+import { File } from "@ionic-native/file";
+import { ActionSheetController } from "ionic-angular";
 import { ItemImage } from "src/entity/item-image";
+import { FileFolder, FileService } from "src/service/file.service";
 
 @Injectable()
 export class ImageService {
@@ -10,28 +11,7 @@ export class ImageService {
   constructor(private actionSheetCtrl: ActionSheetController,
               private camera: Camera,
               private file: File,
-              private platform: Platform) {
-  }
-
-  /**
-   * Copy a file from the temporary camera location into the 'collections' shared folder.
-   * Creates the folder if it does not exist.
-   *
-   * @param entry
-   */
-  private copyToFolder(entry: Entry): Promise<Entry> {
-
-    const currentDirectory = entry.nativeURL.slice(0, -entry.name.length);
-    const directoryRoot = this.platform.is('android') ? this.file.externalRootDirectory : this.file.documentsDirectory;
-    const directoryName = 'Collections';
-
-    return this.file.checkDir(directoryRoot, directoryName)
-      .then(
-        () => this.file.resolveDirectoryUrl(directoryRoot + directoryName),
-        () => this.file.createDir(directoryRoot, directoryName, false)
-      )
-      .then(directory => this.file.moveFile(currentDirectory, entry.name, directory.nativeURL, entry.name));
-
+              private fileService: FileService) {
   }
 
   /**
@@ -53,7 +33,7 @@ export class ImageService {
   /**
    * Saves an uploaded image URL to the figure entity.
    */
-  private imageFromDevice(sourceType: PictureSourceType): Promise<ItemImage> {
+  private imageFromDevice(sourceType: PictureSourceType, type: FileFolder): Promise<ItemImage> {
 
     const cameraOptions: CameraOptions = {
       destinationType: DestinationType.NATIVE_URI,
@@ -64,26 +44,26 @@ export class ImageService {
 
     return this.camera.getPicture(cameraOptions)
       .then(imagePath => this.file.resolveLocalFilesystemUrl(imagePath))
-      .then(entry => sourceType === PictureSourceType.CAMERA ? this.copyToFolder(entry) : entry)
+      .then(entry => sourceType === PictureSourceType.CAMERA ? this.fileService.copyToFolder(entry, type) : entry)
       .then(entry => this.createFromUrl(entry.nativeURL));
   }
 
 
-  create(): Promise<ItemImage> {
+  create(type: FileFolder): Promise<ItemImage> {
 
     return new Promise<ItemImage>((resolve) => this.actionSheetCtrl.create()
       .addButton({
         icon: 'camera',
         text: 'Add new photo',
         handler: () => {
-          resolve(this.imageFromDevice(PictureSourceType.CAMERA));
+          resolve(this.imageFromDevice(PictureSourceType.CAMERA, type));
         }
       })
       .addButton({
         icon: 'images',
         text: 'Select image',
         handler: () => {
-          resolve(this.imageFromDevice(PictureSourceType.SAVEDPHOTOALBUM));
+          resolve(this.imageFromDevice(PictureSourceType.SAVEDPHOTOALBUM, type));
         }
       })
       .present()
@@ -113,7 +93,7 @@ export class ImageService {
     if (stored) {
       promise = Promise.resolve(stored);
     } else {
-      promise = new Promise<string>((resolve, reject) => {
+      promise = this.file.resolveLocalFilesystemUrl(imageUrl).then(() => new Promise<string>((resolve, reject) => {
 
         const init = () => {
 
@@ -144,7 +124,7 @@ export class ImageService {
           init();
         }
 
-      });
+      }));
     }
 
     return promise.then(dataUrl => {

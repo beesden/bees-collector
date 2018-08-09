@@ -96,17 +96,6 @@ runTask('Configuring environment', () => {
 });
 
 /////////////////////////////////
-// PLATFORM MANAGEMENT
-/////////////////////////////////
-
-const platforms = nodePackage.cordova.platforms || [];
-platforms.forEach(platform => {
-	runTask(`Installing ${platform}`, () => {
-		execSync(`npm run cordova -- platform add ${platform}`, {stdio: 'inherit'});
-	});
-});
-
-/////////////////////////////////
 // PLUGIN MANAGEMENT
 /////////////////////////////////
 
@@ -130,6 +119,17 @@ runTask('Configuring plugins', () => {
 		}
 	});
 
+});
+
+/////////////////////////////////
+// PLATFORM MANAGEMENT
+/////////////////////////////////
+
+const platforms = nodePackage.cordova.platforms || [];
+platforms.forEach(platform => {
+	runTask(`Installing ${platform}`, () => {
+		execSync(`npm run cordova -- platform add ${platform}`, {stdio: 'inherit'});
+	});
 });
 
 /////////////////////////////////

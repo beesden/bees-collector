@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { NgForm } from "@angular/forms";
 import { NavParams, ViewController } from "ionic-angular";
 import { Figure } from "src/entity/figure";
-import { FigureProperty } from "src/entity/figure-property";
 import { FigureService } from "src/service/figure.service";
 
 @Component({
@@ -69,33 +68,6 @@ import { FigureService } from "src/service/figure.service";
         </fieldset>
 
         <fieldset>
-          <legend>Additional info</legend>
-
-          <div class="figure-properties" *ngFor="let property of figure.properties; let idx = index">
-
-            <ion-item>
-              <ion-label>Label <span>*</span></ion-label>
-              <ion-input [name]="'property_name_' + idx" [(ngModel)]="property.name" required></ion-input>
-            </ion-item>
-
-            <ion-item>
-              <ion-label>Value <span>*</span></ion-label>
-              <ion-input [name]="'property_value_' + idx" [(ngModel)]="property.value" required></ion-input>
-            </ion-item>
-
-            <button class="bc-button bc-button--text" type="button" (click)="removeProperty(idx)">
-              <ion-icon name="close"></ion-icon>
-            </button>
-
-          </div>
-
-          <div class="figure-property-add">
-            <button class="bc-button bc-button--text" type="button" (click)="addProperty()">Add</button>
-          </div>
-
-        </fieldset>
-
-        <fieldset>
           <legend>Tags:</legend>
           <bc-tag-manager name="tags" [(ngModel)]="figure.tags"></bc-tag-manager>
         </fieldset>
@@ -117,33 +89,15 @@ export class FigureEditPageComponent {
     if (figureId) {
 
       // Edit an existing figure
-      this.figureService.getOne(figureId).then(figure => {
-        this.figure = figure;
-        this.figure.properties = this.figure.properties || [];
-      });
+      this.figureService.getOne(figureId).then(figure => this.figure = figure);
 
     } else {
 
       // Create a new figure
       this.figure = new Figure();
-      this.figure.properties = [];
 
     }
 
-  }
-
-  /**
-   * Add the new property into the form.
-   */
-  addProperty(): void {
-    this.figure.properties.push(new FigureProperty());
-  }
-
-  /**
-   * Remove a custom property row from the form.
-   */
-  removeProperty(idx: number): void {
-    this.figure.properties.splice(idx, 1);
   }
 
   /**

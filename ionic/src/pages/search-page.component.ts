@@ -1,5 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { Content } from "ionic-angular";
+import { timer } from "rxjs/internal/observable/timer";
+import { Subscription } from "rxjs/Subscription";
 import { Figure } from "src/entity/figure";
 import { FigureService } from "src/service/figure.service";
 
@@ -9,7 +11,7 @@ import { FigureService } from "src/service/figure.service";
     <ion-header>
 
       <ion-navbar>
-        <ion-searchbar [(ngModel)]="queryInput" (ionChange)="search(queryInput)" (ionClear)="search()"></ion-searchbar>
+        <ion-searchbar [debounce]="0" [(ngModel)]="queryInput" (ionChange)="search(queryInput)" (ionClear)="search()"></ion-searchbar>
       </ion-navbar>
 
     </ion-header>
@@ -18,7 +20,7 @@ import { FigureService } from "src/service/figure.service";
 
       <ion-spinner *ngIf="queryInput && !figures"></ion-spinner>
       <p class="bc-type-text" *ngIf="queryInput && figures && !figures?.length">No results found. Please try again.</p>
-      
+
       <header class="bc-header" *ngIf="figures">
         <p>{{resultCount > 0 ? resultCount + ' results' : 'No results found.'}}</p>
       </header>
@@ -49,6 +51,8 @@ export class SearchPageComponent {
   resultCount: number;
   figures: Figure[];
 
+  delay: Subscription;
+
   constructor(private figureService: FigureService) {
   }
 
@@ -62,14 +66,20 @@ export class SearchPageComponent {
     delete this.figures;
     delete this.resultCount;
 
+    if (this.delay) {
+      this.delay.unsubscribe();
+    }
+
     if (!query) {
       return;
     }
 
-    this.figureService.search(query, this.perPage, 0).then(([figures, count]) => {
-      this.figures = figures;
-      this.resultCount = count;
-      this.content.scrollToTop();
+    this.delay = timer(750).subscribe(() => {
+      this.figureService.search(query, this.perPage, 0).then(([figures, count]) => {
+        this.figures = figures;
+        this.resultCount = count;
+        this.content.scrollToTop();
+      });
     });
 
   }

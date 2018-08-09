@@ -38,7 +38,7 @@ export class ThemeService {
     const lightContent = getComputedStyle(nativeElement).getPropertyValue('--theme-statusbar-style') === 'light' || true;
 
     if (!this.platform.is('cordova')) {
-      console.log('Apply statusbar theme', {statusBarBackground, lightContent});
+      console.info('Applying statusbar theme', {statusBarBackground, lightContent});
       return;
     }
 

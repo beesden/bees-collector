@@ -7,7 +7,7 @@ services:
     command: bash -c 'npm install && npm run build'
     working_dir: /build
     volumes:
-      - /build/node_modules
+      - npm:/root/.npm
       - ./ionic:/build
       - ./dist/www:/dist/www
 
@@ -18,7 +18,7 @@ services:
     image: node
     working_dir: /build
     volumes:
-      - /build/node_modules
+      - npm:/root/.npm
       - /build/plugins
       - ./cordova:/build
       - ./dist/platforms:/build/platforms
@@ -44,3 +44,4 @@ services:
 
 volumes:
   gradle:
+  npm:

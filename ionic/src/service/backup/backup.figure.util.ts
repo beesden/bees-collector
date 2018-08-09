@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Figure } from "src/entity/figure";
 import { FigureAccessory } from "src/entity/figure-accessory";
-import { FigureProperty } from "src/entity/figure-property";
 import { Tag } from "src/entity/tag";
 import { ImageService } from "src/service/image.service";
 
@@ -21,9 +20,9 @@ export class BackupFigureUtil {
       damaged: figure.damaged,
       incomplete: figure.incomplete,
       manufacturer: figure.manufacturer,
+      highlight: figure.highlight,
       images: (figure.images || []).map(image => image.url),
       accessories: (figure.accessories || []).map(acc => ({name: acc.name, variant: acc.variant})),
-      properties: (figure.properties || []).map(prop => ({name: prop.name, value: prop.value})),
       release: figure.release,
       tags: (figure.tags || []).map(tag => tag.name),
       date_update: figure.dateUpdated.toISOString(),
@@ -37,18 +36,12 @@ export class BackupFigureUtil {
     figure.id = data.id;
     figure.name = data.name;
     figure.variant = data.variant;
+    figure.highlight = data.highlight;
     figure.collected = data.collected;
     figure.incomplete = data.incomplete;
     figure.damaged = data.damaged;
     figure.release = data.release;
     figure.manufacturer = data.manufacturer;
-
-    figure.properties = (data.properties || []).map(data => {
-      const prop = new FigureProperty();
-      prop.name = data.name;
-      prop.value = data.value;
-      return prop;
-    });
 
     figure.tags = (data.tags || []).map(value => {
       const tag = new Tag();

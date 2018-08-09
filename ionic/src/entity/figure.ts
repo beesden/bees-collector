@@ -2,7 +2,6 @@ import { Collectible } from "src/entity/collectible";
 import { Collection } from "src/entity/collection";
 import { CollectionItem } from "src/entity/collection-item";
 import { FigureAccessory } from "src/entity/figure-accessory";
-import { FigureProperty } from "src/entity/figure-property";
 import { Column, Entity, OneToMany } from "typeorm/browser";
 
 @Entity()
@@ -19,9 +18,6 @@ export class Figure extends Collectible {
 
   @OneToMany(type => FigureAccessory, accessory => accessory.figure, {cascade: true, eager: true})
   accessories: FigureAccessory[];
-
-  @OneToMany(type => FigureProperty, property => property.figure, {cascade: true, eager: true})
-  properties: FigureProperty[];
 
   @OneToMany(type => CollectionItem, item => item.figure)
   items: CollectionItem[];

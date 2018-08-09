@@ -14,10 +14,10 @@ interface FigureData {
   collected: boolean;
   damaged: boolean;
   incomplete: boolean;
+  highlight: boolean;
   release: string;
   images: string[];
   accessories: Array<{ name: string, variant: string }>;
-  properties: Array<{ name: string, value: string }>;
   tags: string[];
   date_update: string;
   date_created: string;

@@ -6,6 +6,7 @@ import { AccessoryEditPageComponent } from "src/pages";
 import { FigureEditPageComponent } from "src/pages/figure/figure-edit-page.component";
 import { ImageService } from "src/service";
 import { FigureService } from "src/service/figure.service";
+import { FileFolder } from "src/service/file.service";
 
 @Component({
   selector: 'bp-figure-view',
@@ -64,12 +65,6 @@ import { FigureService } from "src/service/figure.service";
           <ng-container *ngIf="figure.release">
             <dt>Release date</dt>
             <dd>{{figure.release | date: 'yyyy'}}</dd>
-          </ng-container>
-
-          <!-- Extra info -->
-          <ng-container *ngFor="let property of figure.properties">
-            <dt>{{property.name}}</dt>
-            <dd>{{property.value}}</dd>
           </ng-container>
         </dl>
 
@@ -184,7 +179,7 @@ export class FigureViewPageComponent implements IonViewDidEnter {
    */
   changeImage(): void {
 
-    this.imageService.create()
+    this.imageService.create(FileFolder.FIGURE)
       .then(image => this.figure.images = [image])
       .then(() => this.figureService.save(this.figure));
 

@@ -5,12 +5,12 @@ import { Collection } from "src/entity/collection";
 import { CollectionItem } from "src/entity/collection-item";
 import { Figure } from "src/entity/figure";
 import { FigureAccessory } from "src/entity/figure-accessory";
-import { FigureProperty } from "src/entity/figure-property";
 import { ItemImage } from "src/entity/item-image";
 import { Tag } from "src/entity/tag";
 import { BackupCollectionUtil } from "src/service/backup/backup.collection.util";
 import { BackupFigureUtil } from "src/service/backup/backup.figure.util";
 import { ConnectionService } from "src/service/connection.service";
+import { FileFolder, FileService } from "src/service/file.service";
 
 export * from './backup.collection.util';
 export * from './backup.figure.util';
@@ -25,19 +25,15 @@ export class BackupService {
               private platform: Platform,
               private loadingCtrl: LoadingController,
               private file: FilePlugin,
+              private fileService: FileService,
               private collectionUtil: BackupCollectionUtil,
               private figureUtil: BackupFigureUtil) {
 
     this.input.type = 'file';
-    this.input.accept = '.json';
     this.input.multiple = false;
 
     this.loader = this.loadingCtrl.create();
 
-  }
-
-  get dataDirectory(): string {
-    return this.platform.is('ios') ? this.file.syncedDataDirectory : this.file.externalDataDirectory;
   }
 
   private selectFile(): Promise<string> {
@@ -104,7 +100,8 @@ export class BackupService {
         // Download the backup
         const file = new Blob([JSON.stringify(dataBackup)], {type: 'application/json'});
 
-        return this.file.writeFile(this.dataDirectory, `backup-latest.json`, file, {replace: true})
+        return this.fileService.getFolder(FileFolder.BACKUP)
+          .then(directory => this.file.writeFile(directory.nativeURL, `backup-latest.json`, file, {replace: true}))
           .then(() => this.file.writeFile(this.file.externalDataDirectory, `backup-${Date.now()}.json`, file, {replace: true}));
 
       })
@@ -114,14 +111,21 @@ export class BackupService {
 
   restoreData(latest: boolean = true): Promise<boolean> {
 
-    const getFile: Promise<string> = latest ? this.file.readAsText(this.dataDirectory, 'backup-latest.json') : this.selectFile();
+    let getFile: Promise<string>;
+
+    if (latest) {
+      getFile = this.fileService.getFolder(FileFolder.BACKUP)
+        .then(directory => this.file.readAsText(directory.nativeURL, 'backup-latest.json'))
+        .catch(() => this.selectFile());
+    } else {
+      getFile = this.selectFile();
+    }
 
     return getFile.then(file => this.loader.present().then(() => file))
       .then(file => JSON.parse(file) as DataBackup)
       .then(backup => this.connectionService.connection
         .then(connection => connection.manager.clear(Figure)
           .then(() => connection.manager.clear(FigureAccessory))
-          .then(() => connection.manager.clear(FigureProperty))
           .then(() => connection.manager.clear(Collection))
           .then(() => connection.manager.clear(CollectionItem))
           .then(() => connection.manager.clear(ItemImage))

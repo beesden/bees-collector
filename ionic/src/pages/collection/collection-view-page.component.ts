@@ -6,6 +6,7 @@ import { FigureEditPageComponent } from "src/pages";
 import { CollectionEditPageComponent } from "src/pages/collection/collection-edit-page.component";
 import { ImageService } from "src/service";
 import { CollectionService } from "src/service/collection.service";
+import { FileFolder } from "src/service/file.service";
 
 @Component({
   selector: 'bp-collection-view',
@@ -41,15 +42,15 @@ import { CollectionService } from "src/service/collection.service";
           <h1 class="bc-type-title">{{collection.name}}</h1>
           <h2 class="bc-type-subtitle">{{collection.series}}</h2>
           <p *ngIf="collection.description">{{collection.description}}</p>
+          <hr/>
+          <p>{{collection.length}} figures</p>
         </header>
 
         <ng-container *ngIf="collection.figures?.length">
 
-          <h2 class="bc-type-side">{{collection.collected}} / {{collection.length}} collected</h2>
 
           <section>
-            <bc-figure-card *ngFor="let figure of collection.figures"
-                            [figure]="figure"></bc-figure-card>
+            <bc-figure-card *ngFor="let figure of collection.figures" [figure]="figure"></bc-figure-card>
           </section>
         </ng-container>
 
@@ -120,7 +121,7 @@ export class CollectionViewPageComponent implements IonViewDidEnter {
    */
   changeImage(): void {
 
-    this.imageService.create()
+    this.imageService.create(FileFolder.COLLECTION)
       .then(image => this.collection.images = [image])
       .then(() => this.collectionService.saveCollection(this.collection));
 

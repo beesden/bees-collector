@@ -41,7 +41,6 @@ export class TagManagerComponent extends AbstractValueAccessor<Tag[]> {
         .groupBy('name')
         .getManyAndCount()
         .then(tags => {
-          console.log(tags);
         });
     });
   }
