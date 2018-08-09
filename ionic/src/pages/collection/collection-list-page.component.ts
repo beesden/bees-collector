@@ -2,7 +2,7 @@ import { Component, NgZone } from "@angular/core";
 import { ModalController } from "ionic-angular";
 import { Page } from "ionic-angular/navigation/nav-util";
 import { Collection } from "src/entity/collection";
-import { IonViewWillEnter } from "src/ionic-lifecycle";
+import { IonViewDidEnter } from "src/ionic-lifecycle";
 import { CollectionEditPageComponent } from "src/pages/collection/collection-edit-page.component";
 import { SearchPageComponent } from "src/pages/search-page.component";
 import { CollectionService } from "src/service";
@@ -37,7 +37,7 @@ import { CollectionService } from "src/service";
 
       <ng-container *ngIf="collections?.length > 0">
         <bc-collection-list [collections]="collections"></bc-collection-list>
-        
+
         <ion-infinite-scroll (ionInfinite)="doInfinite($event)" [enabled]="total > collections.length">
           <ion-infinite-scroll-content></ion-infinite-scroll-content>
         </ion-infinite-scroll>
@@ -57,14 +57,13 @@ import { CollectionService } from "src/service";
     </ion-content>
   `
 })
-export class CollectionListPageComponent implements IonViewWillEnter {
+export class CollectionListPageComponent implements IonViewDidEnter {
 
   private readonly perPage: number = 12;
   private page: number = 1;
 
   total: number;
   collections: Collection[];
-  collectionEditPage: Page = CollectionEditPageComponent;
   searchPage: Page = SearchPageComponent;
 
   constructor(private collectionService: CollectionService,
@@ -72,7 +71,7 @@ export class CollectionListPageComponent implements IonViewWillEnter {
               private zone: NgZone) {
   }
 
-  ionViewWillEnter(): void {
+  ionViewDidEnter(): void {
 
     // Fetch all up to the current page.
     const refreshCount = this.perPage * this.page;
@@ -96,7 +95,9 @@ export class CollectionListPageComponent implements IonViewWillEnter {
   }
 
   addCollection(): void {
-    this.modalCtrl.create(CollectionEditPageComponent).present();
+    const modal = this.modalCtrl.create(CollectionEditPageComponent)
+    modal.onDidDismiss(() => this.ionViewDidEnter());
+    modal.present();
   }
 
 }

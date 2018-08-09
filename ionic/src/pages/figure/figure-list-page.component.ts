@@ -2,7 +2,7 @@ import { Component, NgZone } from '@angular/core';
 import { ModalController } from "ionic-angular";
 import { Page } from "ionic-angular/navigation/nav-util";
 import { Figure } from "src/entity/figure";
-import { IonViewWillEnter } from "src/ionic-lifecycle";
+import { IonViewDidEnter } from "src/ionic-lifecycle";
 import { FigureEditPageComponent } from "src/pages/figure/figure-edit-page.component";
 import { SearchPageComponent } from "src/pages/search-page.component";
 import { FigureService } from "src/service/figure.service";
@@ -35,7 +35,7 @@ import { FigureService } from "src/service/figure.service";
 
       <header class="bc-header" *ngIf="figures">
         <h1 class="bc-type-title">All figures</h1>
-        <hr />
+        <hr/>
         <p>{{total}} figures</p>
       </header>
 
@@ -65,7 +65,7 @@ import { FigureService } from "src/service/figure.service";
     </button>
   `
 })
-export class FigureListPageComponent implements IonViewWillEnter {
+export class FigureListPageComponent implements IonViewDidEnter {
 
   private readonly perPage: number = 12;
   private page: number = 1;
@@ -80,7 +80,7 @@ export class FigureListPageComponent implements IonViewWillEnter {
               private zone: NgZone) {
   }
 
-  ionViewWillEnter(): void {
+  ionViewDidEnter(): void {
 
     // Fetch all up to the current page.
     const refreshCount = this.perPage * this.page;
@@ -101,7 +101,9 @@ export class FigureListPageComponent implements IonViewWillEnter {
   }
 
   addFigure(): void {
-    this.modalCtrl.create(FigureEditPageComponent).present();
+    const modal = this.modalCtrl.create(FigureEditPageComponent);
+    modal.onDidDismiss(() => this.ionViewDidEnter());
+    modal.present();
   }
 
 }

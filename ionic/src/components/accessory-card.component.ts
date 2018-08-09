@@ -65,7 +65,9 @@ export class AccessoryCardComponent {
    * Open the edit accessory page.
    */
   editAccessory(): void {
-    this.modalCtrl.create(AccessoryEditPageComponent, {accessoryId: this.accessory.id}).present();
+    const modal = this.modalCtrl.create(AccessoryEditPageComponent, {accessoryId: this.accessory.id});
+    modal.onDidDismiss(accessory => this.accessory = accessory);
+    modal.present();
   }
 
 }
