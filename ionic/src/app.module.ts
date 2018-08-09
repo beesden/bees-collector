@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { AndroidPermissions } from "@ionic-native/android-permissions";
 import { Camera } from "@ionic-native/camera";
 import { File } from "@ionic-native/file";
 import { SplashScreen } from "@ionic-native/splash-screen";
@@ -85,7 +86,8 @@ const pages = [
     // Other services
     ThemeService,
 
-    // Ionic Native plugins
+    // Ionic Native cordova
+    AndroidPermissions,
     Camera,
     File,
     SplashScreen,

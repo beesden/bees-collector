@@ -19,7 +19,7 @@ export * from './backup.figure.util';
 export class BackupService {
 
   private input: HTMLInputElement = document.createElement('input');
-  private loader: Loading;
+  private loading: Loading;
 
   constructor(private connectionService: ConnectionService,
               private platform: Platform,
@@ -32,8 +32,14 @@ export class BackupService {
     this.input.type = 'file';
     this.input.multiple = false;
 
-    this.loader = this.loadingCtrl.create();
+  }
 
+  /**
+   * Can't reuse a loading instance. Because ionic hates you.
+   */
+  startLoad(): Promise<void> {
+    this.loading = this.loadingCtrl.create();
+    return this.loading.present();
   }
 
   private selectFile(): Promise<string> {
@@ -43,6 +49,8 @@ export class BackupService {
       const reader = new FileReader();
 
       reader.onload = () => {
+        this.input.onchange = null;
+        this.input.value = null;
         resolve(reader.result);
       };
 
@@ -77,7 +85,7 @@ export class BackupService {
 
   backupData(): Promise<void> {
 
-    return this.loader.present()
+    return this.startLoad()
       .then(() => this.connectionService.connection)
       .then(connection => Promise.all([
         connection.manager.find(Figure),
@@ -107,7 +115,7 @@ export class BackupService {
           ]));
 
       })
-      .then(() => this.loader.dismiss());
+      .then(() => this.loading.dismiss());
 
   }
 
@@ -123,7 +131,7 @@ export class BackupService {
       getFile = this.selectFile();
     }
 
-    return getFile.then(file => this.loader.present().then(() => file))
+    return getFile.then(file => this.startLoad().then(() => file))
       .then(file => JSON.parse(file) as DataBackup)
       .then(backup => this.connectionService.connection
         .then(connection => connection.manager.clear(ItemImage)
@@ -138,7 +146,7 @@ export class BackupService {
           .then(collections => connection.manager.save(collections))
         )
       )
-      .then(() => this.loader.dismiss());
+      .then(() => this.loading.dismiss());
   }
 
 }

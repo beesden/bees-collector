@@ -18,6 +18,7 @@
     "@angular/forms": "^6.1.2",
     "@angular/platform-browser": "^6.1.2",
     "@angular/platform-browser-dynamic": "^6.1.2",
+    "@ionic-native/android-permissions": "^4.11.0",
     "@ionic-native/camera": "^4.11.0",
     "@ionic-native/core": "^4.11.0",
     "@ionic-native/file": "^4.11.0",

@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { AndroidPermissions } from "@ionic-native/android-permissions";
 import { Camera, CameraOptions, DestinationType, MediaType, PictureSourceType } from "@ionic-native/camera";
 import { File } from "@ionic-native/file";
 import { ActionSheetController } from "ionic-angular";
@@ -11,6 +12,7 @@ export class ImageService {
   constructor(private actionSheetCtrl: ActionSheetController,
               private camera: Camera,
               private file: File,
+              private permissions: AndroidPermissions,
               private fileService: FileService) {
   }
 
@@ -93,51 +95,58 @@ export class ImageService {
     if (stored) {
       promise = Promise.resolve(stored);
     } else {
-      promise = this.file.resolveLocalFilesystemUrl(url).then(() => new Promise<string>((resolve, reject) => {
+      promise = new Promise<string>((resolve, reject) => {
 
         const init = () => {
 
-          const img = new Image();
-          img.onerror = error => reject(error);
-          img.onload = () => {
+          this.permissions.checkPermission('android.permission.WRITE_EXTERNAL_STORAGE')
+            .then(res => res.hasPermission ? null : this.permissions.requestPermission('android.permission.WRITE_EXTERNAL_STORAGE'))
+            .then(() => {
 
-            const canvas = document.createElement("canvas");
-            const ctx = canvas.getContext("2d");
+              const img = new Image();
+              img.onerror = error => reject(error);
+              img.onload = () => {
 
-            const ratio = Math.min(targetWidth / img.width, targetHeight / img.height);
-            canvas.width = img.width * ratio;
-            canvas.height = img.height * ratio;
-            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                const canvas = document.createElement("canvas");
+                const ctx = canvas.getContext("2d");
 
-            this.images[imageUrl] = canvas.toDataURL();
-            resolve(this.images[imageUrl]);
+                const ratio = Math.min(targetWidth / img.width, targetHeight / img.height);
+                canvas.width = img.width * ratio;
+                canvas.height = img.height * ratio;
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-          };
+                this.images[imageUrl] = canvas.toDataURL();
+                resolve(this.images[imageUrl]);
 
-          img.src = url;
-          return url;
+              };
 
+              img.src = url;
+              return url;
+
+            });
         };
 
         this.loadQueue.push(init);
         if (this.loadQueue.length === 1) {
           init();
         }
+      });
 
-      }));
+      return promise
+        .catch(() => null)
+        .then(dataUrl => {
+
+          this.loadQueue.shift();
+
+          const next = this.loadQueue[0];
+          if (next) {
+            next();
+          }
+
+          return dataUrl;
+        });
+
     }
-
-    return promise.then(dataUrl => {
-
-      this.loadQueue.shift();
-
-      const next = this.loadQueue[0];
-      if (next) {
-        next();
-      }
-
-      return dataUrl;
-    });
 
   }
 

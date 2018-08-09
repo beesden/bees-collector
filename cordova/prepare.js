@@ -83,6 +83,7 @@ runTask('Configuring environment', () => {
 	// Description
 	addElement(root, 'name', nodePackage.name);
 	addElement(root, 'description', nodePackage.description);
+	addElement(root, 'author').set('email', 'beesden@gmail.com');
 
 	// Config / Preferences
 	addElement(root, 'access').set('origin', 'cdvfile://*');
@@ -100,7 +101,7 @@ runTask('Configuring environment', () => {
 // PLUGIN MANAGEMENT
 /////////////////////////////////
 
-runTask('Configuring plugins', () => {
+runTask('Configuring cordova', () => {
 
 	if (!existsSync(Folders.PLUGINS)) {
 		mkdirSync(Folders.PLUGINS);
