@@ -1,7 +1,6 @@
 import { Component, HostBinding, Input } from '@angular/core';
 import { ActionSheetController, AlertController, ModalController } from "ionic-angular";
 import { FigureAccessory } from "src/entity/figure-accessory";
-import { ItemImage } from "src/entity/item-image";
 import { AccessoryEditPageComponent } from "src/pages";
 import { AccessoryService } from "src/service/accessory.service";
 
@@ -9,8 +8,6 @@ import { AccessoryService } from "src/service/accessory.service";
   selector: 'bc-accessory-card',
   styleUrls: ['./accessory-card.component.scss'],
   template: `
-    <figure [bc-image-view]="coverImage"></figure>
-
     <header>
       <h2>{{accessory.name}}</h2>
       <p *ngIf="accessory.variant">{{accessory.variant}}</p>
@@ -32,10 +29,6 @@ export class AccessoryCardComponent {
               private alertCtrl: AlertController,
               private actionSheetCtrl: ActionSheetController,
               private modalCtrl: ModalController) {
-  }
-
-  get coverImage(): ItemImage {
-    return this.accessory.images && this.accessory.images.length ? this.accessory.images[0] : null;
   }
 
   /**

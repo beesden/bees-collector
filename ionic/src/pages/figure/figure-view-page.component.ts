@@ -50,23 +50,27 @@ import { FileFolder } from "src/service/file.service";
 
         <p class="bc-type-status" [ngClass]="figure.status">{{figure.statusText}}</p>
 
-        <hr/>
+        <ng-container *ngIf="figure.manufacturer || figure.release">
 
-        <!-- Metadata -->
-        <dl class="bc-type-definitions">
+          <hr/>
 
-          <!-- Figure manufacturer -->
-          <ng-container *ngIf="figure.manufacturer">
-            <dt>Manufacturer</dt>
-            <dd>{{figure.manufacturer}}</dd>
-          </ng-container>
+          <!-- Metadata -->
+          <dl class="bc-type-definitions">
 
-          <!-- Release date -->
-          <ng-container *ngIf="figure.release">
-            <dt>Release date</dt>
-            <dd>{{figure.release | date: 'yyyy'}}</dd>
-          </ng-container>
-        </dl>
+            <!-- Figure manufacturer -->
+            <ng-container *ngIf="figure.manufacturer">
+              <dt>Manufacturer</dt>
+              <dd>{{figure.manufacturer}}</dd>
+            </ng-container>
+
+            <!-- Release date -->
+            <ng-container *ngIf="figure.release">
+              <dt>Release date</dt>
+              <dd>{{figure.release | date: 'yyyy'}}</dd>
+            </ng-container>
+          </dl>
+
+        </ng-container>
 
         <nav>
           <bc-status-button [checked]="figure.collected" (click)="toggleCollected()">Owned</bc-status-button>

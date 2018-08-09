@@ -8,6 +8,7 @@ services:
     working_dir: /build
     volumes:
       - npm:/root/.npm
+      - /build/node_modules
       - ./ionic:/build
       - ./dist/www:/dist/www
 
@@ -19,6 +20,7 @@ services:
     working_dir: /build
     volumes:
       - npm:/root/.npm
+      - /build/node_modules
       - /build/plugins
       - ./cordova:/build
       - ./dist/platforms:/build/platforms

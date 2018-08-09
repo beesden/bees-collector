@@ -14,6 +14,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "deleteOutputPath": false,
+            "showCircularDependencies": false,
             "outputPath": "../dist/www",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -39,9 +40,8 @@
                   "with": "environments/environment.prod.ts"
                 }
               ],
-              "scripts": [],
               "deployUrl": "",
-              "optimization": true,
+              "optimization": false,
               "outputHashing": "all",
               "sourceMap": false,
               "extractCss": true,

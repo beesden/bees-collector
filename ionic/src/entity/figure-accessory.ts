@@ -1,9 +1,20 @@
-import { Collectible } from "src/entity/collectible";
 import { Figure } from "src/entity/figure";
-import { Entity, ManyToOne } from "typeorm/browser";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm/browser";
 
 @Entity()
-export class FigureAccessory extends Collectible {
+export class FigureAccessory {
+
+  @PrimaryGeneratedColumn()
+  id: string;
+
+  @Column()
+  name: string;
+
+  @Column({nullable: true})
+  variant: string;
+
+  @Column({nullable: true})
+  notes: string;
 
   @ManyToOne(type => Figure, figure => figure.accessories, {onDelete: 'CASCADE'})
   figure: Figure;

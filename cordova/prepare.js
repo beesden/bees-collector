@@ -89,6 +89,7 @@ runTask('Configuring environment', () => {
 	addPreference('StatusBarOverlaysWebView', 'true');
 	addPreference('AutoHideSplashScreen', 'false');
 	addPreference('ShowSplashScreenSpinner', 'false');
+	addPreference('AndroidLaunchMode', 'singleInstance');
 
 	// Save
 	writeFileSync(configFile, new ElementTree(root).write({indent: 4}), 'utf-8');

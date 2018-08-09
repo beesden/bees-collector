@@ -48,14 +48,8 @@ export class FigureService {
   getOne(figureId: number): Promise<Figure> {
 
     return this.query.then(query => query
-      .leftJoinAndSelect('figure.properties', 'property')
       .leftJoinAndSelect('figure.tags', 'tag')
       .leftJoinAndSelect('figure.accessories', 'accessory')
-      .leftJoinAndSelect('accessory.images', 'accessory_images')
-      .leftJoinAndSelect('figure.items', 'item')
-      .leftJoinAndSelect('item.collection', 'collection')
-      .leftJoinAndSelect('collection.images', 'collection_image')
-      .loadRelationCountAndMap("collection.length", "collection.items")
       .whereInIds(figureId)
       .getOne()
     );

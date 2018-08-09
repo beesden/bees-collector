@@ -14,6 +14,7 @@ import { ImageSliderComponent } from "src/components/image-slider.component";
 import { ImageViewDirective, SortableDirective, SortableHandleDirective, SortableItemDirective } from "src/directives";
 import * as Pages from "src/pages";
 import { AccessoryService, BackupCollectionUtil, BackupFigureUtil, BackupService, CollectionService, ConnectionService, FigureService, ImageService, ThemeService } from "src/service";
+import { FileService } from "src/service/file.service";
 
 const pages = [
 
@@ -70,12 +71,14 @@ const pages = [
 
     // Data services
     ConnectionService,
-    BackupService,
     FigureService,
     AccessoryService,
     CollectionService,
+
+    FileService,
     ImageService,
 
+    BackupService,
     BackupFigureUtil,
     BackupCollectionUtil,
 
