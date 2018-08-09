@@ -43,9 +43,10 @@ html {
   --theme-input-value: #333;
 
   // Figure statuses
-  --status-complete: #292;
-  --status-incomplete: #929;
-  --status-unowned: #922;
+  --status-complete: #4baf4f;
+  --status-incomplete: #3e50b4;
+  --status-damaged: #ff9700;
+  --status-unowned: #f44236;
 
   // Static swatches
   --swatch-white: #fff;
@@ -74,9 +75,10 @@ hr {
 @import './ionic/alert';
 @import './ionic/backdrop';
 @import './ionic/click-block';
-@import './ionic/navbar';
+@import './ionic/loading';
 @import './ionic/menu';
 @import './ionic/modal';
+@import './ionic/navbar';
 @import './ionic/page';
 @import './ionic/picker';
 @import './ionic/searchbar';

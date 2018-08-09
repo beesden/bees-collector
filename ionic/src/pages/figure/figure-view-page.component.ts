@@ -74,9 +74,9 @@ import { FigureService } from "src/service/figure.service";
         </dl>
 
         <nav>
-          <bc-status-button [checked]="figure.collected" (click)="toggleCollected()">Collected</bc-status-button>
-          <bc-status-button *ngIf="figure.collected" [checked]="!figure.incomplete" (click)="toggleIncomplete()">Complete</bc-status-button>
+          <bc-status-button [checked]="figure.collected" (click)="toggleCollected()">Owned</bc-status-button>
           <bc-status-button *ngIf="figure.collected" [checked]="!figure.damaged" (click)="toggleDamaged()">Undamaged</bc-status-button>
+          <bc-status-button *ngIf="figure.collected" [checked]="!figure.incomplete" (click)="toggleIncomplete()">Complete</bc-status-button>
         </nav>
 
       </header>

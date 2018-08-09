@@ -16,4 +16,8 @@ ion-slides {
   .swiper-slide {
     flex: 100vw 0 0;
   }
+
+  .swiper-pagination {
+    display: none;
+  }
 }

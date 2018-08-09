@@ -1,5 +1,5 @@
-import { AfterContentInit, ContentChildren, Directive, EventEmitter, Output, QueryList } from '@angular/core';
-import { take } from "rxjs/operators";
+import { AfterContentInit, ContentChildren, Directive, EventEmitter, OnDestroy, Output, QueryList } from '@angular/core';
+import { Subscription } from "rxjs/Subscription";
 import { SortableItemDirective } from "src/directives/reorder/sortable-item.directive";
 
 export interface SortableEvent {
@@ -10,20 +10,35 @@ export interface SortableEvent {
 @Directive({
   selector: '[bc-sortable]'
 })
-export class SortableDirective implements AfterContentInit {
+export class SortableDirective implements AfterContentInit, OnDestroy {
 
   @ContentChildren(SortableItemDirective) items: QueryList<SortableItemDirective>;
+  private listeners: Subscription[][] = [];
 
   @Output('bc-sortable') onComplete: EventEmitter<{ startIdx: number, targetIdx: number }> = new EventEmitter();
 
   ngAfterContentInit(): void {
 
-    this.items.changes.pipe(take(1)).subscribe(items => items.forEach(item => {
-      item.dragStart.subscribe(() => this.handleStart(item));
-      item.dragMove.subscribe(() => this.handleMove(item));
-      item.dragEnd.subscribe(() => this.handleEnd(item));
-    }));
+    this.items.changes.subscribe(items => {
 
+      this.ngOnDestroy();
+
+      this.listeners = items.map(item => {
+        return [
+          item.dragStart.subscribe(() => this.handleStart(item)),
+          item.dragMove.subscribe(() => this.handleMove(item)),
+          item.dragEnd.subscribe(() => this.handleEnd(item))
+        ];
+      });
+
+    });
+
+    this.items.notifyOnChanges();
+
+  }
+
+  ngOnDestroy(): void {
+    this.listeners.forEach(listeners => listeners.forEach(listener => listener.unsubscribe()));
   }
 
   handleStart(draggedItem: SortableItemDirective): void {

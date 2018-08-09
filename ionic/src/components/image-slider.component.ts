@@ -5,9 +5,11 @@ import { ItemImage } from "src/entity/item-image";
   selector: 'bc-image-slider',
   styleUrls: ['./image-slider.component.scss'],
   template: `
-    <ion-slides [ngClass]="{'has-image': images?.length}"> 
-      <ion-slide *ngFor="let image of images" [bc-image-view]="image">
-      </ion-slide>
+    <ion-slides [ngClass]="{'has-image': images?.length}">
+      <ion-slide *ngFor="let image of images" [bc-image-view]="image"></ion-slide>
+      <button *ngIf="!images?.length">
+        <ion-icon name="add"></ion-icon>
+      </button>
     </ion-slides>
   `
 })

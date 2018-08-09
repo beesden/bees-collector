@@ -10,7 +10,7 @@ import { BackupService } from "src/service/backup/backup.service";
       <ion-navbar>
         <button menuToggle="menu">
           <ion-icon name="menu"></ion-icon>
-        </button>        
+        </button>
         <ion-title>Import / Export</ion-title>
       </ion-navbar>
 
@@ -35,11 +35,13 @@ import { BackupService } from "src/service/backup/backup.service";
           <span>Restore latest</span>
         </button>
         
+        <br />
+
         <button class="bc-button bc-button--text" (click)="restore(false)">
           <ion-icon name="cloud-download"></ion-icon>
           <span>Restore specific</span>
         </button>
-        
+
       </section>
 
       <h2>Backup</h2>
@@ -81,14 +83,14 @@ export class BackupRestorePageComponent {
   backup(): void {
     this.backupService.backupData().then(
       () => this.showMessage('Collection successfully backed up.'),
-      error => this.showMessage(error || 'Something went wrong. Please try again.')
+      error => this.showMessage(error ? error.message || error : 'Something went wrong. Please try again.', error)
     );
   }
 
   restore(latest: boolean): void {
     this.backupService.restoreData(latest).then(
       () => this.showMessage('Collection successfully restored.'),
-      error => this.showMessage(error || 'Something went wrong. Please try again.')
+      error => this.showMessage(error ? error.message || error : 'Something went wrong. Please try again.', error)
     );
   }
 

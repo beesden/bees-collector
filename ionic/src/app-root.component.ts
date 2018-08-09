@@ -31,10 +31,6 @@ import { ThemeService } from "src/service/theme.service";
         </button>
         <button class="menu-item" [ngClass]="{selected: activePage === figureListPage}" (click)="rootPage = figureListPage">
           <ion-icon name="body"></ion-icon>
-          <header>Tags</header>
-        </button>
-        <button class="menu-item" [ngClass]="{selected: activePage === figureListPage}" (click)="rootPage = figureListPage">
-          <ion-icon name="body"></ion-icon>
           <header>All Figures</header>
         </button>
         <button class="menu-item" [ngClass]="{selected: activePage === highlightsPage}" (click)="rootPage = highlightsPage">

@@ -37,9 +37,9 @@ export class BackupFigureUtil {
     figure.id = data.id;
     figure.name = data.name;
     figure.variant = data.variant;
-    figure.collected = data.images.length > 0;
-    figure.incomplete = data.images.length > 0 && !data.collected;
-    figure.damaged = data.images.length > 0 && !data.collected;
+    figure.collected = data.collected;
+    figure.incomplete = data.incomplete;
+    figure.damaged = data.damaged;
     figure.release = data.release;
     figure.manufacturer = data.manufacturer;
 
@@ -64,8 +64,12 @@ export class BackupFigureUtil {
       return prop;
     });
 
-    return Promise.all((data.images || []).map(url => this.imageService.createFromUrl(url)))
-      .then(images => figure.images = images)
+    figure.images = [];
+    return Promise.all((data.images || []).map(url => this.imageService.createFromUrl(url).catch(error => {
+      console.error(error);
+      return null;
+    })))
+      .then(images => figure.images = images.filter(image => !!image))
       .then(() => figure);
 
   }

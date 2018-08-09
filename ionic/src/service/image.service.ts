@@ -35,7 +35,9 @@ export class ImageService {
   }
 
   /**
-   * Opens an image and populates the image metadata from the file info.
+   * Originally used for opening an image and populates the image metadata (e.g. width / height) from a file.
+   * However since height and width aren't needed currently, this has been deprecated.
+   *
    * Can be used when adding an image or restoring from a backup.
    *
    * @param imageUrl
@@ -44,31 +46,7 @@ export class ImageService {
 
     const response = new ItemImage();
     response.url = imageUrl;
-
-    // Open the file from the device as a data URL
-    const parts = imageUrl.split('/');
-    const fileName = parts.pop();
-    const directory = parts.join('/') + '/';
-
-    if (!this.platform.is('cordova')) {
-      response.height = 1;
-      response.width = 1;
-      return Promise.resolve(response);
-    }
-
-    return this.file.readAsDataURL(directory, fileName).then(dataUrl => new Promise<ItemImage>((resolve, reject) => {
-
-      const image = new Image();
-
-      image.onerror = reject;
-      image.onload = () => {
-        response.height = image.height;
-        response.width = image.width;
-        resolve(response);
-      };
-
-      image.src = dataUrl;
-    }));
+    return Promise.resolve(response);
 
   }
 
@@ -110,6 +88,76 @@ export class ImageService {
       })
       .present()
     );
+
+  }
+
+  private loadQueue: Function[] = [];
+  private images = {};
+
+  /**
+   * Load an image, and reduce the size.
+   * Uses a queue to prevent too many images being resized at once.
+   * Returns Data URL string.
+   *
+   * @param {string} url
+   * @param {number} targetWidth
+   * @param {number} targetHeight
+   */
+  loadImage(url: string, targetWidth: number, targetHeight: number): Promise<string> {
+
+    const imageUrl = `${url}@${targetWidth}x${targetHeight}`;
+    const stored = this.images[imageUrl];
+
+    let promise: Promise<string>;
+
+    if (stored) {
+      promise = Promise.resolve(stored);
+    } else {
+      promise = new Promise<string>((resolve, reject) => {
+
+        const init = () => {
+
+          const img = new Image();
+          img.onerror = error => reject(error);
+          img.onload = () => {
+
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+
+            const ratio = Math.min(targetWidth / img.width, targetHeight / img.height);
+            canvas.width = img.width * ratio;
+            canvas.height = img.height * ratio;
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+            this.images[imageUrl] = canvas.toDataURL();
+            resolve(this.images[imageUrl]);
+
+          };
+
+          img.src = url;
+          return url;
+
+        };
+
+        this.loadQueue.push(init);
+        if (this.loadQueue.length === 1) {
+          init();
+        }
+
+      });
+    }
+
+    return promise.then(dataUrl => {
+
+      this.loadQueue.shift();
+
+      const next = this.loadQueue[0];
+      if (next) {
+        next();
+      }
+
+      return dataUrl;
+    });
 
   }
 

@@ -43,8 +43,8 @@ export class BackupCollectionUtil {
       }
     });
 
-    return Promise.all((data.images || []).map(url => this.imageService.createFromUrl(url)))
-      .then(images => collection.images = images)
+    return Promise.all((data.images || []).map(url => this.imageService.createFromUrl(url).catch(() => null)))
+      .then(images => collection.images = images.filter(image => !!image))
       .then(() => collection);
 
   }

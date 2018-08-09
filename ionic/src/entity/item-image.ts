@@ -9,9 +9,4 @@ export class ItemImage {
   @Column()
   url: string;
 
-  @Column()
-  height: number;
-
-  @Column()
-  width: number;
 }

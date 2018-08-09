@@ -53,12 +53,13 @@ import { CollectionService } from "src/service/collection.service";
 
         </fieldset>
 
-        <h2 *ngIf="collection.figures?.length">Figures</h2>
+        <fieldset class="figure-list" (bc-sortable)="reorderItems($event)">
 
-        <section class="figure-list" (bc-sortable)="reorderItems($event)">
+          <legend *ngIf="collection.figures?.length">Figures</legend>
+
           <div bc-sortable-item *ngFor="let figure of collection?.figures; let idx = index;">
 
-            <button bc-sortable-handle>
+            <button bc-sortable-handle type="button">
               <ion-icon name="reorder"></ion-icon>
             </button>
 
@@ -67,12 +68,12 @@ import { CollectionService } from "src/service/collection.service";
               <p>{{figure.variant}}</p>
             </header>
 
-            <button class="remove" (click)="removeFigureFromCollection(idx)">
+            <button class="remove" (click)="removeFigureFromCollection(idx)" type="button">
               <ion-icon name="close"></ion-icon>
             </button>
 
           </div>
-        </section>
+        </fieldset>
 
       </form>
 
@@ -104,7 +105,7 @@ export class CollectionEditPageComponent {
    * @param idx
    */
   removeFigureFromCollection(idx: number): void {
-    this.collection.figures.splice(idx, 1);
+    this.collection.items.splice(idx, 1);
   }
 
   /**

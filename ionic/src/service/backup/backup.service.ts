@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { File as FilePlugin } from "@ionic-native/file";
-import { Platform } from "ionic-angular";
+import { Loading, LoadingController, Platform } from "ionic-angular";
 import { Collection } from "src/entity/collection";
 import { CollectionItem } from "src/entity/collection-item";
 import { Figure } from "src/entity/figure";
 import { FigureAccessory } from "src/entity/figure-accessory";
 import { FigureProperty } from "src/entity/figure-property";
+import { ItemImage } from "src/entity/item-image";
+import { Tag } from "src/entity/tag";
 import { BackupCollectionUtil } from "src/service/backup/backup.collection.util";
 import { BackupFigureUtil } from "src/service/backup/backup.figure.util";
 import { ConnectionService } from "src/service/connection.service";
@@ -17,16 +19,20 @@ export * from './backup.figure.util';
 export class BackupService {
 
   private input: HTMLInputElement = document.createElement('input');
+  private loader: Loading;
 
   constructor(private connectionService: ConnectionService,
               private platform: Platform,
+              private loadingCtrl: LoadingController,
               private file: FilePlugin,
               private collectionUtil: BackupCollectionUtil,
               private figureUtil: BackupFigureUtil) {
 
     this.input.type = 'file';
-    this.input.accept = 'application/json';
+    this.input.accept = '.json';
     this.input.multiple = false;
+
+    this.loader = this.loadingCtrl.create();
 
   }
 
@@ -40,7 +46,10 @@ export class BackupService {
 
       const reader = new FileReader();
 
-      reader.onload = () => resolve(reader.result);
+      reader.onload = () => {
+        resolve(reader.result);
+      };
+
       reader.onerror = err => {
         reader.abort();
         reject(err);
@@ -72,7 +81,8 @@ export class BackupService {
 
   backupData(): Promise<void> {
 
-    return this.connectionService.connection
+    return this.loader.present()
+      .then(() => this.connectionService.connection)
       .then(connection => Promise.all([
         connection.manager.find(Figure),
         connection.getRepository(Collection).createQueryBuilder('collection')
@@ -97,34 +107,33 @@ export class BackupService {
         return this.file.writeFile(this.dataDirectory, `backup-latest.json`, file, {replace: true})
           .then(() => this.file.writeFile(this.file.externalDataDirectory, `backup-${Date.now()}.json`, file, {replace: true}));
 
-      });
+      })
+      .then(() => this.loader.dismiss());
 
   }
 
   restoreData(latest: boolean = true): Promise<boolean> {
 
-    const getFile = latest ? this.file.readAsText(this.dataDirectory, 'backup-latest.json') : this.selectFile();
+    const getFile: Promise<string> = latest ? this.file.readAsText(this.dataDirectory, 'backup-latest.json') : this.selectFile();
 
-    return getFile.then(file => {
-
-        const backup = JSON.parse(file) as DataBackup;
-
-        return this.connectionService.connection.then(connection => {
-            return connection.manager.clear(Figure)
-              .then(() => connection.manager.clear(FigureAccessory))
-              .then(() => connection.manager.clear(FigureProperty))
-              .then(() => connection.manager.clear(Collection))
-              .then(() => connection.manager.clear(CollectionItem))
-              .then(() => Promise.all(backup.figures.map(figure => this.figureUtil.toFigure(figure))))
-              .then(figures => connection.manager.save(figures))
-              .then(figures => Promise.all(backup.collections.map(collection => this.collectionUtil.toCollection(collection, figures))))
-              .then(collections => connection.manager.save(collections))
-              .then(() => true);
-          }
-        );
-
-      }
-    );
+    return getFile.then(file => this.loader.present().then(() => file))
+      .then(file => JSON.parse(file) as DataBackup)
+      .then(backup => this.connectionService.connection
+        .then(connection => connection.manager.clear(Figure)
+          .then(() => connection.manager.clear(FigureAccessory))
+          .then(() => connection.manager.clear(FigureProperty))
+          .then(() => connection.manager.clear(Collection))
+          .then(() => connection.manager.clear(CollectionItem))
+          .then(() => connection.manager.clear(ItemImage))
+          .then(() => connection.manager.clear(Tag))
+          .then(() => Promise.all(backup.figures.map(figure => this.figureUtil.toFigure(figure))))
+          .then(figures => connection.manager.save(figures))
+          .then(figures => Promise.all(backup.collections.map(collection => this.collectionUtil.toCollection(collection, figures))))
+          .then(collections => connection.manager.save(collections))
+          .then(() => true)
+        )
+      )
+      .then(() => this.loader.dismiss());
   }
 
 }
