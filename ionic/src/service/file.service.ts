@@ -25,9 +25,9 @@ export class FileService {
         () => this.file.resolveDirectoryUrl(directoryRoot + directoryName),
         () => this.file.createDir(directoryRoot, directoryName, false)
       )
-      .then(directory => this.file.checkDir(directory.name, type).then(
-        () => this.file.resolveDirectoryUrl(directory.name + type),
-        () => this.file.createDir(directory.name, type, false)
+      .then(directory => this.file.checkDir(directory.nativeURL, type).then(
+        () => this.file.resolveDirectoryUrl(directory.nativeURL + type),
+        () => this.file.createDir(directory.nativeURL, type, false)
       ));
 
   }

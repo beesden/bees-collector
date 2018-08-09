@@ -101,8 +101,10 @@ export class BackupService {
         const file = new Blob([JSON.stringify(dataBackup)], {type: 'application/json'});
 
         return this.fileService.getFolder(FileFolder.BACKUP)
-          .then(directory => this.file.writeFile(directory.nativeURL, `backup-latest.json`, file, {replace: true}))
-          .then(() => this.file.writeFile(this.file.externalDataDirectory, `backup-${Date.now()}.json`, file, {replace: true}));
+          .then(directory => Promise.all([
+            this.file.writeFile(directory.nativeURL, `backup-latest.json`, file, {replace: true}),
+            this.file.writeFile(directory.nativeURL, `backup-${Date.now()}.json`, file, {replace: true})
+          ]));
 
       })
       .then(() => this.loader.dismiss());
@@ -124,17 +126,16 @@ export class BackupService {
     return getFile.then(file => this.loader.present().then(() => file))
       .then(file => JSON.parse(file) as DataBackup)
       .then(backup => this.connectionService.connection
-        .then(connection => connection.manager.clear(Figure)
-          .then(() => connection.manager.clear(FigureAccessory))
-          .then(() => connection.manager.clear(Collection))
-          .then(() => connection.manager.clear(CollectionItem))
-          .then(() => connection.manager.clear(ItemImage))
+        .then(connection => connection.manager.clear(ItemImage)
           .then(() => connection.manager.clear(Tag))
+          .then(() => connection.manager.clear(FigureAccessory))
+          .then(() => connection.manager.clear(CollectionItem))
+          .then(() => connection.manager.clear(Figure))
+          .then(() => connection.manager.clear(Collection))
           .then(() => Promise.all(backup.figures.map(figure => this.figureUtil.toFigure(figure))))
           .then(figures => connection.manager.save(figures))
           .then(figures => Promise.all(backup.collections.map(collection => this.collectionUtil.toCollection(collection, figures))))
           .then(collections => connection.manager.save(collections))
-          .then(() => true)
         )
       )
       .then(() => this.loader.dismiss());

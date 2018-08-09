@@ -93,7 +93,7 @@ export class ImageService {
     if (stored) {
       promise = Promise.resolve(stored);
     } else {
-      promise = this.file.resolveLocalFilesystemUrl(imageUrl).then(() => new Promise<string>((resolve, reject) => {
+      promise = this.file.resolveLocalFilesystemUrl(url).then(() => new Promise<string>((resolve, reject) => {
 
         const init = () => {
 
