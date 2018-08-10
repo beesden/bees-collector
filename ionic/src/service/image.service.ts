@@ -131,22 +131,21 @@ export class ImageService {
           init();
         }
       });
-
-      return promise
-        .catch(() => null)
-        .then(dataUrl => {
-
-          this.loadQueue.shift();
-
-          const next = this.loadQueue[0];
-          if (next) {
-            next();
-          }
-
-          return dataUrl;
-        });
-
     }
+
+    return promise
+      .catch(() => null)
+      .then(dataUrl => {
+
+        this.loadQueue.shift();
+
+        const next = this.loadQueue[0];
+        if (next) {
+          next();
+        }
+
+        return dataUrl;
+      });
 
   }
 
