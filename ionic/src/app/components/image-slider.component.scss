@@ -1,0 +1,38 @@
+@import "../../styles/variables";
+
+:host {
+  display: block;
+  position: relative;
+}
+
+.slides {
+  background: var(--theme-bg-alt);
+  display: block;
+  height: #{$display-base * 8};
+
+  &.has-image {
+    height: #{100vw * (4 / 3)};
+    max-height: 60vh;
+
+    button {
+      display: none;
+    }
+  }
+}
+
+.swiper-slide {
+  background: center center/contain no-repeat;
+}
+
+button {
+  @include button;
+  @include fill;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--theme-content);
+  font-size: 3.5rem;
+  margin: auto;
+  height: 80%;
+  width: 80%;
+}

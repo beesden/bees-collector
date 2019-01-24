@@ -1,0 +1,22 @@
+@import "../../styles/variables";
+
+.bc-scroller {
+  margin: $display-base 0;
+  display: flex;
+  overflow-x: scroll;
+
+  > .scroll-title {
+    flex: 100%;
+  }
+
+  > .scroll-item {
+    flex: #{$display-base * 10} 0 0;
+    margin-left: $display-base;
+
+    > button {
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+}

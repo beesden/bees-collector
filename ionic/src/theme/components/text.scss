@@ -1,0 +1,122 @@
+@import "../../styles/variables";
+
+.bc-header {
+  background: var(--swatch-white);
+  box-shadow: $shadow-small;
+  padding: #{$display-base * 2} #{$display-base * 2} #{$display-base * 1.5};
+  position: relative;
+
+  > :first-child {
+    margin-top: 0;
+  }
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+}
+
+.bc-section{
+  background: var(--swatch-white);
+  box-shadow: $shadow-small;
+  padding: #{$display-base * 2} $display-base;
+  position: relative;
+
+  > :first-child {
+    margin-top: 0;
+  }
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+
+  nav {
+    border-top: 1px solid var(--theme-divider);
+    display: flex;
+    flex-flow: row-reverse;
+    justify-content: space-between;
+    margin: $display-base 0;
+    padding-top: $display-base;
+    text-align: right;
+  }
+}
+
+.bc-type {
+
+  &-title {
+    color: var(--theme-title);
+    font-size: 2rem;
+    font-weight: 500;
+    margin: $display-base 0;
+
+    + .bc-type-subtitle {
+      margin-top: #{-$display-base};
+    }
+  }
+
+  &-subtitle {
+    color: var(--theme-title);
+    font-size: 1rem;
+    font-weight: 300;
+    margin: $display-base 0;
+  }
+
+  &-text {
+    margin: $display-base 0;
+  }
+
+  &-status {
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: .9em;
+
+    &.unowned {
+      color: var(--status-unowned);
+    }
+
+    &.damaged {
+      color: var(--status-damaged);
+    }
+
+    &.incomplete {
+      color: var(--status-incomplete);
+    }
+
+    &.complete {
+      color: var(--status-complete);
+    }
+
+  }
+
+  &-aside {
+    text-align: right;
+    font-weight: 500;
+  }
+
+  &-definitions {
+    font-size: .9rem;
+    overflow-y: scroll;
+    flex: 1;
+    margin: $display-base 0;
+
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-gap: #{$display-base / 2}  #{$display-base * 2};
+    align-content: start;
+
+    dt {
+      grid-column: 1;
+      color: var(--theme-title);
+      font-weight: 500;
+
+      &:after {
+        content: ':';
+      }
+    }
+
+    dd {
+      font-weight: 300;
+      grid-column: 2;
+    }
+  }
+
+}

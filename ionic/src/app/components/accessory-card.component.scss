@@ -1,0 +1,49 @@
+@import "../../styles/variables";
+
+:host {
+  background: var(--swatch-white);
+  border-bottom: 1px solid var(--theme-divider);
+  contain: content;
+  display: flex;
+  align-items: center;
+  padding-right: $display-base;
+
+  &.deleted {
+    display: none;
+  }
+}
+
+header {
+  flex: 1;
+  margin: $display-base;
+
+  h2 {
+    color: var(--theme-title);
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  p {
+    color: var(--theme-content);
+    font-size: .9rem;
+    font-weight: 400;
+  }
+
+}
+
+.actions {
+  button {
+    @include button;
+    color: var(--theme-title);
+    font-size: 1.6rem;
+    padding: #{$display-base / 2};
+  }
+
+}
+
+.status {
+  grid-column: 2 / 4;
+  text-align: right;
+}
+

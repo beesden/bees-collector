@@ -1,0 +1,94 @@
+@import "../../styles/variables";
+
+ion-toolbar,
+ion-toolbar {
+
+  &.toolbar {
+    background: var(--theme-primary);
+    box-shadow: $shadow-large;
+    color: var(--theme-secondary);
+    min-height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    contain: content;
+    padding: 0 $display-base;
+
+    // Title text
+    > .toolbar-content {
+      display: flex;
+      flex-grow: 1;
+      order: 2;
+
+      > .title {
+        @include ellipsis;
+        display: flex;
+        align-items: center;
+        font-size: 1.4rem;
+        font-weight: 500;
+
+        > .toolbar-title {
+          display: block;
+          width: 100%;
+        }
+      }
+
+    }
+
+    // Legacy background element
+    > .toolbar-background {
+      display: none;
+    }
+
+    // Navigation icons
+    > .back-button,
+    > .toolbar-content > .close-button,
+    > [menuToggle] {
+      @include button;
+      font-size: 1.8rem;
+      padding: #{$display-base / 2};
+      margin-right: #{$display-base * 2};
+      flex-grow: 0;
+      order: -1;
+    }
+
+    // Back button visibility
+    .back-button {
+      display: none;
+
+      &.show-back-button {
+        display: initial;
+      }
+
+    }
+
+    // Action items
+    > ion-buttons {
+      display: flex;
+      order: 3;
+      flex-grow: 0;
+
+      > button {
+        @include button;
+        padding: #{$display-base / 2};
+        font-size: 25px;
+        width: 30px;
+
+        + button {
+          margin-left: $display-base;
+        }
+      }
+    }
+
+    // Additional options dropdown
+    // todo - directive?
+    .dropdown {
+      position: absolute;
+      right: 0;
+      top: 0;
+
+    }
+  }
+
+}

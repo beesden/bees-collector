@@ -1,0 +1,33 @@
+@import "../../styles/variables";
+
+ion-modal {
+  @include fill;
+  display: block;
+  contain: strict;
+
+  .modal-wrapper {
+    z-index: 10;
+    height: 100%;
+    transform: translate3d(0, 40px, 0);
+    opacity: .01;
+    position: relative;
+    contain: strict;
+  }
+
+  @media only screen and (min-width: 768px) and (min-height: 600px) {
+
+    .modal-wrapper {
+      left: calc(50% - (600px / 2));
+      top: calc(50% - (500px / 2));
+      position: absolute;
+      width: 600px;
+      max-height: 600px;
+      height: percentage(5 / 6);
+      border-radius: 2px;
+      overflow: hidden;
+      box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+    }
+
+  }
+
+}

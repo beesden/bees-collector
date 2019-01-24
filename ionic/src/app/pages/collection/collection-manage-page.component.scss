@@ -1,0 +1,43 @@
+@import "../../../styles/variables";
+
+h1 {
+  margin: #{$display-base * 2};
+}
+
+.figure-list {
+
+  > div {
+    background: var(--theme-bg);
+    border-bottom: 1px solid var(--theme-divider);
+    align-items: center;
+    display: flex;
+    min-height: #{$display-base * 5};
+    position: relative;
+
+    > button {
+      @include button;
+      display: flex;
+      padding: 0 $display-base;
+      font-size: 20px;
+      height: 100%;
+    }
+
+    > header {
+      @include ellipsis;
+      padding: $display-base;
+      flex: 1;
+
+      h2 {
+        color: var(--theme-title);
+        font-weight: 500;
+        font-size: 1rem;
+      }
+
+      p {
+        font-weight: 300;
+        font-size: .9rem;
+      }
+    }
+  }
+
+}

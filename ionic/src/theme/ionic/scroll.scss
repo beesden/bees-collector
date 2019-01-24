@@ -1,0 +1,27 @@
+@import "../../styles/variables";
+
+ion-infinite-scroll {
+  display: block;
+  width: 100%;
+
+  ion-infinite-scroll-content {
+    contain: content;
+    min-height: 120px;
+
+    .infinite-loading {
+      display: none;
+      width: 100%;
+      margin: 0 0 32px;
+    }
+
+    &[state="loading"] .infinite-loading {
+      display: block;
+    }
+
+    &[state="disabled"] {
+      display: none;
+    }
+
+  }
+
+}

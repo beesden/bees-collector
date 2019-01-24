@@ -1,0 +1,39 @@
+@import "../../styles/variables";
+
+figure {
+  background: center center/cover no-repeat;
+  border-radius: 2px;
+  margin: 0;
+  padding-bottom: 85%;
+  position: relative;
+  width: 100%;
+
+  &:after {
+    background: linear-gradient(to top, rgba(#000, .2), rgba(#000, .05));
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+header {
+  padding: #{$display-base / 2} 0 $display-base;
+}
+
+h2 {
+  @include ellipsis;
+  color: var(--theme-title);
+  font-size: 1.1rem;
+  font-weight: 500;
+  line-height: 1.6;
+  margin: 0;
+}
+
+p {
+  font-weight: 300;
+  margin: 0;
+}

@@ -1,0 +1,34 @@
+@import "../../styles/variables";
+
+:host {
+  display: block;
+  margin-bottom: $display-base;
+}
+
+.tag {
+  @include ellipsis;
+  background: var(--theme-primary);
+  color: var(--theme-secondary);
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9px;
+  font-size: .9rem;
+  margin-right: 4px;
+  padding: 6px 9px;
+
+  button {
+    color: var(--theme-secondary);
+    padding: 0 3px;
+    margin-left: 6px;
+  }
+}
+
+.tag-input {
+  display: flex;
+
+  ion-item {
+    flex: 1;
+    margin-bottom: 0;
+    margin-right: $display-base;
+  }
+}

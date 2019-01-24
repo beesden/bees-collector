@@ -1,0 +1,53 @@
+@import "../../styles/variables";
+
+ion-tabs {
+  @include fill;
+  display: flex;
+  flex-direction: column;
+
+  > ion-tab {
+    height: 100%;
+    position: relative;
+    contain: content;
+    opacity: 0;
+
+    &.show-tab {
+      opacity: 1;
+    }
+  }
+
+  > .tabbar {
+    background: var(--theme-bg);
+    border-top: 1px solid var(--theme-divider);
+    display: flex;
+    order: 1;
+    width: 100%;
+
+    > .tab-button {
+      color: var(--theme-content);
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      padding: #{$display-base / 2};
+      text-decoration: none;
+      align-items: center;
+      justify-content: flex-end;
+
+      @include ripple(var(--theme-primary));
+
+      &[aria-selected="true"] {
+        color: var(--theme-primary);
+      }
+
+      > .tab-button-icon {
+        font-size: 1.5rem;
+      }
+
+      > .tab-button-text {
+        font-size: 0.8rem;
+      }
+    }
+
+  }
+
+}

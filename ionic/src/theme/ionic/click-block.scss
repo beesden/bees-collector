@@ -1,0 +1,7 @@
+@import "../../styles/variables";
+
+// Prevents clicks when ionic is doing something, e.g. page transitions
+.click-block-active {
+  @include fill;
+  z-index: 99999;
+}

@@ -1,0 +1,8 @@
+@import "../../styles/variables";
+
+:host {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(#{$display-base * 12}, 1fr));
+  grid-gap: #{$display-base * 1.5};
+  margin: $display-base;
+}

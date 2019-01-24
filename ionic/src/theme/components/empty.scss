@@ -1,0 +1,20 @@
+@import "../../styles/variables";
+
+.bc-empty {
+  padding: #{$display-base * 4} #{$display-base * 2} 0;
+  text-align: center;
+
+  > ion-icon {
+    color: var(--theme-primary);
+    font-size: 6rem;
+    line-height: 1;
+  }
+
+  .scroll-content &:only-child {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100%
+  }
+}

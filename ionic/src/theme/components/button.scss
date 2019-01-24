@@ -1,0 +1,72 @@
+@import "../../styles/variables";
+
+.bc-button {
+  @include button(var(--theme-secondary), var(--theme-primary));
+  @include ellipsis;
+
+  border: 1px solid var(--theme-primary);
+  border-radius: 4px;
+  box-shadow: $shadow-small;
+  font-size: .9rem;
+  font-weight: 500;
+  letter-spacing: .5px;
+  padding: $display-base #{$display-base * 2};
+  position: relative;
+  transition: color 320ms ease-in-out;
+  text-transform: uppercase;
+
+  > ion-icon:first-child {
+    margin-right: .4em;
+  }
+
+  > ion-icon:only-child {
+    margin: 0;
+  }
+
+  &[disabled] {
+    cursor: default;
+    opacity: .4;
+    pointer-events: none;
+  }
+
+  &--outline {
+    color: var(--theme-primary);
+    background: none;
+    border-color: var(--theme-primary);
+  }
+
+  &--text {
+    background: none;
+    border: none;
+    box-shadow: none;
+    display: inline;
+    color: var(--theme-primary);
+    padding: $display-base;
+  }
+
+  &--block {
+    display: block;
+    width: 100%;
+  }
+
+  &--fab {
+    border-radius: 50%;
+    height: #{$display-base * 4};
+    width: #{$display-base * 4};
+    padding: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    z-index: 999;
+    right: $display-base;
+    bottom: $display-base;
+
+    > ion-icon:only-child {
+      font-size: #{$display-base * 2}
+    }
+  }
+
+}
